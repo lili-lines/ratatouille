@@ -1,7 +1,7 @@
-## Roadmap Micromouse with Analog Whiskers 🐭 : June 12 → August 22, 2026
+## 🐭 Roadmap Micromouse : June 12 → August 22, 2026
 
 
-### 🗓️ Week 1 — June 12-18
+### 🗓️ Week 1 — June 12 to 18
 
 **Target**
 - **Elec :** BOM + diagram
