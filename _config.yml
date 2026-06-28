@@ -1,0 +1,22 @@
+title: 🐭 Ratatouille
+description: Micromouse with Analog Whiskers
+author: lili-lines
+
+# Project site: the site is served under /ratatouille
+baseurl: "/ratatouille"
+url: "https://lili-lines.github.io"
+
+# Blog theme bundled with GitHub Pages
+theme: minima
+
+# Generates blog pages from the _posts folder
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Don't include code/project folders in the site
+exclude:
+  - algo
+  - elect
+  - mecha
+  - test

@@ -1,4 +1,10 @@
-## 🐭 Roadmap Micromouse : June 12 → August 22, 2026
+---
+layout: page
+title: Timeline
+permalink: /timeline/
+---
+
+## 🐭 Timeline Micromouse : June 12 → August 22, 2026
 
 
 ### 🗓️ Week 1 — June 12 to 18

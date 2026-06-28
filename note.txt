@@ -1,0 +1,8 @@
+lancer le blog
+> bundle exec jekyll serve
+
+
+Idées :
+. Key Takeaways
+. What I Learned This Week
+. Life Hacks

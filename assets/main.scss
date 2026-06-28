@@ -1,0 +1,111 @@
+---
+# This file overrides the one from the minima theme.
+# The two dashes above are REQUIRED (they tell Jekyll to compile the SCSS).
+---
+
+// ============================================================
+//  1) VARIABLES  — change the values below as you like
+//     (must come BEFORE the @import "minima" line)
+// ============================================================
+
+// --- Colors ---
+$brand-color:      #c0392b;   // link / accent color (here a "ratatouille" red)
+$text-color:       #1a1a1a;   // text color
+$background-color: #fffaf5;   // page background (here a creamy white)
+
+// --- Font ---
+$base-font-family: "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+$base-font-size:   17px;
+$base-line-height: 1.65;
+
+// --- Layout ---
+$content-width:    760px;     // max width of the content column
+
+// ============================================================
+//  Theme import (DO NOT move this line)
+// ============================================================
+@import "minima";
+
+// ============================================================
+//  2) CUSTOM CSS  — add your own rules here (after the import)
+// ============================================================
+
+// Site title in the header: a bit larger and bolder
+.site-title {
+  font-weight: 700;
+}
+
+// Subtle underline on post links when hovered
+.post-link:hover {
+  text-decoration: underline;
+}
+
+// Soft rounded corners around code blocks
+pre, code {
+  border-radius: 6px;
+}
+
+// Footer on a single line: title — description — name
+.footer-oneline {
+  margin: 0;
+  text-align: center;
+  color: $grey-color;
+  @include relative-font-size(0.9375);
+}
+.footer-title { font-weight: 700; }
+.footer-sep   { opacity: 0.6; }
+
+// Tag chips (#hashtags) at the bottom of posts
+.post-tags {
+  list-style: none;
+  margin: $spacing-unit 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.post-tags li { margin: 0; }
+.post-tags a {
+  display: inline-block;
+  padding: 2px 12px;
+  border: 1px solid $brand-color;
+  border-radius: 999px;
+  font-size: 0.85em;
+  text-decoration: none;
+  color: $brand-color;
+}
+.post-tags a:hover {
+  background-color: $brand-color;
+  color: #fff;
+}
+
+// Two-column layout (e.g. side-by-side definitions in a post)
+.two-col {
+  display: flex;
+  flex-wrap: wrap;        // stacks the columns on narrow screens
+  gap: $spacing-unit;
+}
+.two-col .col {
+  flex: 1 1 0;
+  min-width: 240px;
+}
+
+// Inline tag chips shown next to the date in the home post list
+.post-tags-inline {
+  margin-left: 10px;
+  a {
+    display: inline-block;
+    padding: 1px 9px;
+    margin-right: 4px;
+    border: 1px solid $brand-color;
+    border-radius: 999px;
+    font-size: 0.75em;
+    text-decoration: none;
+    color: $brand-color;
+    vertical-align: middle;
+  }
+  a:hover {
+    background-color: $brand-color;
+    color: #fff;
+  }
+}
