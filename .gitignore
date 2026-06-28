@@ -7,3 +7,5 @@ _site/
 # Bundler (gems installed locally)
 /.bundle/
 /vendor/
+
+note.txt

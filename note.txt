@@ -1,6 +1,8 @@
 lancer le blog
 > bundle exec jekyll serve
 
+selon la date du titre les articles sont affiche, Jekyll n'affiche pas les articles écrire dans le futur
+> bundle exec jekyll serve --future
 
 Idées :
 . Key Takeaways
