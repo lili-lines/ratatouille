@@ -8,10 +8,10 @@
 //     (must come BEFORE the @import "minima" line)
 // ============================================================
 
-// --- Colors ---
-$brand-color:      #c0392b;   // link / accent color (here a "ratatouille" red)
-$text-color:       #1a1a1a;   // text color
-$background-color: #fffaf5;   // page background (here a creamy white)
+// --- Colors (UMBRA protocol, adapted for a light/cream background) ---
+$brand-color:      #a21caf;   // accent / links — UMBRA magenta (readable on cream)
+$text-color:       #1b1530;   // text color — dark indigo
+$background-color: #fffaf5;   // page background — creamy white (kept)
 
 // --- Font ---
 $base-font-family: "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
@@ -40,9 +40,70 @@ $content-width:    760px;     // max width of the content column
   text-decoration: underline;
 }
 
-// Soft rounded corners around code blocks
+// ============================================================
+//  UMBRA theme accents (cyberpunk on cream)
+// ============================================================
+$umbra-dark:    #100d23;   // dark terminal background
+$umbra-code-bg: #1f1547;   // dark VIOLET background for code (script look)
+$umbra-green:   #00FF9C;   // neon green (terminal text)
+$umbra-magenta: #d57bff;   // neon magenta
+$umbra-cyan:    #00b0ff;   // neon cyan
+$tag-color:     #0a9d62;   // tags: readable green (variant E)
+
+// Important messages: light callout box (distinct from code)
+blockquote {
+  background-color: #f6e9fb;            // pale lavender tint
+  color: $text-color;
+  border-left: 4px solid $brand-color;  // magenta bar
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-style: normal;
+  a { color: $brand-color; }
+}
+
+// Highlight: neon-green highlighter
+mark, .hl {
+  background-color: $umbra-green;
+  color: $umbra-dark;
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+// Code: dark VIOLET "script" look
 pre, code {
   border-radius: 6px;
+  background-color: $umbra-code-bg;
+  border: 0;
+}
+code { color: $umbra-magenta; padding: 1px 6px; }   // inline code
+pre  { color: $umbra-green; padding: 12px 16px; }    // code block
+pre code { color: inherit; background: transparent; padding: 0; }
+
+// Syntax-highlighted code blocks (Rouge): force the violet background
+// and remap the tokens to readable UMBRA neon colors.
+.highlight,
+.highlighter-rouge .highlight,
+pre.highlight {
+  background: $umbra-code-bg;
+  color: #e9e6ff;                       // default light text
+}
+.highlight {
+  .c, .cm, .c1, .cs, .cp, .cd          { color: #9d9ae0; font-style: italic; } // comments
+  .k, .kd, .kn, .kp, .kr, .kt, .kv     { color: $umbra-magenta; }              // keywords
+  .s, .s1, .s2, .sb, .sc, .sd, .se,
+  .sh, .si, .sx, .sr, .ss, .dl         { color: #c3e88d; }                     // strings
+  .m, .mi, .mf, .mh, .mo, .il          { color: #fffc58; }                     // numbers
+  .nf, .nx                             { color: #82aaff; }                     // functions
+  .o, .ow                              { color: $umbra-cyan; }                 // operators
+  .nt                                  { color: #ff5680; }                     // tags
+  .nb, .bp                             { color: $umbra-green; }                // builtins
+  .err                                 { color: #ff5370; background: transparent; }
+}
+
+// Headings: subtle magenta underline
+.post-content h2, .post-list-heading, .page-heading {
+  border-bottom: 2px solid rgba($brand-color, 0.25);
+  padding-bottom: 0.2em;
 }
 
 // Footer on a single line: title — description — name
@@ -66,18 +127,12 @@ pre, code {
 }
 .post-tags li { margin: 0; }
 .post-tags a {
-  display: inline-block;
-  padding: 2px 12px;
-  border: 1px solid $brand-color;
-  border-radius: 999px;
   font-size: 0.85em;
   text-decoration: none;
-  color: $brand-color;
+  color: $tag-color;
+  font-weight: 600;
 }
-.post-tags a:hover {
-  background-color: $brand-color;
-  color: #fff;
-}
+.post-tags a:hover { text-decoration: underline; }
 
 // Two-column layout (e.g. side-by-side definitions in a post)
 .two-col {
@@ -94,18 +149,12 @@ pre, code {
 .post-tags-inline {
   margin-left: 10px;
   a {
-    display: inline-block;
-    padding: 1px 9px;
-    margin-right: 4px;
-    border: 1px solid $brand-color;
-    border-radius: 999px;
-    font-size: 0.75em;
+    margin-right: 8px;
+    font-size: 0.78em;
     text-decoration: none;
-    color: $brand-color;
+    color: $tag-color;
+    font-weight: 600;
     vertical-align: middle;
   }
-  a:hover {
-    background-color: $brand-color;
-    color: #fff;
-  }
+  a:hover { text-decoration: underline; }
 }

@@ -8,3 +8,32 @@ Idées :
 . Key Takeaways
 . What I Learned This Week
 . Life Hacks
+
+Legend :
+🚧 todo
+🐭 for mouse
+💡 idées
+👀 resultats
+📌 rappel
+🔍 zoom
+🎓 acquis
+
+
+### 🎨 Style preview — UMBRA theme
+
+Normal text with a [link](#), some **bold**, and inline `code`. You can also
+<mark>highlight</mark> an important word.
+
+> ⚠️ Important message — a callout styled like a cyberpunk terminal.
+
+```cpp
+int v = analogRead(A0);   // code block, terminal look
+```
+
+<ul class="post-tags">
+  <li><a href="#">#electronics</a></li>
+  <li><a href="#">#algo</a></li>
+  <li><a href="#">#whisker</a></li>
+</ul>
+
+---
