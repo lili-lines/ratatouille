@@ -4,6 +4,14 @@ lancer le blog
 selon la date du titre les articles sont affiche, Jekyll n'affiche pas les articles écrire dans le futur
 > bundle exec jekyll serve --future
 
+
+bio-inspiration
+
+Ref :
+. https://github.com/prometheux-ar/cyberpunk
+
+
+
 Idées :
 . Key Takeaways
 . What I Learned This Week

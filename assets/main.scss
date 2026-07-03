@@ -30,10 +30,23 @@ $content-width:    760px;     // max width of the content column
 //  2) CUSTOM CSS  — add your own rules here (after the import)
 // ============================================================
 
-// Site title in the header: a bit larger and bolder
-.site-title {
+// Headings in the theme color (magenta)
+h1 { color: #1f1547; }
+h2 { color: #0a9d62; }
+h3 { color: #00b0ff; }
+h4, h5, h6 { color: $brand-color; }
+
+// Header: magenta site title + cyan nav links
+.site-title,
+.site-title:visited {
   font-weight: 700;
+  color: $text-color;          // magenta
 }
+.site-nav .page-link,
+.site-nav .page-link:visited {
+  color: #1f1547;               // cyan
+}
+.site-nav .page-link:hover { color: $brand-color; }
 
 // Subtle underline on post links when hovered
 .post-link:hover {
@@ -100,10 +113,16 @@ pre.highlight {
   .err                                 { color: #ff5370; background: transparent; }
 }
 
-// Headings: subtle magenta underline
-.post-content h2, .post-list-heading, .page-heading {
+// Headings inside posts: subtle magenta underline
+// (the home "Micromouse" title is intentionally left without a line)
+.post-content h2 {
   border-bottom: 2px solid rgba($brand-color, 0.25);
   padding-bottom: 0.2em;
+}
+
+// Space between the intro text and the post list on the home page
+.home .post-list {
+  margin-top: $spacing-unit * 2;
 }
 
 // Footer on a single line: title — description — name
