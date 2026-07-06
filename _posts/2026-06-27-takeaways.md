@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Insights & Takeaways
+title: Takeaways, starter
 date: 2026-06-27 10:00:00 +0200
 tags: [electricity, electronics]
 ---

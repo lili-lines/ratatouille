@@ -11,7 +11,6 @@ Ref :
 . https://github.com/prometheux-ar/cyberpunk
 
 
-
 Idées :
 . Key Takeaways
 . What I Learned This Week
