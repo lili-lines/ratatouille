@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Encoder + IMU fusion: where the robot is & where it looks"
+title: Where is Ratatouille ?
 date: 2026-07-10 10:00:00 +0200
 tags: [sensors, navigation]
 ---
