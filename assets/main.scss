@@ -153,6 +153,36 @@ pre.highlight {
 }
 .post-tags a:hover { text-decoration: underline; }
 
+// Acronym tooltips (abbr): a themed bubble on hover.
+// A small script (in head.html) swaps title -> data-bubble so the native
+// OS tooltip is replaced by this one; abbr[title] is the no-JS fallback.
+abbr[title], abbr[data-bubble] {
+  cursor: help;
+  text-decoration: underline dotted $brand-color;
+  text-underline-offset: 2px;
+}
+abbr[data-bubble] { position: relative; }
+abbr[data-bubble]:hover::after,
+abbr[data-bubble]:focus::after {
+  content: attr(data-bubble);
+  position: absolute;
+  left: 0;
+  bottom: 135%;
+  z-index: 20;
+  width: max-content;
+  max-width: 280px;
+  white-space: normal;
+  background: $umbra-code-bg;      // dark violet, theme
+  color: #e9e6ff;
+  border: 1px solid $brand-color;  // magenta border, theme
+  border-radius: 6px;
+  padding: 7px 11px;
+  font-size: 0.95rem;              // slightly bigger than a native tooltip
+  font-weight: 400;
+  line-height: 1.4;
+  box-shadow: 0 3px 12px rgba(16, 13, 35, 0.35);
+}
+
 // Two-column layout (e.g. side-by-side definitions in a post)
 .two-col {
   display: flex;

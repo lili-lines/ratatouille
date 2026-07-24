@@ -6,7 +6,7 @@ tags: [electronics, signal]
 ---
 
 
-#### (1) Pulse Width Modulation (PWM)
+## 1. Pulse Width Modulation (PWM)
 
 Continuously varying the motor's voltage is hard. Instead, the Teensy generates a PWM signal, a simple on/off command (3.3 V logic). The motor driver TB6612FNG follows it and switches the motor's 7.4 V supply on/off thousands of times per second.
 What sets the power is the duty cycle = the share of time the signal stays **on**. <br>
@@ -27,7 +27,7 @@ These fast switches create electrical noise that leaks into the whole circuit an
 🐭 In the MicroMouse: this is the "PWM-limited so the average stays ≈ 6 V" line from the BOM. The battery is 7.4 V, but at a duty cycle of ~81% the average the motor sees ≈ 6 V.
 
 
-#### (2) Clean whisker signal under PWM
+## 2. Clean whisker signal under PWM
 
 It means the reading stays clean while the motors run, that's the challenge, since a clean signal at standstill is easy.
 
@@ -37,7 +37,7 @@ The noise defenses :
 - the star ground (one common ground point).
 
 
-#### (3) Experiment
+#### **Experiment**
 
 blablabla
 

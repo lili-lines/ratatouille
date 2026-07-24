@@ -5,6 +5,9 @@ selon la date du titre les articles sont affiche, Jekyll n'affiche pas les artic
 > bundle exec jekyll serve --future
 
 
+Ref compo :
+. https://www.pjrc.com/store/teensy40.html
+
 bio-inspiration
 
 Ref :

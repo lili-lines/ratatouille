@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Takeaways, starter
+title: 🥡 Takeaways, starter
 date: 2026-06-27 10:00:00 +0200
 tags: [electricity, electronics]
 ---
 
-#### key Concepts
+#### **key Concepts**
 Here are the concepts I learned.
 
 
