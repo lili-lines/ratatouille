@@ -47,3 +47,31 @@ int v = analogRead(A0);   // code block, terminal look
 </ul>
 
 ---
+
+Exemple concret : lire ta moustache (AS5600 → Teensy)
+La moustache se plie → l'aimant tourne → l'AS5600 met une tension 
+sur sa broche OUT. Convention : 0 V = angle mini, 
+3,3 V = angle maxi. 
+→ moustache à moitié pliée = ~1,65 V.
+Ce fil arrive sur la broche A0 du Teensy.
+Le ADC du Teensy mesure cette tension et la transforme en nombre : 
+analogRead(A0) → ~2048 (sur 0–4095).
+Le Teensy « reconnaît » l'info parce que ton code sait que 
+« la tension sur A0 = l'angle de la moustache ». C'est toi qui as 
+fixé cette convention en le programmant.
+
+moustache pliée ─► AS5600 sort 1,65 V ─► A0 ─► ADC lit 2048 ─► 
+                          "moustache à moitié pliée"
+                         (la convention : V ∝ angle)
+
+Information = what we want to know or command, e.g. "the whisker 
+is bent", "go at 80%".
+L'information est codée dans une grandeur physique du signal : 
+une tension 3.3$V$, la vune durée, une suite de bits)
+→ Le composant « reconnaît » parce qu'il applique la même 
+convention que l'émetteur. C'est comme deux personnes qui 
+parlent la même langue.
+
+Signal = the physical carrier of the information on a wire: a 
+voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, 
+not energy, so its current is tiny.
