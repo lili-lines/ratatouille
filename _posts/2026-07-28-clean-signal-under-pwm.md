@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Clean whisker signal, PWM
-date: 2026-07-02 10:00:00 +0200
+date: 2026-07-28 10:00:00 +0200
 tags: [electronics, signal]
 ---
 

@@ -1,0 +1,19 @@
+Agis en tant qu'expert en robotique embarquée et algorithmes pour la compétition Micromouse. Je souhaite implémenter l'algorithme de résolution de labyrinthe "Floodfill" pour le tester dans le simulateur MMS (Micromouse Simulator de mackorone : https://github.com/mackorone/mms), que voici.
+
+L'objectif final est d'intégrer ce code dans une vraie Micromouse (vraisemblablement codée en C++ / Arduino). Pour l'instant, je veux une version de test fonctionnelle pour le simulateur.
+
+Génère-moi le code complet en C++ respectant scrupuleusement le protocole de communication de MMS (via stdin/stdout). Aussi, comme je suis débutant en C++, explique-moi le code et pourquoi tu as fait ces choix d'implémentation, quelles sont les bonnes pratiques.
+
+Contraintes et architecture du code :
+1. Taille du labyrinthe : 16x16 fixes. L'objectif est le centre : (7,7), (7,8), (8,7), (8,8).
+2. Protocole MMS : Utilise uniquement les commandes standards (ex: move, turnLeft, turnRight, wallFront, wallLeft, wallRight, setText, setColor). Pense à vider le cache (flush) après chaque envoi et à lire la réponse sur stdin quand c'est requis par l'API de MMS.
+3. Représentation de la carte :
+   - Un tableau pour stocker les distances du Floodfill.
+   - Un tableau ou une matrice pour stocker les murs découverts (en utilisant des masques de bits pour le Nord, Est, Sud, Ouest pour chaque cellule).
+4. Algorithme Floodfill : Implémente une version propre avec une file (Queue) pour recalculer les distances dès qu'un nouveau mur est détecté.
+5. Visuels MMS : Utilise setText pour afficher la valeur de distance du Floodfill sur chaque case de l'interface en temps réel, et setColor pour marquer le chemin exploré.
+
+En plus du code, fournis-moi :
+- Les instructions rapides pour configurer la ligne "Run Command" dans MMS.
+- Une brève explication sur la façon dont l'architecture de ce code devra être adaptée pour passer du simulateur au vrai hardware de la Micromouse (gestion des capteurs IR/ToF et des moteurs).
+- Un tuto pour visualiser cet algo dans le simulateur.

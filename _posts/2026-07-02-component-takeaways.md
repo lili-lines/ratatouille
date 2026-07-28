@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 🥡 Takeaways, component
-date: 2026-07-24 10:00:00 +0200
+date: 2026-07-02 10:00:00 +0200
 tags: [electronics]
 ---
 

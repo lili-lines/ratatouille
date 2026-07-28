@@ -5,23 +5,36 @@ date: 2026-07-01 10:00:00 +0200
 tags: [algo, mms]
 ---
 
-<p align="center"><img src="{{ '/assets/img/mms_perso.gif' | relative_url }}" alt="mms maze simulator" width="360"></p>
 
-Flood-fill gives every cell its distance to the goal. The mouse then walks downhill (big → small) until it reaches $0$, the goal.
+## The real path : the claude path 🤖
 
-I won't re-explain the algorithm, there are detailed explanations all over the web. Here I keep only what I actually did in the [mms](https://github.com/mackorone/mms) simulator.
+I did not write this algorithm from scratch. I asked Claude Code to write the flood-fill for the [mms](https://github.com/mackorone/mms) simulator. It worked on the first runs, but it was a black box 🧙.
 
-Just the core of the algorithm:
+So I read the code line by line and asked Claude to explain it to me. This post is not a tutorial. It is the list of things I ended up understanding, that caught my interest and that I wanted to share.
+
+I did not know the right words at the time. So I asked Mistral to write a proper prompt for me to get mms working. Here is the full prompt it gave me: <br>
+[floodfill_prompt.txt](https://github.com/lili-lines/ratatouille/blob/main/algo/floodfill_prompt.txt).
+
+<figure style="text-align:center; margin:0;">
+  <img src="{{ '/assets/img/mms_perso.gif' | relative_url }}" alt="mms maze simulator" width="360" style="display:block; margin:0 auto;">
+  <figcaption style="font-size:0.85rem;">Screen capture of the algorithm running in the mms simulator</figcaption>
+</figure>
+
+**The algorithm**
+
+Here is the core of the algorithm, to help us understand it better.
 
 $$d(\text{cell}) = 1 + \min_{n}\, d(n), \qquad d(\text{goal}) = 0$$
 
-$n$ = ranges over the neighbours with no wall in between<br>
-$d$ = the smallest distance to the goal among its neighbours + 1 
+$n$ = the neighbours with no wall in between <br>
+$d$ = smallest distance to the goal among the neighbours, plus 1
 
-References flood-fill:<br>
+Every cell gets its distance to the goal. The mouse then walks downhill (big → small) until it reaches $0$.
+
+Here are more detailed explanations:<br>
 . [Micromouse-from-scratch walkthrough](https://medium.com/@minikiraniamayadharmasiri/micromouse-from-scratch-algorithm-maze-traversal-shortest-path-floodfill-741242e8510) <br>
 . [UC Irvine's flood-fill page](https://ieee.ics.uci.edu/micromouse/floodfill.html) <br>
-. [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf) <br>
+. [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)
 
 
 #### **1. Coordinates & directions in MMS**
@@ -33,53 +46,48 @@ MMS puts the origin $(0,0)$ at the bottom-left, like a math graph:
 <img src="{{ '/assets/img/graph_maths.png' | relative_url }}" alt="MMS coordinate graph" width="95%">
 </div>
 <div class="col" markdown="1" style="flex: 1.3">
-**→ x** = column, going EAST (right), **x** increases <br>
-**↑ y** = row, going NORTH (up), **y** increases <br>
-← WEST = **x** decreases <br>
-↓ SOUTH = **y** decreases <br>
+→ x = column, going EAST (right), x increases <br>
+↑ y = row, going NORTH (up), y increases <br>
+← WEST = x decreases <br>
+↓ SOUTH = y decreases <br>
 </div>
 </div>
 
-🧭 Cardinal directions = NORTH, EAST, SOUTH, WEST, coded as $0,1,2,3$ in that order.
+Cardinal directions NORTH, EAST, SOUTH, WEST are coded $0,1,2,3$ in that order.
 
 
-#### **2. The modulo $\%$ in C++, the rotation trick**
+#### **2. The modulo $\%$, the rotation trick**
 
-The mouse keeps its heading in `mouseDir` $(0=N, 1=E, 2=S, 3=W)$. Since the directions follow each other clockwise, turning right = +1, turning left = -1. The $\% 4$ modulo wraps around to stay within $[0:3]$:
+The mouse keeps its heading in `mouseDir` $(0=N, 1=E, 2=S, 3=W)$. The directions follow each other clockwise, so turning right = +1, turning left = -1. The $\% 4$ wraps around to stay in $[0:3]$:
 
 ```cpp
 turnRight() { mouseDir = (mouseDir + 1) % 4; }   // N→E→S→W→N...
 turnLeft()  { mouseDir = (mouseDir + 3) % 4; }   // +3 is the same as -1
 ```
 
-So 1 left = 3 rights <br>
-And $−1\%4$ gives −1, a negative number in C++, which is not a valid direction $[0:3]$
+One left = three rights. I use +3, not -1, because $-1\%4$ gives $-1$ in C++, which is not a valid direction.
 
 
-#### **3. The flush in MMS**
+#### **3. The flush**
 
-The mouse sends text to the simulator through `stdin/stdout`. But the computer doesn't send letters one by one: it piles them up in a buffer, like a bucket, and only sends when the bucket is full.
+The mouse talks to the simulator through `stdin/stdout`. The computer does not send letters one by one: it piles them in a buffer and sends only when the buffer is full.
 
-The problem is that a command like `moveForward` is short → the bucket isn't full → the command stays stuck → the mouse waits for a reply that never comes.
+A command like `moveForward` is short, so the buffer never fills, the command stays stuck, and the mouse waits for a reply that never comes.
 
-To fix it, we use the flush: it forces the bucket to empty immediately. In C++, `std::endl` does 2 things at once: `'\n'` + flush.
+The flush forces the buffer to empty now. In C++, `std::endl` does both: newline + flush.
 
 ```cpp
 std::cout << cmd << std::endl;   // sends & empties the buffer right away
 ```
 
-Every command sent to MMS must be followed by a flush, otherwise the dialogue breaks.
+Every command must be flushed, or the dialogue breaks.
 
 
 #### **4. On the real robot**
 
-On the real robot there are 3 types of runs: exploration, the return (lets you explore more), and the speed run. You must not lose the hard-earned wall map.
+The real robot has 3 runs: exploration, return, and speed run. It must not lose the wall map it built.
 
-- Robot stays powered **on** 🟢: the map lives in RAM (global variables). You just clear `distance_grid`, keep `walls`, and re-run `floodFill()` → the perfect path is recomputed in a fraction of a second.
-- Robot powered **off** 🔴: RAM is wiped. You must write `walls` to non-volatile memory (EEPROM / Flash), physical storage. A 16×16 maze = 256 bytes (1 byte per cell), which is tiny.
+Robot stays on: the map lives in RAM. Clear the distance grid, keep the walls, re-run flood-fill, and the path is recomputed in a fraction of a second.
 
-
-#### **Takeaways**
-
-🤖 And today this kind of task is what an AI coding assistant like Claude Code nails, fast and well. The real value is understanding it, knowing what to ask for, and spotting when the output is wrong.
+Robot off: RAM is wiped. The walls must be written to non-volatile memory (EEPROM / Flash). A 16×16 maze is 256 bytes, one per cell, which is tiny.
 
