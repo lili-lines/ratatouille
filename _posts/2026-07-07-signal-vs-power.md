@@ -8,14 +8,14 @@ tags: [electronics]
 * TOC
 {:toc}
 
-C'est quoi qui circul ducoup ?
+C'est quoi qui circul ?
 
-couleur fil :
-. noir- /violet+ ou rouge
-. autre couleur pour les commandes (vert)
+couleur fil: <br> 
+. noir- /violet+ ou rouge <br>
+. autre couleur pour les commandes (vert & jaune) <br>
 
 #### **Signal**
-**Signal** = the physical carrier of the information on a wire: a voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, not energy, so its current is tiny.
+Signal = the physical carrier of the information on a wire: a voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, not energy, so its current is tiny.
 
 **Information**, what we want to know or command, e.g. the whisker is bent, go at 80%.
 
@@ -25,13 +25,14 @@ Three ways to encode it:
 
 | Encoding | The info is in… | Who reads it |
 |---|---|---|
-| Logic level | the voltage: 3.3 V = "1", 0 V = "0" | a digital pin |
-| Analog | the value of the voltage (1.6 V = a given angle) | an ADC |
+| Logic | voltage: 3.3V=1, 0V=0 | a digital pin |
+| Analog | value of the voltage, 1.6 V = a given angle | an ADC |
 | Protocol (I2C, PWM…) | a coded sequence of pulses | dedicated hardware in the chip |
 
-→ A component recognizes the info because it applies the same convention as the sender. Like two people speaking the same language.
+→ a component recognizes the info because it applies the same convention as the sender. Like two people speaking the same language.
 
-🚧 todo : **order**
+**Order**
+🚧 todo :
 
 #### **Power**
 Power = energy: what actually does the work, spin a motor. It needs a real voltage and a big current.

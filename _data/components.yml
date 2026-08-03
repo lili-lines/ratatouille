@@ -110,6 +110,12 @@
     - "buck = step-down, stays cool"
     - "unlike a linear regulator that wastes the extra as heat"
 
+- id: PMW3901
+  title: "PMW390"
+  images:
+    - src: PMW3901_schema.png
+  text: "🚧 : PMW3901 optical flow sensor"
+
 - id: motor
   title: "motor"
   images:
