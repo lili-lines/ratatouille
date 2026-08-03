@@ -5,6 +5,8 @@ date: 2026-07-01 10:00:00 +0200
 tags: [algo, mms]
 ---
 
+* TOC
+{:toc}
 
 ## The real path : the claude path 🤖
 

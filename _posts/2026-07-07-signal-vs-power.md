@@ -5,7 +5,14 @@ date: 2026-07-07 10:00:00 +0200
 tags: [electronics]
 ---
 
+* TOC
+{:toc}
+
 C'est quoi qui circul ducoup ?
+
+couleur fil :
+. noir- /violet+ ou rouge
+. autre couleur pour les commandes (vert)
 
 #### **Signal**
 **Signal** = the physical carrier of the information on a wire: a voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, not energy, so its current is tiny.

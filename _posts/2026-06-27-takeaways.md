@@ -5,6 +5,9 @@ date: 2026-06-27 10:00:00 +0200
 tags: [electricity, electronics]
 ---
 
+* TOC
+{:toc}
+
 #### **key Concepts**
 Here are the concepts I learned.
 

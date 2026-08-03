@@ -2,9 +2,11 @@
 layout: post
 title: Clean whisker signal, PWM
 date: 2026-07-28 10:00:00 +0200
-tags: [electronics, signal]
+tags: [electronics, signal, experiment]
 ---
 
+* TOC
+{:toc}
 
 ## 1. Pulse Width Modulation (PWM)
 
@@ -42,11 +44,24 @@ The noise defenses :
 blablabla
 
 Hardware :
-. on bench power supply :
+. power = on bench power supply :
     params in line :
     . voltage (7.4 V to mimic the battery) 
-    . the current limit 
+    . the current limit  (300-500 mA)
 . Teensy
+. 1-2 AS5600 + aimant
+. 1 motor N20
+. driver
+. Breadboard + câbles Dupont
+. Multimètre (vérifier les tensions avant de tout relier)
+
+Les élèments annti-bruit :
+ça serait interressant de checker leur efficacité 1/1.
+. RC filter /moustache (R 1 kΩ + C 100 nF)
+. condensateur decouplage (100 nF) près de chaque puce
+. condensateur réservoir (≥ 470 µF)
+. contrainte de câblage : câblage en étoile (masse commune unique)
+. la proximité compte car le but est d'absorber les pics de courant au moment précis ou le moteur tire (démarrage changement PWM), si on branche loin, le fil/distance retarde sa reaction
 
 
 🚧 todo : <br>

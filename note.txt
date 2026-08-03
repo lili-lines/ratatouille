@@ -4,9 +4,19 @@ lancer le blog
 selon la date du titre les articles sont affiche, Jekyll n'affiche pas les articles écrire dans le futur
 > bundle exec jekyll serve --future
 
+
 Ref compo :
 . https://www.pjrc.com/store/teensy40.html
 . https://arduino.blaisepascal.fr/codeur-absolu-as5600/
+. gyro : https://components101.com/sensors/mpu6050-module
+
+
+. Post 3D print et pièce à construire
+retour impression 3D : pour les petites pièce c'était pas tres précis
+mais en recoupant eu cuteur ça passe.
+et les trop petites pièces se décolle
+. Post test moteur + vitesse : shema branchage
+. Post composant : utiliser le power du labo + multimetre pour verif chaque IN/OUT
 
 
 bio-inspiration
@@ -23,11 +33,27 @@ Idées :
 Legend :
 🚧 todo
 🐭 for mouse
-💡 idées
+💡 idées, astuces
 👀 resultats
 📌 rappel
 🔍 zoom
 🎓 acquis
+
+
+### Pour le post Takeaways, composants :
+Fichier,	Contenu,	Rôle
+
+_data/components.yml	
+les infos (titres, textes, images, IN/OUT) 
+ce que tu édites au quotidien
+
+_includes/component-carousel.html	
+la structure HTML (boucle Liquid)	
+tu n'y touches presque jamais
+
+assets/main.scss	
+le CSS .compo-*	style global, 
+réutilisable
 
 
 ### 🎨 Style preview — UMBRA theme

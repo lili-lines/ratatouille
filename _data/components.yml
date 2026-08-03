@@ -1,0 +1,140 @@
+# Data for the component carousel (rendered by _includes/component-carousel.html)
+# Each entry = one slide. Images live in assets/img/.
+
+- id: teensy
+  title: "Teensy 4.0 🧠"
+  images:
+    - src: teensy.png
+      width: "80%"
+      caption: 'Details of the 40 input/output signal pins. Source: <a href="https://www.pjrc.com/store/teensy40.html" target="_blank" rel="noopener">pjrc.com</a>'
+    - src: teensy_soudure.png
+      width: "100%"
+      caption: "Before / after soldering the header pins"
+  role: "The MCU, runs the code, reads the sensors, 3.3 V logic."
+  software: "upload code with Arduino IDE."
+  in:
+    - "power (VIN ← MP1584 5 V) ⚡"
+    - "left whisker (A0 ← AS5600 OUT) ℹ️"
+    - "right whisker (A1 ← AS5600 OUT) ℹ️"
+    - "gyro (18/SDA & 19/SCL ← MPU-6050) ℹ️"
+    - "switch (GND & 23 ← slide switch) 🎮"
+  out:
+    - "motor commands (pins → TB6612FNG) 🎮"
+    - "motor A : pin 2 → PWMA / pin 3 → AIN1 / pin 4 → AIN2"
+    - "motor B : pin 5 → PWMB / pin 6 → BIN1 / pin 7 → BIN2"
+  warn:
+    - "3.3 V logic, NOT 5 V tolerant."
+    - "Analog-to-Digital Converter (ADC) converts the AS5600 tension into a number = [0:3.3 V] → [0:4095], 12 bits"
+  zoom:
+    - "the Teensy 4.0 has 2 separate ADCs, so A0 and A1 can be sampled in parallel"
+
+- id: as5600
+  title: "AS5600 🧲"
+  images:
+    - src: as5600.jpg
+      width: "90%"
+      caption: 'Details input/output pins'
+    - src: as56_soudure.png
+      width: "100%"
+      caption: "Before / after soldering the header pins"
+  role: "Magnetic angle sensor. Reads how much the whisker bends."
+  in:
+    - "power (VCC+ & GND- ← Teensy 3.3 V) ⚡"
+    - "magnet angle (diametric magnet above the chip) ℹ️"
+    - "sets the counting direction (DIR- ← GND) 🎮"
+  out:
+      - "angle (OUT → Teensy A0/A1)"
+      - "analog min angle = 0°/0V, max angle = VCC V [0:VCC] V) ℹ️"
+  warn:
+      - "needs a DIAMETRIC magnet (not axial)"
+      - "analog OUT is ratiometric: it scales with VCC."
+      - "tension OUT = (angle / angle_max) x VCC"
+  zoom:
+      - "the 360° max is never transmitted: the wire carries only volts, the ADC turns it into a raw number"
+      - "for the whisker you don't need degrees, you watch the raw value and its slope"
+      - "angle° = (valeur_brute / 4095) x 360°"
+
+- id: gyro
+  title: "gyro"
+  images:
+    - src: gyro_MPU6050-Pinout.png
+      width: "90%"
+      caption: 'Details input/output pins. Source: <a href="https://components101.com/sensors/mpu6050-module" target="_blank" rel="noopener">components101.com</a>'
+  text: "🚧 : MPU-6050. Measures rotation and tilt to track heading."
+
+- id: driver
+  title: "Driver 🕹️"
+  images:
+    - src: driver_schema.jpg
+      width: "100%"
+      caption: "TB6612FNG pinout"
+    - src: driver_soudure.png
+      width: "100%"
+      caption: "Before / after soldering the header pins"
+  role: "TB6612FNG. Powers and steers the 2 motors from the Teensy's orders."
+  in:
+    - "speed"
+    - " - motor A (PWMA ← Teensy pin 2) 🎮"
+    - " - motor B (PWMB ← Teensy pin 5) 🎮"
+    - "direction"
+    - " - motor A (AIN1 / AIN2 ← Teensy pins 3 / 4) 🎮"
+    - " - motor B (BIN1 / BIN2 ← Teensy pins 6 / 7) 🎮"
+    - "wake-up (STBY ← Teensy pin 8, HIGH) 🎮"
+    - "logic power (VCC ← Teensy 3.3 V) ⚡"
+    - "motor power (VM ← battery 7.4 V) ⚡"
+  out:
+    - "motor A (AO1 / AO2 → motor A) ⚡"
+    - "motor B (BO1 / BO2 → motor B) ⚡"
+  warn:
+    - "STBY must be HIGH, else the driver stays asleep"
+    - "common ground GND: Teensy + driver + battery"
+    - "VCC = 3.3 V logic, VM = 7.4 V power, don't swap"
+  zoom:
+    - "power translator: 3.3 V orders in → 7.4 V to the motors out"
+    - "AIN1/AIN2 = 1/0 forward, 0/1 reverse, 0/0 stop, 1/1 brake"
+
+- id: mp1584
+  title: "MP1584"
+  images:
+    - src: MP1584-Pinout.jpg
+      width: "90%"
+  role: "Step-down (buck) converter. Drops the 7.4 V battery to a clean 5 V for the Teensy."
+  in:
+    - "power (IN+/IN- ← battery 7.4 V) ⚡"
+  out:
+    - "power (OUT+/OUT- → Teensy VIN, 5 V) ⚡"
+  warn:
+    - "adjust the trim pot to 5 V with a multimeter BEFORE connecting the Teensy"
+    - "default output is random: never plug the Teensy on an unset module"
+  zoom:
+    - "buck = step-down, stays cool"
+    - "unlike a linear regulator that wastes the extra as heat"
+
+- id: motor
+  title: "motor"
+  images:
+    - src: motorN20.jpg
+  text: "🚧 : N20 gear motor. Drives one wheel."
+
+- id: switch
+  title: "interupteur"
+  images:
+    - src: slide_switch.jpg
+  text: "🚧 : Slide switch. Cuts the battery power on/off."
+
+- id: battery
+  title: "battery"
+  images:
+    - src: battery.jpg
+  role: "🚧 : Battery. Powers the robot. 2S = en série, SM 3-pin = power + équilibre"
+  in:
+    - "power charge yellow (?) (7.4 V Li-ion 2S) ⚡"
+  out:
+    - "power (7.4 V → MP1584) ⚡"
+    - "+ rouge ~ 7.4 V/8.4 V"
+    - "- noir ground = GND (0 V)"
+    - "yellow = for the charger, no connect to 🐭"
+  warn:
+  - "prévoir comment recharger la batterie sans la déconnecter du robot"
+  - "🚧 todo : explication de ce qu'il faut"
+  - "attention à l'explosion 💥"

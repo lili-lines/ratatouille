@@ -1,0 +1,44 @@
+{%- comment -%}
+CSS-only component carousel. Data: _data/components.yml. Styles: assets/main.scss (.compo-*).
+{%- endcomment -%}
+<div class="compo-carousel">
+  <div class="compo-strip">
+    {%- for c in site.data.components %}
+    <div class="compo-slide" id="c-{{ c.id }}">
+      <div class="compo-img{% if c.images.size > 1 %} stacked{% endif %}">
+        {%- for im in c.images %}
+        {%- if im.caption %}
+        <figure>
+          <img src="{{ '/assets/img/' | append: im.src | relative_url }}"{% if im.width %} style="width:{{ im.width }}; max-height:none; display:block; margin:0 auto;"{% endif %}>
+          <figcaption>{{ im.caption }}</figcaption>
+        </figure>
+        {%- else %}
+        <img src="{{ '/assets/img/' | append: im.src | relative_url }}"{% if im.width %} style="width:{{ im.width }}; max-height:none;"{% endif %}>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+      <div class="compo-info">
+        <span class="compo-title">{{ c.title }}</span>
+        <div class="compo-text">
+          {%- if c.text %}{{ c.text }}
+          {%- else %}
+          <div class="compo-sec"><strong>Role</strong> : {{ c.role }}</div>
+          {%- if c.software %}
+          <div class="compo-sec"><strong>Software</strong> : {{ c.software }}</div>
+          {%- endif %}
+          <div class="compo-sec"><strong>IN</strong> :<br>{% for i in c.in %}{{ i }}<br>{% endfor %}</div>
+          <div class="compo-sec"><strong>OUT</strong> :<br>{% for o in c.out %}{{ o }}<br>{% endfor %}</div>
+          {%- if c.warn %}<div class="compo-sec"><strong>⚠️</strong> :<br>{% for w in c.warn %}{{ w }}<br>{% endfor %}</div>{% endif %}
+          {%- if c.zoom %}<div class="compo-sec"><strong>🔍</strong> :<br>{% for z in c.zoom %}{{ z }}<br>{% endfor %}</div>{% endif %}
+          {%- endif %}
+        </div>
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+  <div class="compo-thumbs">
+    {%- for c in site.data.components %}
+    <a href="#c-{{ c.id }}"><img src="{{ '/assets/img/' | append: c.images[0].src | relative_url }}"></a>
+    {%- endfor %}
+  </div>
+</div>
