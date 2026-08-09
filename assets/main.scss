@@ -30,11 +30,48 @@ $content-width:    800px;     // max width of the content column
 //  2) CUSTOM CSS  — add your own rules here (after the import)
 // ============================================================
 
-// Headings in the theme color (magenta)
-h1 { color: #1f1547; }
-h2 { color: #0a9d62; }
-h3 { color: #00b0ff; }
-h4, h5, h6 { color: $brand-color; }
+// Headings inside post content: same size as the body text, with a small
+// colored square marker. Scoped to .post-content so the page/post title
+// itself (rendered from the front-matter `title:`, outside this wrapper)
+// keeps its own larger size.
+.post-content {
+  h1, h2, h3, h4, h5, h6 {
+    font-size: $base-font-size;
+    font-weight: 700;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.9em;  // taille du carré des titres
+      height: 0.9em;
+      background-color: currentColor;
+      margin-right: 0.5em;
+      vertical-align: middle;
+    }
+  }
+  h2, h4 {
+    margin-top: 2em;
+  }
+  h1 { color: #1f1547; }
+  h2 { color: #0a9d62; }
+  h3 { color: #00b0ff; }
+  h4, h5, h6 { color: $brand-color; }
+
+  // Same visual look as h3 (color, bold, square marker) but on a plain
+  // paragraph: not a real heading, so it stays out of the TOC.
+  .fake-h3 {
+    font-weight: 700;
+    color: #00b0ff;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.9em;
+      height: 0.9em;
+      background-color: currentColor;
+      margin-right: 0.5em;
+      vertical-align: middle;
+    }
+  }
+}
 
 // Header: magenta site title + cyan nav links
 .site-title,
@@ -113,12 +150,6 @@ pre.highlight {
   .err                                 { color: #ff5370; background: transparent; }
 }
 
-// Headings inside posts: subtle magenta underline
-// (the home "Micromouse" title is intentionally left without a line)
-.post-content h2 {
-  border-bottom: 2px solid rgba($brand-color, 0.25);
-  padding-bottom: 0.2em;
-}
 
 // Space between the intro text and the post list on the home page
 .home .post-list {

@@ -114,7 +114,13 @@
   title: "PMW390"
   images:
     - src: PMW3901_schema.png
-  text: "🚧 : PMW3901 optical flow sensor"
+  role: "🚧 : PMW3901 optical flow sensor"
+  zoom:
+    - "PMW3901 est un photodétecteur en silicium avec une sensibilité qui augmente du bleu au rouge"
+    - "voir la courbe de réponse spectrale exacte du PMW3901"
+    - "diamètre de la zone vue = 2 × hauteur × tan(angle/2)
+                        = 2 × 80mm × tan(20°)
+                        ≈ 58 mm de diamètre"
 
 - id: motor
   title: "motor"

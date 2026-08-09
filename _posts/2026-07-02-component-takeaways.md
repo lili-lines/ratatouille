@@ -12,4 +12,12 @@ tags: [electronics]
 
 {% include component-carousel.html %}
 
+Liste des connecteurs et leur nom :
+. SM connector (male/femelle)
+. jack (male/femelle)
+. JST-XH, 2 pins, 3 pins
+. banana plug 🍌
+. alligator clip 🐊
+. Dupont, jumper wire 
+
 
