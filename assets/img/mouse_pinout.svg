@@ -1,0 +1,214 @@
+<svg viewBox="0 0 1100 1200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1100" height="1200" fill="#fffaf5"/>
+
+  <!-- ============ TITLE ============ -->
+  <text x="550" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1530">Ratatouille — pinout &amp; placement (to scale, cm)</text>
+  <text x="550" y="48" text-anchor="middle" font-size="11" fill="#a21caf" font-style="italic">Reference layout — verify/refine in Fusion 360 before cutting</text>
+
+  <!-- ============ CM GRID (1cm = 60px), origin at (100,80) ============ -->
+  <g stroke="#e8d9ee" stroke-width="1">
+    <!-- vertical lines every 1cm, 0 to 12cm -->
+    <line x1="100" y1="80" x2="100" y2="1040"/><line x1="160" y1="80" x2="160" y2="1040"/>
+    <line x1="220" y1="80" x2="220" y2="1040"/><line x1="280" y1="80" x2="280" y2="1040"/>
+    <line x1="340" y1="80" x2="340" y2="1040"/><line x1="400" y1="80" x2="400" y2="1040"/>
+    <line x1="460" y1="80" x2="460" y2="1040"/><line x1="520" y1="80" x2="520" y2="1040"/>
+    <line x1="580" y1="80" x2="580" y2="1040"/><line x1="640" y1="80" x2="640" y2="1040"/>
+    <line x1="700" y1="80" x2="700" y2="1040"/><line x1="760" y1="80" x2="760" y2="1040"/>
+    <line x1="820" y1="80" x2="820" y2="1040"/>
+    <!-- horizontal lines every 1cm, 0 to 16cm -->
+    <line x1="100" y1="80" x2="820" y2="80"/><line x1="100" y1="140" x2="820" y2="140"/>
+    <line x1="100" y1="200" x2="820" y2="200"/><line x1="100" y1="260" x2="820" y2="260"/>
+    <line x1="100" y1="320" x2="820" y2="320"/><line x1="100" y1="380" x2="820" y2="380"/>
+    <line x1="100" y1="440" x2="820" y2="440"/><line x1="100" y1="500" x2="820" y2="500"/>
+    <line x1="100" y1="560" x2="820" y2="560"/><line x1="100" y1="620" x2="820" y2="620"/>
+    <line x1="100" y1="680" x2="820" y2="680"/><line x1="100" y1="740" x2="820" y2="740"/>
+    <line x1="100" y1="800" x2="820" y2="800"/><line x1="100" y1="860" x2="820" y2="860"/>
+    <line x1="100" y1="920" x2="820" y2="920"/><line x1="100" y1="980" x2="820" y2="980"/>
+    <line x1="100" y1="1040" x2="820" y2="1040"/>
+  </g>
+  <text x="60" y="84" font-size="10" fill="#a21caf">0cm</text>
+  <text x="60" y="1044" font-size="10" fill="#a21caf">16cm</text>
+  <text x="96" y="1060" font-size="10" fill="#a21caf">0cm</text>
+  <text x="808" y="1060" font-size="10" fill="#a21caf">12cm</text>
+
+  <!-- helper: 1cm = 60px, origin ox=100, oy=80 -->
+
+  <!-- ============ CHASSIS OUTLINE ============ -->
+  <rect x="100" y="140" width="600" height="900" rx="24" fill="none" stroke="#a21caf" stroke-width="2" stroke-dasharray="6,5"/>
+
+  <!-- ============ WHISKER TIPS (mechanical, not wired) ============ -->
+  <circle cx="190" cy="90" r="5" fill="#00b0ff"/>
+  <circle cx="610" cy="90" r="5" fill="#00b0ff"/>
+  <line x1="190" y1="90" x2="220" y2="140" stroke="#00b0ff" stroke-width="1.5"/>
+  <line x1="610" y1="90" x2="580" y2="140" stroke="#00b0ff" stroke-width="1.5"/>
+
+  <!-- ============ AS5600 L : 2.4x1.5cm at x=1.0..3.4cm, y=1.2..2.7cm ============ -->
+  <rect x="160" y="152" width="144" height="90" rx="4" fill="#fffaf5" stroke="#00b0ff" stroke-width="2"/>
+  <text x="232" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">AS5600 L</text>
+  <text x="232" y="192" text-anchor="middle" font-size="9" fill="#1b1530">2.4 × 1.5 cm</text>
+  <text x="232" y="206" text-anchor="middle" font-size="8" fill="#a21caf">pins: VCC GND OUT DIR</text>
+  <text x="232" y="219" text-anchor="middle" font-size="8" fill="#1b1530">pos: x=1.0-3.4cm, y=1.2-2.7cm</text>
+
+  <!-- ============ AS5600 R : mirrored, x=6.6..9.0cm ============ -->
+  <rect x="496" y="152" width="144" height="90" rx="4" fill="#fffaf5" stroke="#00b0ff" stroke-width="2"/>
+  <text x="568" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">AS5600 R</text>
+  <text x="568" y="192" text-anchor="middle" font-size="9" fill="#1b1530">2.4 × 1.5 cm</text>
+  <text x="568" y="206" text-anchor="middle" font-size="8" fill="#a21caf">pins: VCC GND OUT DIR</text>
+  <text x="568" y="219" text-anchor="middle" font-size="8" fill="#1b1530">pos: x=6.6-9.0cm, y=1.2-2.7cm</text>
+
+  <!-- ============ GYRO : 2.1x1.6cm centered x=5cm, y=3.0..4.6cm ============ -->
+  <rect x="337" y="260" width="126" height="96" rx="4" fill="#fffaf5" stroke="#a21caf" stroke-width="2"/>
+  <text x="400" y="288" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Gyro MPU-6050</text>
+  <text x="400" y="302" text-anchor="middle" font-size="9" fill="#1b1530">2.1 × 1.6 cm</text>
+  <text x="400" y="316" text-anchor="middle" font-size="8" fill="#a21caf">pins: VCC GND SDA SCL</text>
+  <text x="400" y="329" text-anchor="middle" font-size="8" fill="#1b1530">pos: x=3.95-6.05cm, y=3.0-4.6cm</text>
+  <text x="400" y="342" text-anchor="middle" font-size="8" fill="#1b1530">(I2C addr 0x68)</text>
+
+  <!-- ============ TEENSY 4.0 : 3.5x1.8cm x=3.25..6.75cm, y=5.0..6.8cm ============ -->
+  <rect x="295" y="440" width="210" height="108" rx="4" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="400" y="468" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Teensy 4.0</text>
+  <text x="400" y="482" text-anchor="middle" font-size="9" fill="#1b1530">3.5 × 1.8 cm</text>
+  <text x="400" y="496" text-anchor="middle" font-size="8" fill="#1b1530">pos: x=3.25-6.75cm, y=5.0-6.8cm</text>
+  <text x="400" y="510" text-anchor="middle" font-size="8" fill="#a21caf">VIN GND 3V3 A0 A1 18 19</text>
+  <text x="400" y="522" text-anchor="middle" font-size="8" fill="#a21caf">2-8 (driver) 9-12 (encoders)</text>
+
+  <!-- ============ DRIVER : 2.0x1.5cm x=7.3..9.3cm y=5.0..6.5cm ============ -->
+  <rect x="538" y="440" width="120" height="90" rx="4" fill="#fffaf5" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="598" y="466" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Driver</text>
+  <text x="598" y="480" text-anchor="middle" font-size="9" fill="#1b1530">TB6612FNG</text>
+  <text x="598" y="493" text-anchor="middle" font-size="8" fill="#1b1530">2.0 × 1.5 cm</text>
+  <text x="598" y="506" text-anchor="middle" font-size="8" fill="#a21caf">VM VCC GND</text>
+  <text x="598" y="518" text-anchor="middle" font-size="8" fill="#a21caf">PWMA/B AIN/BIN STBY</text>
+
+  <!-- ============ MOTOR L + WHEEL L ============ -->
+  <rect x="148" y="572" width="72" height="132" rx="4" fill="#fffaf5" stroke="#0a9d62" stroke-width="2"/>
+  <text x="184" y="600" text-anchor="middle" font-size="10" font-weight="700" fill="#1b1530">Motor L</text>
+  <text x="184" y="613" text-anchor="middle" font-size="8" fill="#1b1530">N20</text>
+  <text x="184" y="626" text-anchor="middle" font-size="8" fill="#1b1530">1.2×2.2cm</text>
+  <text x="184" y="639" text-anchor="middle" font-size="7" fill="#a21caf">power: +/−</text>
+  <text x="184" y="650" text-anchor="middle" font-size="7" fill="#a21caf">enc: VCC GND A B</text>
+  <circle cx="118" cy="638" r="72" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="118" y="642" text-anchor="middle" font-size="10" font-weight="700" fill="#1b1530">Wheel L</text>
+  <text x="118" y="720" text-anchor="middle" font-size="8" fill="#1b1530">⌀3.2cm</text>
+
+  <!-- ============ MOTOR R + WHEEL R (mirror) ============ -->
+  <rect x="580" y="572" width="72" height="132" rx="4" fill="#fffaf5" stroke="#0a9d62" stroke-width="2"/>
+  <text x="616" y="600" text-anchor="middle" font-size="10" font-weight="700" fill="#1b1530">Motor R</text>
+  <text x="616" y="613" text-anchor="middle" font-size="8" fill="#1b1530">N20</text>
+  <text x="616" y="626" text-anchor="middle" font-size="8" fill="#1b1530">1.2×2.2cm</text>
+  <text x="616" y="639" text-anchor="middle" font-size="7" fill="#a21caf">power: +/−</text>
+  <text x="616" y="650" text-anchor="middle" font-size="7" fill="#a21caf">enc: VCC GND A B</text>
+  <circle cx="682" cy="638" r="72" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="682" y="642" text-anchor="middle" font-size="10" font-weight="700" fill="#1b1530">Wheel R</text>
+  <text x="682" y="720" text-anchor="middle" font-size="8" fill="#1b1530">⌀3.2cm</text>
+
+  <!-- ============ BATTERY : 5.5x3.0cm x=2.25..7.75cm y=9.8..12.8cm ============ -->
+  <rect x="235" y="668" width="330" height="180" rx="4" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="400" y="718" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Battery LiPo 2S</text>
+  <text x="400" y="734" text-anchor="middle" font-size="9" fill="#1b1530">7.4V, 5.5 × 3.0 cm</text>
+  <text x="400" y="748" text-anchor="middle" font-size="8" fill="#1b1530">pos: x=2.25-7.75cm, y=9.8-12.8cm</text>
+  <text x="400" y="762" text-anchor="middle" font-size="8" fill="#a21caf">pins: + / −</text>
+
+  <!-- ============ SWITCH + FUSE row : y=13.0..13.5cm ============ -->
+  <rect x="220" y="860" width="60" height="30" rx="3" fill="#fffaf5" stroke="#1f1547" stroke-width="2"/>
+  <text x="250" y="879" text-anchor="middle" font-size="9" font-weight="700" fill="#1b1530">Switch</text>
+
+  <rect x="292" y="860" width="120" height="30" rx="3" fill="#fffaf5" stroke="#1f1547" stroke-width="2"/>
+  <text x="352" y="879" text-anchor="middle" font-size="9" font-weight="700" fill="#1b1530">Fuse 2A</text>
+
+  <!-- ============ MP1584 : 2.2x1.7cm ============ -->
+  <rect x="322" y="920" width="132" height="102" rx="4" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="388" y="950" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">MP1584</text>
+  <text x="388" y="964" text-anchor="middle" font-size="9" fill="#1b1530">2.2 × 1.7 cm</text>
+  <text x="388" y="978" text-anchor="middle" font-size="8" fill="#a21caf">IN+ IN− OUT+ OUT−</text>
+  <text x="388" y="991" text-anchor="middle" font-size="8" fill="#1b1530">pos: y=13.8-15.5cm</text>
+
+  <!-- ============ BALL CASTER ============ -->
+  <circle cx="400" cy="1020" r="12" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="400" y="1050" text-anchor="middle" font-size="9" font-weight="700" fill="#1b1530">Ball caster</text>
+
+  <!-- ============ CONNECTION BUNDLES (power: solid dark, signal: dashed magenta) ============ -->
+  <g stroke="#1b1530" stroke-width="2.5" fill="none">
+    <!-- Battery -> Fuse -->
+    <path d="M400,668 L400,845 L250,845 L250,860"/>
+    <!-- Fuse -> Switch -->
+    <path d="M292,875 L280,875"/>
+    <!-- Switch -> power split (to MP1584 IN and Driver VM) -->
+    <path d="M220,875 L180,875 L180,1080 L388,1080 L388,1022"/>
+    <path d="M180,1080 L598,1080 L598,530"/>
+  </g>
+  <text x="255" y="840" font-size="9" fill="#1b1530">7.4V (batt→fuse)</text>
+  <text x="185" y="1075" font-size="9" fill="#1b1530">7.4V rail (→ MP1584 IN, → driver VM)</text>
+
+  <g stroke="#1b1530" stroke-width="2.5" fill="none">
+    <!-- MP1584 OUT -> Teensy VIN -->
+    <path d="M454,940 L505,940 L505,548"/>
+  </g>
+  <text x="460" y="935" font-size="9" fill="#1b1530">5V</text>
+
+  <g stroke="#1b1547" stroke-width="2" fill="none">
+    <!-- Teensy 3.3V bus (up through gyro to whiskers) -->
+    <path d="M400,440 L400,152"/>
+  </g>
+  <text x="405" y="360" font-size="9" fill="#1f1547">3.3V bus (→ gyro, AS5600 L/R, driver VCC)</text>
+  <!-- 3.3V stub to driver VCC -->
+  <path d="M505,470 L538,470" stroke="#1f1547" stroke-width="2" fill="none"/>
+
+  <!-- Driver -> Motor L / R (power) -->
+  <g stroke="#0a9d62" stroke-width="2.5" fill="none">
+    <path d="M538,485 L184,485 L184,572"/>
+    <path d="M658,485 L616,485 L616,572"/>
+  </g>
+  <text x="290" y="480" font-size="9" fill="#0a9d62">chopped 7.4V → motors</text>
+
+  <!-- ============ SIGNAL BUNDLES (dashed magenta) ============ -->
+  <g stroke="#a21caf" stroke-width="1.5" fill="none" stroke-dasharray="6,4">
+    <!-- AS5600 L -> Teensy -->
+    <path d="M232,242 L232,400 L295,460"/>
+    <!-- AS5600 R -> Teensy -->
+    <path d="M568,242 L568,400 L505,460"/>
+    <!-- Gyro -> Teensy (I2C) -->
+    <path d="M400,356 L400,440"/>
+    <!-- Teensy -> Driver (PWM/dir, 6 signal wires bundled) -->
+    <path d="M505,485 L538,485" stroke-width="3"/>
+    <!-- Motor L encoder -> Teensy -->
+    <path d="M184,572 L184,555 L295,500"/>
+    <!-- Motor R encoder -> Teensy -->
+    <path d="M616,572 L616,555 L505,500"/>
+  </g>
+  <text x="140" y="395" font-size="8" fill="#a21caf">AS5600 L: OUT (+VCC/GND tap)</text>
+  <text x="590" y="395" font-size="8" fill="#a21caf">AS5600 R: OUT (+VCC/GND tap)</text>
+  <text x="405" y="400" font-size="8" fill="#a21caf">I2C: SDA/SCL</text>
+  <text x="480" y="478" font-size="8" fill="#a21caf">PWMA/B, AIN1/2, BIN1/2, STBY (×7)</text>
+  <text x="110" y="565" font-size="8" fill="#a21caf">quadrature A/B</text>
+  <text x="620" y="565" font-size="8" fill="#a21caf">quadrature A/B</text>
+
+  <!-- Unavoidable crossing marker (hop) where the 3.3V bus and a signal line visually cross without connecting -->
+  <path d="M390,400 A10,10 0 0 1 410,400" stroke="#1b1530" stroke-width="2" fill="none"/>
+  <text x="415" y="404" font-size="7" fill="#1b1530" font-style="italic">hop = no connection</text>
+
+  <!-- ============ LEGEND ============ -->
+  <rect x="100" y="1070" width="720" height="115" rx="10" fill="#f6e9fb" stroke="#a21caf" stroke-width="1.5"/>
+  <text x="120" y="1092" font-size="13" font-weight="700" fill="#1b1530">Legend</text>
+  <line x1="120" y1="1105" x2="160" y2="1105" stroke="#1b1530" stroke-width="2.5"/>
+  <text x="168" y="1109" font-size="10" fill="#1b1530">Power, 7.4V / 5V trunk</text>
+  <line x1="120" y1="1122" x2="160" y2="1122" stroke="#1f1547" stroke-width="2"/>
+  <text x="168" y="1126" font-size="10" fill="#1b1530">Power, 3.3V bus</text>
+  <line x1="120" y1="1139" x2="160" y2="1139" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="168" y="1143" font-size="10" fill="#1b1530">Power, chopped 7.4V to motors</text>
+  <line x1="120" y1="1156" x2="160" y2="1156" stroke="#a21caf" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="168" y="1160" font-size="10" fill="#1b1530">Signal / data bundle (pins listed in label)</text>
+  <path d="M110,1173 A8,8 0 0 1 126,1173" stroke="#1b1530" stroke-width="2" fill="none"/>
+  <text x="134" y="1177" font-size="10" fill="#1b1530">Wires cross here, NOT connected (hop)</text>
+  <text x="420" y="1109" font-size="9" fill="#1b1530">Box border color = noise zone:</text>
+  <rect x="420" y="1118" width="14" height="14" fill="none" stroke="#1f1547" stroke-width="2"/>
+  <text x="440" y="1130" font-size="9" fill="#1b1530">quiet (brain/power)</text>
+  <rect x="420" y="1140" width="14" height="14" fill="none" stroke="#a21caf" stroke-width="2"/>
+  <text x="440" y="1152" font-size="9" fill="#1b1530">quiet (sensors)</text>
+  <rect x="420" y="1162" width="14" height="14" fill="none" stroke="#00b0ff" stroke-width="2"/>
+  <text x="440" y="1174" font-size="9" fill="#1b1530">quiet (whiskers)</text>
+  <rect x="600" y="1118" width="14" height="14" fill="none" stroke="#0a9d62" stroke-width="2"/>
+  <text x="620" y="1130" font-size="9" fill="#1b1530">NOISY (motors/driver)</text>
+  <text x="600" y="1150" font-size="9" fill="#1b1530" font-style="italic">1cm grid squares</text>
+  <text x="600" y="1163" font-size="9" fill="#1b1530" font-style="italic">for scale reference</text>
+</svg>

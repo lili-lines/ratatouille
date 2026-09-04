@@ -8,7 +8,7 @@ tags: [algo, mms]
 * TOC
 {:toc}
 
-## The real path : the claude path 🤖
+#### 1. The real path : the claude path 🤖
 
 I did not write this algorithm from scratch. I asked Claude Code to write the flood-fill for the [mms](https://github.com/mackorone/mms) simulator. It worked on the first runs, but it was a black box 🧙.
 
@@ -39,7 +39,7 @@ Here are more detailed explanations:<br>
 . [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)
 
 
-#### **1. Coordinates & directions in MMS**
+#### 2. Coordinates & directions in MMS
 
 MMS puts the origin $(0,0)$ at the bottom-left, like a math graph:
 
@@ -58,7 +58,7 @@ MMS puts the origin $(0,0)$ at the bottom-left, like a math graph:
 Cardinal directions NORTH, EAST, SOUTH, WEST are coded $0,1,2,3$ in that order.
 
 
-#### **2. The modulo $\%$, the rotation trick**
+#### 3. The modulo $\%$, the rotation trick
 
 The mouse keeps its heading in `mouseDir` $(0=N, 1=E, 2=S, 3=W)$. The directions follow each other clockwise, so turning right = +1, turning left = -1. The $\% 4$ wraps around to stay in $[0:3]$:
 
@@ -70,7 +70,7 @@ turnLeft()  { mouseDir = (mouseDir + 3) % 4; }   // +3 is the same as -1
 One left = three rights. I use +3, not -1, because $-1\%4$ gives $-1$ in C++, which is not a valid direction.
 
 
-#### **3. The flush**
+#### 4. The flush
 
 The mouse talks to the simulator through `stdin/stdout`. The computer does not send letters one by one: it piles them in a buffer and sends only when the buffer is full.
 
@@ -85,7 +85,7 @@ std::cout << cmd << std::endl;   // sends & empties the buffer right away
 Every command must be flushed, or the dialogue breaks.
 
 
-#### **4. On the real robot**
+#### 5. On the real robot
 
 The real robot has 3 runs: exploration, return, and speed run. It must not lose the wall map it built.
 

@@ -11,6 +11,15 @@ Ref compo :
 . gyro : https://components101.com/sensors/mpu6050-module
 
 
+## References global
+
+- [The Inception of Chedda: A detailed design and analysis of Micromouse](https://www.physics.unlv.edu/~bill/ecg497/Drew_Tondra_report.pdf)
+- [Timothy Boger's Engineering Blog — Micromouse](https://timsengineeringblog.weebly.com/micromouse.html)
+- [Ian Hoffman — Micromouse Project Introduction](https://ianmhoffman.github.io/Micromouse/)
+- [Embedded System Engineering — Micromouse Robot](http://embeddedsystemengineering.blogspot.com/2015/03/micromouse-robot.html)
+- [Micromouse exemple design](https://ukmars.org/contests/micromouse/)
+
+
 . Post 3D print et pièce à construire
 retour impression 3D : pour les petites pièce c'était pas tres précis
 mais en recoupant eu cuteur ça passe.

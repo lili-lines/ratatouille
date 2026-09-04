@@ -65,7 +65,7 @@
 - id: driver
   title: "Driver 🕹️"
   images:
-    - src: driver_schema.jpg
+    - src: driver_schema_h.jpg
       width: "100%"
       caption: "TB6612FNG pinout"
     - src: driver_soudure.png
@@ -150,3 +150,6 @@
   - "prévoir comment recharger la batterie sans la déconnecter du robot"
   - "🚧 todo : explication de ce qu'il faut"
   - "attention à l'explosion 💥"
+  - "important pour la charge mettre les couleurs en face, c'est le moment 
+    ou on peut se bruler donc attention, une fois les rouges en face des 
+    rouges, noir en face des noirs... on branche, si ça fume pas c'est ok"

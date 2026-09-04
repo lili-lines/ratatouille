@@ -1,51 +1,70 @@
+Ref expiquation composant condensateur :
+https://fr.vecteezy.com/art-vectoriel/25747550-l-eau-reservoir-analogie-pour-une-condensateur-adapte-pour-educatif-des-produits
+
+
+Memo assemblage :
+
+VISU MD
+Top-down layout of the mouse: where each component sits, and how they connect (power in solid lines, signal/data in dashed lines).
+
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/mouse_layout.svg' | relative_url }}" alt="Ratatouille micromouse layout and wiring diagram" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Component placement and connections, schematic (not to scale)</figcaption>
+</figure>
+
+
+
+Zone "PUISSANCE" (bruyante)  ←→  Zone "SIGNAL" (sensible)
+   batterie, moteurs,              Teensy, AS5600, gyro,
+   driver, câbles 7,4V              PMW3901, câbles I2C/SPI
+
+minimum de proximité entre elle
+
+👌 Ce qui DOIT être proche (obligation physique/électrique)
+
+. Condensateur découplage ↔ sa puce	doit être à quelques mm des pattes VCC/GND, sinon il ne stabilise plus rien
+
+. Condensateur réservoir ↔ Driver (VM)	doit absorber les pics de courant à la source, un fil trop long retarde sa réaction
+
+. Driver ↔ Moteurs	fils courts = moins de perte de tension/résistance sur les gros courants (jusqu'à 3A)
+
+. use/Switch ↔ Batterie	la protection doit être au plus près de la source, pas en bout de chaîne
+
+⛔ Ce qui NE DOIT PAS être proche (à éviter absolument)
+
+. Moteurs ↔ AS5600 (moustaches)	le bruit électrique du moteur (commutation brushed DC) pollue le signal analogique fragile de l'AS5600 → lecture qui tremble
+
+. Moteurs ↔ Gyro	les vibrations mécaniques du moteur faussent la mesure du gyro (bruit dans la lecture d'orientation)
+
+. Câbles de **puissance** (7,4V) ↔ câbles de **signal** (I2C, SPI, analog)	
+s'ils courent en parallèle et collés, le courant qui varie dans le fil de puissance induit du bruit dans le fil de signal à côté (couplage électromagnétique) — c'est pour ça que le star ground impose une masse commune à un seul point, pas des masses qui se croisent partout
+
+. MP1584 (buck) ↔ AS5600	le MP1584 est lui-même une source de bruit (il découpe à haute fréquence, comme un mini-PWM) — le garder à distance du signal analogique fragile
+
+
+🐭 DONC :
+Moustaches + PMW3901 + Gyro groupés à l'avant/centre → loin des moteurs, zone "calme"
+Moteurs + Driver + Batterie groupés sur les côtés/arrière → zone "puissance", loin des capteurs sensibles
+Le Teensy au centre exact → c'est le seul composant qui doit toucher les deux zones (il reçoit les signaux ET commande la puissance), donc il sert de frontière/pont entre les deux
+
+⚠️ code : Le code qui ignore le signal moustache pendant un virage actif
+
+⚠️ GND en étoile = 1 seul point car signal bruyant et on ne veut pas perturber l'information avec du bruit, donc 1 ligne comme la breadboard. 
+
 lazer print:
 . faire une piece pour aligner les moteurs
-
 . ressort
 
-ACHAT :
-. cable alim labo → breadbord
-    banana plug alligator clip to breadboard jumper wire set
-    香蕉插頭鱷魚夾杜邦線組
-    ou banana plug to alligator clip test leads
-       香蕉插頭轉鱷魚夾測試線
-  
-. chargeur baterrie 1 element: 
-  2S 鋰電池平衡充電器 SM接頭輸出
-  2S LiPo balance charger with SM connector output
-ou plusieur :
-  . chargeur :
-    2S LiPo balance charger, JST-XH connector
-    2S 鋰電池平衡充電器, JST-XH接頭 (ok en ligne)
-    + JST-XH to SM 2S adapter cable
-      JST-XH 轉 SM 轉接線 2S ⚠️
-    + prise si no inside :
-      12V DC power adapter, 5.5x2.1mm barrel plug
-      12V DC電源供應器 5.5x2.1mm接頭
 
-. LED : Rouge (630–660 nm) ou Rouge Proche-Infrarouge (850 nm)
-LED 5mm à trous (through-hole), pas CMS/SMD (trop petit à souder à la main) 20mA
-  English: red LED 5mm high brightness
-  中文: 紅色LED 5mm 高亮度
-  Résistance : Vf ≈ 2,0V → 270Ω (7,4−2,0)/0,02 (x5)
-  ou
-  red LED 5mm high brightness 20mA
-  紅色LED 5mm 高亮度 20mA (x4)
-    + 220 ohm resistor 1/4W
-      220歐姆電阻 1/4W (x4)
+💲💲💲 ACHAT :
 
-  English: infrared LED 850nm 5mm
-  中文: 紅外線LED 850nm 5mm
-  Résistance : Vf ≈ 1,4V → 300Ω (7,4−1,4)/0,02
-  
-  English: blue LED 5mm high brightness
-  中文: 藍色LED 5mm 高亮度
-  Résistance : Vf ≈ 3,2V → 220Ω (7,4−3,2)/0,02
-
-  → éclairage en biais 30° à 45° par rapport à la surface
-
-a checker : Résistance = (7.4V − 3.2V) / 0.02A ≈ 210Ω → 220Ω standard, ça convient
-. que le module PMW3901 gere la conversion 3V3 → 2.1V
+. English: micro SD card module SPI Arduino
+  中文: micro SD卡模組 SPI
+  model qui accept directement 3.3V
+  我要買 micro SD卡模組，SPI介面，支援3.3V
+  Je veux un module carte micro SD, interface SPI, compatible 3.3V.
+  + une carte micro SD
+    microSD記憶卡
 
 . fuse :
   5x20mm 2A slow blow glass fuse 250V
@@ -54,31 +73,19 @@ a checker : Résistance = (7.4V − 3.2V) / 0.02A ≈ 210Ω → 220Ω standard, 
    inline fuse holder 5x20mm with wire leads
    5x20mm 保險絲座 帶線 (ou 熔斷器座)
 
-. interupteur :
-  SPST (單刀單擲)	2 broches, juste ON/OFF 3A 250V ou 5A 125V (l'un ou l'autre convient, tant que ≥3A)
-  我要買滑動開關，10mm，單刀單擲(SPST)，至少3A
-
-
 . caoutchou
-. vis
-. mouse/gel
+. vis, écrou, rondel (plastique ou métal)
+. mouse anti bruit, mouse/gel
 
 
-
-
-
-POST
-. creation de post :
-. assemblage
-. pour PWM : Amortir les vibrations du mât avec tampon en mousse/caoutchouc entre chassis et mat, ajout d'une jupe anti lumiere autour du capteur (? a voir si besoin)
-. bom update 
-
+POST 
+. assemblage des composants
 la structure : composant absorbant de vibration : tampon en mouse/caoutchouc
-
+. pour PWM : Amortir les vibrations du mât avec tampon en mousse/caoutchouc entre chassis et mat, ajout d'une jupe anti lumiere autour du capteur (? a voir si besoin)
 
 
 🚧 in process :
-alim de labo = batterie, fuse, interrupteur
+alim de labo <=> batterie, fuse, interrupteur
 
   AVANT CHAQUE XP
 . xps : mesurer les composants au multimetre

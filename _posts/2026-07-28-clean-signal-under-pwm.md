@@ -39,7 +39,7 @@ The noise defenses :
 - the star ground (one common ground point).
 
 
-#### **Experiment**
+#### 2.1 Experiment
 
 **Hardware:** <br>
 . power = on bench power supply : <br>
@@ -80,3 +80,7 @@ Each step changes only one thing at a time, so any change in noise can be attrib
 . run the protocol above <br>
 . graph : signal with vs without each defender <br>
 . photo <br>
+
+# References
+
+- [PWM 'noise' on AnalogRead input — Arduino Forum](https://forum.arduino.cc/t/pwm-noise-on-analogread-input/295606)

@@ -1,0 +1,12 @@
+condition,label,n,mean,std,p2p
+motorOFF,motor OFF (baseline),702,493.1,1.28,14
+motor130,"motor 130, all defenders",665,496.3,1.27,16
+motor130_noRC,"motor 130, no RC filter",662,495.2,0.86,8
+motor130_noCondD,"motor 130, no decoupling",679,503.5,1.30,14
+motor130_noCondR,"motor 130, no reservoir",790,492.8,1.18,17
+motor130_nostar,"motor 130, no star ground",726,491.1,1.34,16
+motor206,"motor 206, all defenders",686,492.7,1.09,13
+motor206_noRC,"motor 206, no RC filter",622,493.4,0.81,6
+motor206_noCondD,"motor 206, no decoupling",746,488.5,1.10,12
+motor206_noCondR,"motor 206, no reservoir",614,498.1,1.27,16
+motor206_nostar,"motor 206, no star ground",588,494.3,1.15,12

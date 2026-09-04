@@ -30,11 +30,27 @@ $content-width:    800px;     // max width of the content column
 //  2) CUSTOM CSS  — add your own rules here (after the import)
 // ============================================================
 
+// Simple tables: no cell borders, tighter row height.
+.post-content table {
+  border: none;
+  th, td {
+    border: none;
+    padding: 4px 12px;
+  }
+  tr {
+    border: none;
+  }
+}
+
 // Headings inside post content: same size as the body text, with a small
 // colored square marker. Scoped to .post-content so the page/post title
 // itself (rendered from the front-matter `title:`, outside this wrapper)
 // keeps its own larger size.
 .post-content {
+  p, li {
+    text-align: justify;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-size: $base-font-size;
     font-weight: 700;
@@ -52,9 +68,9 @@ $content-width:    800px;     // max width of the content column
     margin-top: 2em;
   }
   h1 { color: #1f1547; }
-  h2 { color: #0a9d62; }
+  h2 { color: $brand-color; }
   h3 { color: #00b0ff; }
-  h4, h5, h6 { color: $brand-color; }
+  h4, h5, h6 { color: #0a9d62; }
 
   // Same visual look as h3 (color, bold, square marker) but on a plain
   // paragraph: not a real heading, so it stays out of the TOC.
@@ -119,14 +135,16 @@ mark, .hl {
   border-radius: 3px;
 }
 
-// Code: dark VIOLET "script" look
-pre, code {
+// Code blocks: dark VIOLET "script" look. Inline code stays plain (same
+// color as body text, monospace font only, no background pill).
+pre {
   border-radius: 6px;
   background-color: $umbra-code-bg;
   border: 0;
+  color: $umbra-green;
+  padding: 12px 16px;
 }
-code { color: $umbra-magenta; padding: 1px 6px; }   // inline code
-pre  { color: $umbra-green; padding: 12px 16px; }    // code block
+code { padding: 1px 4px; background: transparent; border: 0; }   // inline code: no color/background/border override
 pre code { color: inherit; background: transparent; padding: 0; }
 
 // Syntax-highlighted code blocks (Rouge): force the violet background
@@ -226,6 +244,19 @@ abbr[data-bubble]:focus::after {
   a:hover { text-decoration: underline; }
 }
 
+// BOM component columns: text on top, image below. The columns stretch to the
+// same height and the image is pinned at the bottom, so images of adjacent
+// columns line up. Paragraph margins are removed so the gap under the text is
+// set only by the image's own margin-top.
+.bom-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  p { margin-bottom: 0; }
+}
+
 // Two-column layout (e.g. side-by-side definitions in a post)
 .two-col {
   display: flex;
@@ -260,26 +291,25 @@ abbr[data-bubble]:focus::after {
 }
 .compo-strip {
   display: flex;
+  align-items: flex-start;   // chaque slide garde sa propre hauteur, pas celle du plus grand
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  border: 1px solid $brand-color;
   border-radius: 8px;
 }
 .compo-strip::-webkit-scrollbar { display: none; }
 .compo-slide {
   flex: 0 0 100%;
   scroll-snap-align: center;
-  min-height: 290px;           // hauteur : px
   display: flex;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-start;
+  gap: 15px;
   background: $background-color;
-  padding: 20px 28px;
+  padding: 15px 15px;
   box-sizing: border-box;
 }
 .compo-img { flex: 1; display: flex; justify-content: center; }
-.compo-img.stacked { flex-direction: column; gap: 14px; }
+.compo-img.stacked { flex-direction: column; gap: 10px; }
 .compo-img img { max-width: 100%; max-height: 280px; object-fit: contain; }
 .compo-img figure { margin: 0; text-align: center; }
 .compo-img figcaption { font-size: 0.8rem; }

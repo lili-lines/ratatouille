@@ -14,7 +14,9 @@ couleur fil: <br>
 . noir- /violet+ ou rouge <br>
 . autre couleur pour les commandes (vert & jaune) <br>
 
-#### **Signal**
+## 1. Ce qui circule
+
+#### 1.1 Signal: information, order
 Signal = the physical carrier of the information on a wire: a voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, not energy, so its current is tiny.
 
 **Information**, what we want to know or command, e.g. the whisker is bent, go at 80%.
@@ -34,13 +36,13 @@ Three ways to encode it:
 **Order**
 🚧 todo :
 
-#### **Power**
+####  1.2 Power
 Power = energy: what actually does the work, spin a motor. It needs a real voltage and a big current.
 
 🐭 In the mouse: the Teensy sends information as a 3.3$V$ signal, an order. The battery sends power 7.4$V$ that moves the motors. Same wires, two different jobs.
 
 
-#### **Voltages**
+## 2. Voltages
 
 - 3.3 V = the signal, logic, the order. It carries almost no energy, tiny current.
 - 7.4 V = the power, the energy.
@@ -48,3 +50,7 @@ Power = energy: what actually does the work, spin a motor. It needs a real volta
 The driver bridges the two. The TB6612FNG has two separate inputs on purpose:
 - **VCC** = logic side, powered at 3.3 V (it listens to the Teensy's order).
 - **VM** = motor side, powered at 7.4 V (the battery's power).
+
+# References
+
+- [TB6612FNG Hookup Guide — SparkFun Learn](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all)

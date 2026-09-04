@@ -1,0 +1,158 @@
+<svg viewBox="0 0 1000 940" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1000" height="940" fill="#fffaf5"/>
+
+  <!-- ============ FRONT / REAR ============ -->
+  <text x="500" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#1b1530">FRONT ▲</text>
+  <text x="500" y="712" text-anchor="middle" font-size="18" font-weight="700" fill="#1b1530">▼ REAR</text>
+
+  <!-- ============ CHASSIS OUTLINE ============ -->
+  <rect x="280" y="140" width="440" height="460" rx="50" fill="none" stroke="#a21caf" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="500" y="165" text-anchor="middle" font-size="11" fill="#a21caf" font-style="italic">chassis footprint (not to scale)</text>
+
+  <!-- ============ WHISKERS ============ -->
+  <circle cx="190" cy="75" r="6" fill="#00b0ff"/>
+  <circle cx="810" cy="75" r="6" fill="#00b0ff"/>
+  <line x1="190" y1="75" x2="330" y2="165" stroke="#00b0ff" stroke-width="2"/>
+  <line x1="810" y1="75" x2="670" y2="165" stroke="#00b0ff" stroke-width="2"/>
+  <text x="150" y="60" font-size="11" fill="#1b1530">tip L</text>
+  <text x="815" y="60" font-size="11" fill="#1b1530">tip R</text>
+
+  <rect x="300" y="165" width="140" height="42" rx="6" fill="#fffaf5" stroke="#00b0ff" stroke-width="2"/>
+  <text x="370" y="183" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Whisker pivot L</text>
+  <text x="370" y="198" text-anchor="middle" font-size="11" fill="#1b1530">+ AS5600</text>
+
+  <rect x="560" y="165" width="140" height="42" rx="6" fill="#fffaf5" stroke="#00b0ff" stroke-width="2"/>
+  <text x="630" y="183" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Whisker pivot R</text>
+  <text x="630" y="198" text-anchor="middle" font-size="11" fill="#1b1530">+ AS5600</text>
+
+  <!-- ============ PMW3901 (Plan B) ============ -->
+  <rect x="410" y="225" width="180" height="42" rx="6" fill="#fffaf5" stroke="#0a9d62" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="500" y="243" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">PMW3901 (optional)</text>
+  <text x="500" y="258" text-anchor="middle" font-size="10" fill="#1b1530">optical flow, mast ≥80mm</text>
+
+  <!-- ============ GYRO ============ -->
+  <rect x="430" y="285" width="140" height="42" rx="6" fill="#fffaf5" stroke="#a21caf" stroke-width="2"/>
+  <text x="500" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Gyro / IMU</text>
+  <text x="500" y="318" text-anchor="middle" font-size="10" fill="#1b1530">MPU-6050</text>
+
+  <!-- ============ TEENSY (brain) ============ -->
+  <rect x="415" y="355" width="170" height="58" rx="6" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="500" y="378" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1530">Teensy 4.0</text>
+  <text x="500" y="394" text-anchor="middle" font-size="10" fill="#1b1530">MCU / brain</text>
+
+  <!-- ============ DRIVER ============ -->
+  <rect x="630" y="355" width="140" height="58" rx="6" fill="#fffaf5" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="700" y="378" text-anchor="middle" font-size="13" font-weight="700" fill="#1b1530">Driver</text>
+  <text x="700" y="394" text-anchor="middle" font-size="10" fill="#1b1530">TB6612FNG</text>
+
+  <!-- ============ MOTORS + WHEELS ============ -->
+  <rect x="300" y="440" width="120" height="40" rx="6" fill="#fffaf5" stroke="#0a9d62" stroke-width="2"/>
+  <text x="360" y="464" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Motor L (N20)</text>
+
+  <rect x="580" y="440" width="120" height="40" rx="6" fill="#fffaf5" stroke="#0a9d62" stroke-width="2"/>
+  <text x="640" y="464" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Motor R (N20)</text>
+
+  <circle cx="255" cy="460" r="36" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="255" y="465" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Wheel L</text>
+
+  <circle cx="745" cy="460" r="36" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="745" y="465" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Wheel R</text>
+
+  <!-- ============ BATTERY / SWITCH / FUSE / MP1584 ============ -->
+  <rect x="415" y="500" width="170" height="48" rx="6" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="500" y="521" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">Battery</text>
+  <text x="500" y="536" text-anchor="middle" font-size="10" fill="#1b1530">LiPo 2S, 7.4V</text>
+
+  <rect x="415" y="562" width="78" height="34" rx="6" fill="#fffaf5" stroke="#1f1547" stroke-width="2"/>
+  <text x="454" y="583" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Switch</text>
+
+  <rect x="507" y="562" width="78" height="34" rx="6" fill="#fffaf5" stroke="#1f1547" stroke-width="2"/>
+  <text x="546" y="583" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Fuse</text>
+
+  <rect x="415" y="610" width="170" height="42" rx="6" fill="#fffaf5" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="500" y="629" text-anchor="middle" font-size="12" font-weight="700" fill="#1b1530">MP1584</text>
+  <text x="500" y="644" text-anchor="middle" font-size="10" fill="#1b1530">buck → 5V</text>
+
+  <!-- ============ BALL CASTER ============ -->
+  <circle cx="500" cy="680" r="20" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="500" y="720" text-anchor="middle" font-size="11" font-weight="700" fill="#1b1530">Ball caster</text>
+
+  <!-- ============ POWER CONNECTIONS (solid, voltage labeled) ============ -->
+  <g stroke="#1b1530" stroke-width="3" fill="none">
+    <!-- Battery -> Switch -->
+    <path d="M500,548 L454,562"/>
+    <!-- Switch -> Fuse -->
+    <path d="M493,579 L507,579"/>
+    <!-- Fuse -> MP1584 IN -->
+    <path d="M546,596 L546,604 L500,604 L500,610"/>
+    <!-- Fuse -> Driver VM -->
+    <path d="M585,579 L830,579 L830,384 L770,384"/>
+    <!-- MP1584 OUT -> Teensy VIN -->
+    <path d="M556,610 L556,432 L500,432 L500,413"/>
+    <!-- Teensy 3.3V bus (up to gyro / PMW3901 / whiskers) -->
+    <path d="M500,355 L500,167"/>
+    <!-- 3.3V stub to whisker pivot L -->
+    <path d="M500,186 L440,186"/>
+    <!-- 3.3V stub to whisker pivot R -->
+    <path d="M500,186 L560,186"/>
+    <!-- Teensy 3.3V -> Driver VCC -->
+    <path d="M585,370 L630,370"/>
+    <!-- Driver -> Motor L (chopped 7.4V) -->
+    <path d="M630,395 L360,395 L360,440"/>
+    <!-- Driver -> Motor R (chopped 7.4V) -->
+    <path d="M770,395 L640,395 L640,440"/>
+  </g>
+  <text x="472" y="558" font-size="10" fill="#1b1530">7.4V</text>
+  <text x="700" y="480" font-size="10" fill="#1b1530">7.4V (VM)</text>
+  <text x="562" y="500" font-size="10" fill="#1b1530">5V</text>
+  <text x="505" y="230" font-size="10" fill="#1b1530">3.3V bus</text>
+  <text x="590" y="365" font-size="10" fill="#1b1530">3.3V (VCC)</text>
+  <text x="440" y="420" font-size="10" fill="#1b1530">chopped 7.4V</text>
+
+  <!-- ============ SIGNAL / DATA CONNECTIONS (dashed) ============ -->
+  <g stroke="#a21caf" stroke-width="1.5" fill="none" stroke-dasharray="6,4">
+    <!-- Whisker pivot L (AS5600 OUT) -> Teensy (analog) -->
+    <path d="M370,207 L370,300 L415,380"/>
+    <!-- Whisker pivot R (AS5600 OUT) -> Teensy (analog) -->
+    <path d="M630,207 L630,300 L585,380"/>
+    <!-- Gyro -> Teensy (I2C) -->
+    <path d="M500,327 L500,355"/>
+    <!-- PMW3901 -> Teensy (SPI) -->
+    <path d="M470,267 L440,355"/>
+    <!-- Teensy -> Driver (PWM + direction) -->
+    <path d="M585,384 L630,384"/>
+    <!-- Motor L encoder -> Teensy (quadrature) -->
+    <path d="M360,440 L360,410 L415,395"/>
+    <!-- Motor R encoder -> Teensy (quadrature) -->
+    <path d="M640,440 L640,410 L585,395"/>
+  </g>
+  <text x="330" y="260" font-size="9" fill="#a21caf">analog</text>
+  <text x="640" y="260" font-size="9" fill="#a21caf">analog</text>
+  <text x="505" y="345" font-size="9" fill="#a21caf">I2C</text>
+  <text x="410" y="300" font-size="9" fill="#a21caf">SPI</text>
+  <text x="588" y="380" font-size="9" fill="#a21caf">PWM + dir</text>
+  <text x="335" y="418" font-size="9" fill="#a21caf">quadrature</text>
+
+  <!-- ============ LEGEND ============ -->
+  <rect x="60" y="750" width="880" height="170" rx="10" fill="#f6e9fb" stroke="#a21caf" stroke-width="1.5"/>
+  <text x="90" y="778" font-size="15" font-weight="700" fill="#1b1530">Legend</text>
+
+  <text x="90" y="805" font-size="12" font-weight="700" fill="#1b1530">Box border = BOM section</text>
+  <rect x="90" y="815" width="16" height="16" fill="none" stroke="#1f1547" stroke-width="2.5"/>
+  <text x="112" y="828" font-size="11" fill="#1b1530">1 — Brain &amp; power</text>
+  <rect x="260" y="815" width="16" height="16" fill="none" stroke="#0a9d62" stroke-width="2.5"/>
+  <text x="282" y="828" font-size="11" fill="#1b1530">2 — Movement</text>
+  <rect x="420" y="815" width="16" height="16" fill="none" stroke="#00b0ff" stroke-width="2"/>
+  <text x="442" y="828" font-size="11" fill="#1b1530">3 — Analog whiskers</text>
+  <rect x="600" y="815" width="16" height="16" fill="none" stroke="#a21caf" stroke-width="2.5"/>
+  <text x="622" y="828" font-size="11" fill="#1b1530">4 — Inertial sensing</text>
+
+  <text x="90" y="860" font-size="12" font-weight="700" fill="#1b1530">Connections</text>
+  <line x1="90" y1="875" x2="130" y2="875" stroke="#1b1530" stroke-width="3"/>
+  <text x="138" y="879" font-size="11" fill="#1b1530">Power (voltage labeled on the line)</text>
+  <line x1="90" y1="895" x2="130" y2="895" stroke="#a21caf" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="138" y="899" font-size="11" fill="#1b1530">Signal / data (protocol labeled on the line)</text>
+
+  <text x="500" y="875" font-size="10" fill="#1b1530" font-style="italic">Dashed cyan whisker arms = mechanical link (not electrical)</text>
+  <text x="500" y="895" font-size="10" fill="#1b1530" font-style="italic">Dashed green PMW3901 border = Plan B, only if motors lack an encoder</text>
+</svg>
