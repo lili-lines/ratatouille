@@ -46,10 +46,10 @@ const int MAX_CORRECTION = 40;
 
 // valeur moustache droite visee en suivi normal (a mi-chemin entre "mur colle" et "pas de mur")
 // -- A CALIBRER : pose le robot a la distance de suivi ideale, lis la valeur, mets-la ici
-const int WALL_FOLLOW_TARGET = 300;
+const int WALL_FOLLOW_TARGET = 1200;
 
 // -- A CALIBRER avec ton mini-tronco de test --
-const int WALL_PRESENT_THRESHOLD = 500;   // au-dessus = mur present (moustache pliee)
+const int WALL_PRESENT_THRESHOLD = 2000;  // au-dessus = mur present (moustache pliee)
 const int OPENING_CONFIRM_COUNT = 8;      // nb de lectures consecutives sans mur pour confirmer (x20ms)
 const unsigned long STALL_TIMEOUT_MS = 400;
 
@@ -60,7 +60,7 @@ const long TICKS_APPROACH = (long)(90.0 / MM_PER_TICK);
 int openingCounter = 0;
 int prevRight = 0;
 bool sawFastDrop = false;
-const int DROP_THRESHOLD = 100;  // delta minimal en 1 cycle pour compter comme "chute rapide" -- A CALIBRER
+const int DROP_THRESHOLD = 400;  // delta minimal en 1 cycle pour compter comme "chute rapide" -- A CALIBRER
 
 enum State { IDLE, DRIVING };
 State state = IDLE;
@@ -150,6 +150,7 @@ void turn90(int dir) {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   Wire.beginTransmission(MPU_ADDR);

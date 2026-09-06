@@ -8,30 +8,38 @@ tags: [electronics, hardware]
 * TOC
 {:toc}
 
-🚧 todo : <br>
-. stripboard vs perfboard, lequel pour quelle partie <br>
-. comment faire les chemins (stripboard: couper les bandes / perfboard: fil point-à-point) <br>
-. masse en étoile, comment l'organiser sur la carte <br>
-. fil de câblage : calibre, isolation <br>
-. photos avant/après soudure
 
-. Comment connecter tout ensemble :
-  * **Stripboard** — tu coupes au lieu de dessiner
-    Avant (bande continue) :
-  ●───●───●───●───●───●───●   ← tous ces trous sont déjà reliés entre eux
+In this post I want to explain the different ways to connect everything together, the boards, and how to make the paths.
 
-  Après avoir coupé entre 2 trous (avec une petite mèche ou un cutter) :
-  ●───●───●  ✂  ●───●───●───●   ← maintenant 2 groupes séparés
-  SI = Tu veux relier 2 bandes différentes (perpendiculaires) → il n'y a pas de connexion automatique entre bandes → tu ajoutes un fil de pontage (jumper) soudé entre les deux points.
-  * **Perfboard** — tout est isolé, tu câbles fil par fil
-    ●   ●   ●   ●   ●   ●   ●   ← chaque trou = isolé
-    pour connecter on soude un fil entre les 2 pattes à relier ou  si les deux trous sont à coté on peut faire une goutte de soudure, attention risque de court-circuit si il y en a trop
-    Pour la GND = un fil-tronc que tu ajoutes toi-même en selectionnant une rangé de trous
-  * **breadboard**
-  * **photosensible**
-  * **PCB**
-⚠️ faire courrir toute une ligne long ou larg pour la masse GND
-  LES CHEMINS : Fil de câblage isolé (ok pour gros courant), Fil wire-wrap (pas de gros courrant sinon fond, ok pour les chemins de l'information/signal, attention fragile donc à fixer/coller pour qu'il ne bouge pas)
+## 1. Stripboard
+
+You cut instead of drawing. Before, the holes of a strip are already connected to each other:
+●───●───●───●───●───●───●
+
+After cutting between 2 holes, with a small drill bit or a cutter, it makes 2 separate groups: <br>
+●───●───●  ✂  ●───●───●───●
+
+To connect 2 different strips (perpendicular), there is no automatic connection between strips: you add a jumper wire soldered between the two points.
+
+## 2. Perfboard
+
+Everything is isolated, you wire it one wire at a time, each hole is independent: <br>
+●   ●   ●   ●   ●   ●   ●
+
+To connect, you solder a wire between the 2 pins. If the two holes are next to each other, you can make a drop of solder — watch out for the short circuit if there is too much of it.
+
+For the GND, a trunk wire that you add yourself, along a chosen row of holes.
+
+⚠️ run a whole line, lengthwise or widthwise, for the GND. Where that line goes matters, see [Signal vs power]({% post_url 2026-07-07-signal-vs-power %}).
+
+## 3. Breadboard, photosensitive, PCB
+
+🚧 todo
+
+## 4. The paths
+
+. **Insulated hookup wire**: ok for high current <br>
+. **Wire-wrap wire**: no high current or it melts, ok for the information/signal paths, fragile so it must be taped or glued so it does not move
 
 # References
 

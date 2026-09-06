@@ -111,3 +111,91 @@ parlent la même langue.
 Signal = the physical carrier of the information on a wire: a 
 voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, 
 not energy, so its current is tiny.
+
+
+
+
+PARTI 2 MOUSTACHE AS5600
+
+XP:
+. aimant + structure stable (proto moustache)
+. teensy
+. as5600
+. power = USB
+
+⚠️ faire une structure ajustable : determiner l'espace optimale entre l'aimant et la puce
+
+result:
+. shema du proto
+. lecture de la valeur pour chaque angle de la moustache
+. estimation des seuils (~)
+
+🚧 TODO: <br>
+. mesure avec la piece 3D <br> 
+. log the angle → value curve while bending the rod by known amounts, real grah data value (py)
+
+#### 2.1 What do we do with the number ?
+Once the angle is a number, we watch for the release: the moment a whisker, bent against a wall, springs back. Two cases:
+
+1. the robot drifts slightly from the wall → the whisker releases slowly
+2. the wall ends: intersection → the whisker releases suddenly
+
+#### 2.2 Derivative + threshold
+We tell the two apart with the derivative, how fast the signal changes: <br>
+. slow release → small derivative <br>
+. sudden release → large derivative, a spike <br>
+
+So we put a threshold on the derivative: <br>
+. above it → "The wall just ended, there is an opening here" <br>
+. below → "I'm just drifting, keep following the wall"
+
+Detecting one specific event by a criterion like this is called discrimination.
+
+
+PROTOCOLE XP :
+1. Baseline, moteur OFF, AVEC les 4 défenses → référence propre
+2. AVEC les 4 défenses, moteur ON → compare à la référence
+3. Retire le RC filter SEUL, moteur ON → compare, remets-le
+4. Retire le découplage SEUL, moteur ON → compare, remets-le
+5. Retire le réservoir SEUL, moteur ON → compare, remets-le
+6. Casse la masse en étoile, moteur ON → compare, restaure-la
+
+
+branchement UBS
+ouvrir arduino
+
+Tools → Board → Teensy 4.0        (vérifie que c'est coché)
+Tools → Port → select le port du Teensy ("Teensy", COMx Serial Port)
+
+Upload code 
+
+Tools → Serial Monitor    (affiche les chiffres en texte)
+Tools → Serial Plotter    (affiche un graphique en temps réel — plus visuel)
+
+pour l'enregistrement des valeurs il faut fermer arduino et lancer le script python :
+> python xp_log_whisker.py
+
+
+XP :
+. cablage
+. branchement USB : code tourne
+upload code
+> serial monitor = lecture valeur moustache en continu
+test tourner la moustache = valeur change
+au multimetre :
+  STBY	~3,3V (HIGH)
+  AIN1	~3,3V (HIGH)
+  AIN2	~0V (LOW)
+  PWMA	une tension intermédiaire, le multimètre moyenne le PWM, ~1,5-2V pour un duty de 51%
+
+. seulement apres = alim de labo = OUTPUT bouton
+
+motor xp n°1 vitesse = 130, 130 / 255 ≈ 51% duty cycle, 7,4V × 0,51 ≈ 3,8V (bat 7.4V)
+motor xp n°2 vitesse = 206
+0,81 × 255 ≈ 206
+
+vitesse moteur :
+0   = moteur à l'arrêt (0% duty cycle)
+128 = environ demi-vitesse (~50%)
+255 = vitesse maximale (100% duty cycle)
+

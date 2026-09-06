@@ -28,7 +28,7 @@ const int LED_STATE = 21;
 
 const int SPEED = 130;       // 0-255, avance tout droit
 const int TURN_SPEED = 100;  // 0-255, vitesse du pivot
-const int RELEASE_THRESHOLD = 150;
+const int RELEASE_THRESHOLD = 600;
 const float TARGET_ANGLE = 90.0;
 
 enum State { IDLE, FORWARD, TURNING, DONE };
@@ -71,6 +71,7 @@ void updateHeading() {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   Wire.beginTransmission(MPU_ADDR);

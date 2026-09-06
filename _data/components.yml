@@ -17,11 +17,10 @@
     - "left whisker (A0 ← AS5600 OUT) ℹ️"
     - "right whisker (A1 ← AS5600 OUT) ℹ️"
     - "gyro (18/SDA & 19/SCL ← MPU-6050) ℹ️"
-    - "switch (GND & 23 ← slide switch) 🎮"
   out:
     - "motor commands (pins → TB6612FNG) 🎮"
     - "motor A : pin 2 → PWMA / pin 3 → AIN1 / pin 4 → AIN2"
-    - "motor B : pin 5 → PWMB / pin 6 → BIN1 / pin 7 → BIN2"
+    - "motor B : pin 5 → PWMB / pin 6 → BIN1 / pin 20 → BIN2"
   warn:
     - "3.3 V logic, NOT 5 V tolerant."
     - "Analog-to-Digital Converter (ADC) converts the AS5600 tension into a number = [0:3.3 V] → [0:4095], 12 bits"
@@ -55,12 +54,29 @@
       - "angle° = (valeur_brute / 4095) x 360°"
 
 - id: gyro
-  title: "gyro"
+  title: "Gyro / IMU 🧭"
   images:
     - src: gyro_MPU6050-Pinout.png
       width: "90%"
       caption: 'Details input/output pins. Source: <a href="https://components101.com/sensors/mpu6050-module" target="_blank" rel="noopener">components101.com</a>'
-  text: "🚧 : MPU-6050. Measures rotation and tilt to track heading."
+    - src: gyro_soudure.png
+      width: "100%"
+      caption: "Before / after soldering the header pins"
+  role: "MPU-6050 / GY-521, 6-axis (gyro + accelerometer). Gives the heading, which way the mouse is facing."
+  software: "Wire library (I2C), wake the chip with register 0x6B, read the Z axis on register 0x47."
+  in:
+    - "VCC & GND ← Teensy 3.3 V ⚡"
+    - "the robot's rotation ℹ️"
+  out:
+    - "I2C → Teensy 18/SDA & 19/SCL, address 0x68, ang speed Z ℹ️"
+    - "raw / 131.0 = °/s, on the default ±250 °/s range"
+  warn:
+    - "I2C only on this module, no SPI"
+    - "OUT = SPEED, not an angle: you integrate it yourself, so the error accumulates"
+    - "it drifts: even at rest ~-2 °/s, calibrate that bias at startup"
+  zoom:
+    - "heading += (raw/131.0 - bias) x dt, integrated in the loop"
+    - "bias calibration = average N samples at rest, precision ≈ 1/√N, N=200 ≈ 1 s of waiting"
 
 - id: driver
   title: "Driver 🕹️"
@@ -78,7 +94,7 @@
     - " - motor B (PWMB ← Teensy pin 5) 🎮"
     - "direction"
     - " - motor A (AIN1 / AIN2 ← Teensy pins 3 / 4) 🎮"
-    - " - motor B (BIN1 / BIN2 ← Teensy pins 6 / 7) 🎮"
+    - " - motor B (BIN1 / BIN2 ← Teensy pins 6 / 20) 🎮"
     - "wake-up (STBY ← Teensy pin 8, HIGH) 🎮"
     - "logic power (VCC ← Teensy 3.3 V) ⚡"
     - "motor power (VM ← battery 7.4 V) ⚡"
@@ -111,28 +127,46 @@
     - "unlike a linear regulator that wastes the extra as heat"
 
 - id: PMW3901
-  title: "PMW390"
+  title: "PMW3901"
   images:
     - src: PMW3901_schema.png
-  role: "🚧 : PMW3901 optical flow sensor"
+      width: "90%"
+  role: "Optical flow sensor, plan B for the odometry if the motors had come without encoders. NOT USED in the end: the N20 motors arrived with their hall encoders."
+  in:
+    - "VCC & GND ← Teensy 3.3 V ⚡"
+    - "ground image (through the lens) ℹ️"
+  out:
+    - "SPI 3.3 V → Teensy, dx & dy displacement ℹ️"
+  warn:
+    - "needs ≥80 mm above the floor to focus, and ≥100 lux"
   zoom:
-    - "PMW3901 est un photodétecteur en silicium avec une sensibilité qui augmente du bleu au rouge"
-    - "voir la courbe de réponse spectrale exacte du PMW3901"
-    - "diamètre de la zone vue = 2 × hauteur × tan(angle/2)
-                        = 2 × 80mm × tan(20°)
-                        ≈ 58 mm de diamètre"
+    - "seen area = 2 x height x tan(angle/2) = 2 x 80mm x tan(20°) ≈ 58 mm diameter"
 
 - id: motor
-  title: "motor"
+  title: "N20 + hall encoder ⚙️"
   images:
-    - src: motorN20.jpg
-  text: "🚧 : N20 gear motor. Drives one wheel."
-
-- id: switch
-  title: "interupteur"
-  images:
-    - src: slide_switch.jpg
-  text: "🚧 : Slide switch. Cuts the battery power on/off."
+    - src: N20-Gear-motor_encoder_pinout_3.jpg
+      width: "100%"
+      caption: "The 6 pins of the motor + encoder connector"
+    - src: motorN20_encoder.jpg
+      width: "90%"
+      caption: "N20 motor with its encoder"
+  role: "N20 gear motor. Turns one wheel, and its hall encoder counts how much it turned."
+  in:
+    - "motor power M1- & M2+ ← driver AO1/AO2 or BO1/BO2 7.4 V ⚡"
+    - "encoder power VCC & GND ← Teensy 3.3 V ⚡"
+  out:
+    - "torque → wheel ⚡"
+    - "C1 = hall A, C2 = hall B, quadrature square wave → Teensy ℹ️"
+    - "right motor: C1 → pin 9, C2 → pin 10"
+    - "left motor: C1 → pin 11, C2 → pin 12"
+  warn:
+    - "M1/M2 NEVER go to the Teensy, they carry the 7.4 V from the driver"
+    - "power the encoder from 3.3 V: its outputs follow VCC and the Teensy is not 5 V tolerant"
+  zoom:
+    - "base resolution 7 ppr, but after the gearbox we measured ≈1151 counts per wheel turn"
+    - "Ø32 mm wheel ⇔ ~100 mm per turn, so 100/1151 ≈ 0.087 mm per count"
+    - "read both channels: one alone only counts, two give the direction"
 
 - id: battery
   title: "battery"

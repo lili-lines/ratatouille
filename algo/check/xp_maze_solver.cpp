@@ -50,7 +50,7 @@ const float MM_PER_TICK = 100.0 / 1151.0;
 const long TICKS_CELL = (long)(180.0 / MM_PER_TICK);  // pas de cellule TMIRC (centre a centre)
 
 // seuil moustache pliee = mur present -- A CALIBRER (compare une lecture mur-colle vs libre)
-const int WALL_THRESHOLD = 500;
+const int WALL_THRESHOLD = 2000;
 
 // si aucun tick pendant ce temps alors que le moteur avance = mur devant (stall)
 const unsigned long STALL_TIMEOUT_MS = 400;
@@ -338,6 +338,7 @@ void exploreStep() {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   Wire.beginTransmission(MPU_ADDR);

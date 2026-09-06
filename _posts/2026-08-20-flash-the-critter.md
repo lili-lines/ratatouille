@@ -10,6 +10,8 @@ tags: [electronics, firmware]
 
 Après avoir validé l'assemblage, il faut checker si tout est correctement connecté et que le courant circule.
 
+Objectif → Matériel → Protocole → Critère de réussite → Résultat
+
 
 ## 1. Test en USB, réponse gyro, compteur, moustache
 
@@ -21,7 +23,7 @@ Les moteurs sont à l'arrêt, `STBY LOW`. On tourne les roues à la main pour le
 
 #### 1.1 Critères de réussite
 
-Le gyro doit se calibrer et indiquer le bon angle d'orientation du robot, à vérifier en prenant un repère au sol. Les 2 encodeurs des roues doivent compter le nombre de tours, d'un côté (+) et de l'autre (-). Les 3 modules AS5600 doivent lire l'angle de l'aimant. <br>
+Le gyro doit se calibrer et indiquer le bon angle d'orientation du robot, à vérifier en prenant un repère au sol. Les 2 encodeurs des roues doivent compter le nombre de tours, d'un côté (+) et de l'autre (-). Les 3 modules AS5600 doivent lire l'angle de l'aimant, chacun sur sa propre pin analogique et sans s'influencer entre eux. <br>
 Vérifier les valeurs avec le Serial Monitor sur Arduino : les valeurs sont lues en continu. Les signaux doivent être justes et propres.
 
 #### 1.2 Validation

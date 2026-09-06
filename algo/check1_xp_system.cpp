@@ -56,6 +56,7 @@ void encoderL_ISR() {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   // gyro

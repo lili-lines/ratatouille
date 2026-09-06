@@ -5,26 +5,9 @@ date: 2026-08-23 10:00:00 +0200
 tags: [competition]
 ---
 
-* TOC
-{:toc}
 
-kunfu panda gif de la face contre le mur
+<img src="{{ '/assets/img/pandas.gif' | relative_url }}" alt="pandas" height="200" style="max-width:100%">
 
-forcement je n'ai pas eu de labyrinthe pour tester alors 
-
-🚧 todo : <br>
-. contexte de la compétition (lieu, date, règlement) <br>
-. état du robot avant le jour J <br>
-. déroulement / résultats <br>
-. ce qui a marché, ce qui a raté <br>
-. photos / vidéo
-
-moustache trop bancale
-algo pas assez tester
-
-amélioration :
-. module moustache et structure de la moustache en moins de pieces
-. algo
 
 # References
 

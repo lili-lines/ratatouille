@@ -4,14 +4,15 @@
 const int WHISKER_R = A0;
 
 // -- memes valeurs que xp_wall_follower.cpp, a garder synchronisees --
-const int WALL_PRESENT_THRESHOLD = 500;
-const int WALL_FOLLOW_TARGET = 300;
-const int DROP_THRESHOLD = 100;
+const int WALL_PRESENT_THRESHOLD = 2000;
+const int WALL_FOLLOW_TARGET = 1200;
+const int DROP_THRESHOLD = 400;
 
 int prevRight = 0;
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustache lue sur 0..4095
   prevRight = analogRead(WHISKER_R);
   Serial.println("valeur\tdelta\tinterpretation");
   Serial.println("Bouge la moustache a la main : vers la souris, puis relache-la.");

@@ -41,7 +41,7 @@ const float KP_GYRO = 3.0;
 const int MAX_CORRECTION = 40;
 
 // -- A CALIBRER avec ton mini-troncon de test --
-const int WALL_PRESENT_THRESHOLD = 500;
+const int WALL_PRESENT_THRESHOLD = 2000;
 const int OPENING_CONFIRM_COUNT = 8;  // nb de lectures consecutives sans mur (x20ms)
 
 // distance entre la moustache et le centre de rotation du robot -- A AJUSTER
@@ -52,7 +52,7 @@ const long TICKS_APPROACH = (long)(90.0 / MM_PER_TICK);  // ~9cm, a ajuster enco
 int openingCounter = 0;
 int prevRight = 0;
 bool sawFastDrop = false;
-const int DROP_THRESHOLD = 100;  // delta minimal en 1 cycle pour compter comme "chute rapide" -- A CALIBRER
+const int DROP_THRESHOLD = 400;  // delta minimal en 1 cycle pour compter comme "chute rapide" -- A CALIBRER
 
 enum State { IDLE, DRIVING, APPROACH, TURNING, DONE };
 State state = IDLE;
@@ -100,6 +100,7 @@ void updateHeading() {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   Wire.beginTransmission(MPU_ADDR);

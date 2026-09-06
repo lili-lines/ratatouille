@@ -27,8 +27,8 @@ const int WHISKER_F = A1;  // avant
 const int WHISKER_L = A2;  // gauche
 
 // -- seuils, a garder synchronises avec xp_wall_follower.cpp / check4_xp_whisker.cpp --
-const int DROP_THRESHOLD = 100;   // relachement VIF (gauche/droite) : chute >= ce delta
-const int MOVE_THRESHOLD = 30;    // n'importe quel mouvement (avant) : |delta| >= ce seuil
+const int DROP_THRESHOLD = 400;   // relachement VIF (gauche/droite) : chute >= ce delta
+const int MOVE_THRESHOLD = 120;   // n'importe quel mouvement (avant) : |delta| >= ce seuil
 
 const int TURN_SPEED = 100;  // 0-255
 
@@ -89,6 +89,7 @@ void startTurn(float angle, int sign, const char* why) {
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustaches lues sur 0..4095
   Wire.begin();
 
   Wire.beginTransmission(MPU_ADDR);

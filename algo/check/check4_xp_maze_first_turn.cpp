@@ -8,13 +8,14 @@ const int BTN_GO = 17;
 const int BTN_RESET = 22;
 
 int prevValue = 0;
-const int RELEASE_THRESHOLD = 150;  // a ajuster selon tes valeurs reelles observees
+const int RELEASE_THRESHOLD = 600;  // a ajuster selon tes valeurs reelles observees
 
 bool running = false;
 bool done = false;
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustache lue sur 0..4095
   pinMode(BTN_GO, INPUT_PULLUP);
   pinMode(BTN_RESET, INPUT_PULLUP);
   prevValue = analogRead(WHISKER1);

@@ -8,6 +8,7 @@ const int ENC_B = 10;
 
 void setup() {
   Serial.begin(115200);
+  analogReadResolution(12);   // moustache lue sur 0..4095
 
   pinMode(PWMA, OUTPUT);
   pinMode(AIN1, OUTPUT);
