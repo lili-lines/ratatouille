@@ -21,7 +21,6 @@ Au départ le châssis était prévu en impression 3D (voir la section Chassis d
 
 Pour **le corps**, des supports en forme de rectangle pour valider le positionnement des composants. C'est ici qu'on va déterminer la taille de la souris : longueur, largeur, hauteur. Le mur mesurant 50mm, les moustaches doivent être positionnées en dessous pour détecter le mur.
 
-
 Pour **les moustaches**, une structure en sandwich qui va maintenir le pivot des moustaches stable et droit d'un côté et de l'autre. La matière de la moustache doit être solide pour plus de précision. Enfin un mécanisme doit être prévu pour ramener la moustache à un état neutre défini.
 
 ## 1. Les contraintes
@@ -91,6 +90,8 @@ Pour la v1 on part sur **la tige alu Ø0.5mm**. C'est le meilleur compromis parm
 
 
 ## 3. Validation
+
+AUSSI = check each component with a multimeter
 
 Cette partie est itérative prototype, critère de validation, mesure, si le critère n'est pas respecté, alors on modifie le prototype est on remesure.
 

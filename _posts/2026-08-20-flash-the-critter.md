@@ -68,6 +68,13 @@ Les scripts à upload sur le teensy : <br>
 [> check3_xp_turn.cpp]({{ '/algo/check3_xp_turn.cpp' | relative_url }}) - parametrage `TARGET_ANGLE = 360 & 90 & 45` <br>
 [> check4_xp_whisker_turn.cpp]({{ '/algo/check4_xp_whisker_turn.cpp' | relative_url }})
 
+**Protocole**
+. Distance en ligne droite
+Pousse le robot à la main, en ligne droite, sur une distance connue (ex. 50cm, mesurée à la règle). Compare à la distance calculée par le code (ticks × mm-par-tick, via la circonférence ⌀32mm).
+
+. Parcours combiné
+Pousse le robot en L (ex. 30cm tout droit, puis pivote 90°, puis 30cm) — compare la position finale calculée (x, y, cap) à la position réelle mesurée.
+
 #### 3.1 Critères
 Le robot doit avancer en ligne droite, faire un virage à 360°, 90°, 45°. Les moustaches doivent réagir au contact.
 

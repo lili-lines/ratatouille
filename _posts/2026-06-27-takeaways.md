@@ -84,17 +84,19 @@ $R$ : resistance in ohms Ω <br>
 🚧 todo : couple explication
 
 
-## 4. Star vs. Delta Connections
+## 4. Star vs delta Connections
 
-Star/Delta is just a way to wire a motor that has 3 phases (3 coils), so it only concerns brushless motors. The 3-phase idea is used in high-voltage industry (380 $V$) but also in low voltage (a brushless on a small battery), it depends on the coils, not the voltage.
+Star & delta is a way to wire a motor that has 3 phases (3 coils), so it only concerns brushless motors. The 3-phase idea is used in high-voltage industry (380 $V$) but also in low voltage, a brushless on a small battery, it depends on the coils, not the voltage.
 
-| Motor | Wires | Star/Delta? |
+| Motor | Wires | Concerned? |
 |---|---|---|
 | **DC brushed** (with brushes), *my N20* 🐭 | 2 (+/–) | ❌ no |
 | **Stepper** | 4–6 | ❌ no |
 | **Brushless / BLDC** (no brushes) | 3 phases | ✅ yes |
 
 *BLDC = Brushless Direct Current*
+
+The manufacturer choose : star = the 3 coils joined at one common point, delta = the 3 coils in a closed loop. Star draws less current and gives a smoother torque at low speed, delta gives more speed.
 
 🐭 We use simple 2-wire brushed N20 motors, so Star/Delta does not apply here. It is just background, useful only if we later switch to brushless.
 
