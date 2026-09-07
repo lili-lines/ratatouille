@@ -77,7 +77,7 @@ Caractéristiques des supports : <br>
 . couleur = transparent <br>
 . épaisseur = 2mm <br>
 . taille = on va essayer plusieurs longueurs <br>
-. fichier SVG = [body_v1.svg](https://github.com/lili-lines/ratatouille/blob/main/mecha/body_v1.svg) <br>
+. fichier SVG = [body_v1.svg]({{ site.repo }}/mecha/body_v1.svg) <br>
 N'ayant pas de découpeuse laser, j'ai passé commande dans un magasin.
 
 [photo du résultat après découpe]

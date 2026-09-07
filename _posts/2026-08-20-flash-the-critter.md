@@ -18,7 +18,7 @@ Objectif → Matériel → Protocole → Critère de réussite → Résultat
 [photo du dispositif avec monitor]
 
 L'idée ici est de vérifier si les capteurs fonctionnent et sont lus correctement. On upload donc le script suivant sur le Teensy : <br>
-[check1_xp_system.cpp]({{ '/algo/check1_xp_system.cpp' | relative_url }}) <br>
+[check1_xp_system.cpp]({{ site.repo }}/algo/check1_xp_system.cpp) <br>
 Les moteurs sont à l'arrêt, `STBY LOW`. On tourne les roues à la main pour le test.
 
 #### 1.1 Critères de réussite
@@ -64,9 +64,9 @@ Ajouter des boutons : <br>
 Le driver en mode `STBY LOW` sleep reste au démarrage. Les boutons : RESET remet tout à zéro, GO réveille le driver `STBY HIGH`, RETRY redémarre l'étape en cours en cas de problème sur le terrain. LED d'état fixe et clignotante selon GO et reset.
 
 Les scripts à upload sur le teensy : <br>
-[> check2_xp_straight.cpp]({{ '/algo/check2_xp_straight.cpp' | relative_url }}) <br>
-[> check3_xp_turn.cpp]({{ '/algo/check3_xp_turn.cpp' | relative_url }}) - parametrage `TARGET_ANGLE = 360 & 90 & 45` <br>
-[> check4_xp_whisker_turn.cpp]({{ '/algo/check4_xp_whisker_turn.cpp' | relative_url }})
+[> check2_xp_straight.cpp]({{ site.repo }}/algo/check2_xp_straight.cpp) <br>
+[> check3_xp_turn.cpp]({{ site.repo }}/algo/check3_xp_turn.cpp) - parametrage `TARGET_ANGLE = 360 & 90 & 45` <br>
+[> check4_xp_whisker_turn.cpp]({{ site.repo }}/algo/check4_xp_whisker_turn.cpp)
 
 **Protocole**
 . Distance en ligne droite
@@ -88,8 +88,8 @@ Le robot doit avancer en ligne droite, faire un virage à 360°, 90°, 45°. Les
 
 ## 4. Test sur batterie
 
-[> check2_xp_straight.cpp]({{ '/algo/check2_xp_straight.cpp' | relative_url }}) - parametrage `TICKS_TARGET = 1000` <br>
-[> check6_xp_circle.cpp]({{ '/algo/check6_xp_circle.cpp' | relative_url }})
+[> check2_xp_straight.cpp]({{ site.repo }}/algo/check2_xp_straight.cpp) - parametrage `TICKS_TARGET = 1000` <br>
+[> check6_xp_circle.cpp]({{ site.repo }}/algo/check6_xp_circle.cpp)
 
 #### 4.1 Critères
 Faire une ligne droite 1m : lente, croisière, fast <br>

@@ -80,8 +80,14 @@ $R$ : resistance in ohms Ω <br>
 **Decoupling** When motors start or spin, they create heavy electrical noise and sudden voltage drops on the power line. This can glitch or reset the microcontroller. <br>
 **The Fix:** We place small decoupling capacitors physically as close as possible to the microcontroller's power pins. They act like tiny local energy reservoirs to stabilize the voltage ($V$).
 
-**Motor**
-🚧 todo : couple explication
+**Motor** <br>
+**Torque** is the twisting force at the motor shaft, what actually pushes the robot forward. **Speed** is how fast that shaft turns. The two trade against each other: a motor gives its maximum torque when it is blocked and turns at zero speed (stall), and its maximum speed when it spins free with nothing to push. Asking for more torque always costs speed.
+
+$$\text{Mechanical power} = \text{Torque} \times \text{Rotation speed}$$
+
+Same shape as $P = V \times I$ above: a motor takes electrical power in and gives mechanical power out. So for a given power you choose where to spend it, in force or in speed. A **gearbox** does exactly that trade: it divides the speed and multiplies the torque. Our N20 has one, which turns a small fast motor into a slower but stronger wheel drive.
+
+🐭 At low PWM the motor has little torque to spare, so any change of friction changes its speed. The mouse needs torque margin to start moving and to accelerate out of a turn.
 
 
 ## 4. Star vs delta Connections

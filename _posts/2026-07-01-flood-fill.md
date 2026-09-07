@@ -15,7 +15,7 @@ I did not write this algorithm from scratch. I asked Claude Code to write the fl
 So I read the code line by line and asked Claude to explain it to me. This post is not a tutorial. It is the list of things I ended up understanding, that caught my interest and that I wanted to share.
 
 I did not know the right words at the time. So I asked Mistral to write a proper prompt for me to get mms working. Here is the full prompt it gave me: <br>
-[floodfill_prompt.txt](https://github.com/lili-lines/ratatouille/blob/main/algo/floodfill_prompt.txt).
+[floodfill_prompt.txt]({{ site.repo }}/algo/floodfill_prompt.txt).
 
 <figure style="text-align:center; margin:0;">
   <img src="{{ '/assets/img/mms_perso.gif' | relative_url }}" alt="mms maze simulator" width="360" style="display:block; margin:0 auto;">
