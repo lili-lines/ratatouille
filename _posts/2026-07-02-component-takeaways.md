@@ -54,3 +54,4 @@ The sources behind the cards :
 - [MPU-6050 module — components101](https://components101.com/sensors/mpu6050-module), pinout & registers
 - [TB6612FNG Hookup Guide — SparkFun](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all), how to drive the 2 motors
 - [MP1584 — Monolithic Power Systems](https://www.monolithicpower.com/en/mp1584.html), datasheet of the buck converter
+- [Pololu — Quadrature encoders](https://www.pololu.com/docs/0J83/5.4), CPR at the wheel = gearbox ratio x counts at the motor shaft

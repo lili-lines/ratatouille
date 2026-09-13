@@ -12,6 +12,7 @@
 $brand-color:      #a21caf;   // accent / links — UMBRA magenta (readable on cream)
 $text-color:       #1b1530;   // text color — dark indigo
 $background-color: #fffaf5;   // page background — creamy white (kept)
+$tag-color:        #0a9d62;   // readable green — tags, table rules, sub-headings
 
 // --- Font ---
 $base-font-family: "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
@@ -30,16 +31,47 @@ $content-width:    800px;     // max width of the content column
 //  2) CUSTOM CSS  — add your own rules here (after the import)
 // ============================================================
 
-// Simple tables: no cell borders, tighter row height.
+// Tables: hug their content instead of filling the column, page background,
+// green rules, and the same text color as the body.
+// Minima forces width:100%, lightens the text and zebra-stripes the rows,
+// so all three have to be overridden explicitly.
 .post-content table {
-  border: none;
+  width: auto;              // shrink-to-fit instead of minima's 100%
+  max-width: 100%;
+  margin: 0 auto $spacing-unit 0;   // stays flush left
+  border-collapse: collapse;
+  background-color: $background-color;
+  color: $text-color;       // minima lightens this by 18%, we don't want that
+  font-size: 0.95em;
+
   th, td {
-    border: none;
-    padding: 4px 12px;
+    padding: 2px 14px;        // tight rows: vertical padding, horizontal unchanged
+    line-height: 1.35;        // the body's 1.65 is too airy inside a cell
+    border: 1px solid $tag-color;
+    background-color: $background-color;   // kills the zebra striping
+    color: $text-color;
+    text-align: left;
   }
+
+  th {
+    font-weight: 700;
+    border-bottom-width: 2px;              // header separated a bit more firmly
+  }
+
   tr {
     border: none;
   }
+}
+
+// Caption under a table, same look as the image figcaptions. Written in
+// markdown as a paragraph followed by `{: .table-caption}`. The negative
+// top margin pulls it up under the table (which carries a 30px bottom margin).
+.post-content .table-caption {
+  font-size: 0.85rem;
+  color: $text-color;
+  opacity: 0.75;
+  margin: -22px 0 $spacing-unit;
+  text-align: left;
 }
 
 // Headings inside post content: same size as the body text, with a small
@@ -114,7 +146,6 @@ $umbra-code-bg: #1f1547;   // dark VIOLET background for code (script look)
 $umbra-green:   #00FF9C;   // neon green (terminal text)
 $umbra-magenta: #d57bff;   // neon magenta
 $umbra-cyan:    #00b0ff;   // neon cyan
-$tag-color:     #0a9d62;   // tags: readable green (variant E)
 
 // Important messages: light callout box (distinct from code)
 blockquote {

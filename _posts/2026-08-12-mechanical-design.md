@@ -8,6 +8,7 @@ tags: [mechanics, hardware]
 * TOC
 {:toc}
 
+🚧 todo : ajouter la position de l'essieu, la distance avec le nez, justifier la position des moustache également + indiquer la marque de la mesure d'odometry
 
 <figure style="margin:0;">
   <img src="{{ '/assets/img/mouse_v0.png' | relative_url }}" alt="Design initial de la souris" style="max-width:100%; border-radius:6px;">
@@ -17,7 +18,7 @@ tags: [mechanics, hardware]
 
 Ce post détaille le processus de fabrication du corps et l'assemblage des composants sur le châssis. Ci-dessus le design initial imaginé. Pour une première composition j'utilise des supports en plastique acrylique découpés au laser.
 
-Au départ le châssis était prévu en impression 3D (voir la section Chassis de la [BOM]({% post_url 2026-06-28-bom %})), mais j'abandonne cette idée : pour un premier montage la découpe laser est plus simple et plus rapide. Les pièces sont plates, on itère en quelques minutes au lieu de plusieurs heures d'impression, et il est facile de repercer ou d'élargir un trou à la main pour ajuster le positionnement. L'impression 3D reste pertinente pour une v2, une fois la géométrie figée (formes non planes, supports moustache intégrés).
+Au départ le châssis était prévu en impression 3D (c.f. [BOM]({% post_url 2026-06-28-bom %})), mais pour un premier montage la découpe laser est plus simple et les itérations sont plus rapide. Il est plus facile de repercer ou d'élargir un trou à la main pour ajuster le positionnement. L'impression 3D reste pertinente pour une v2, une fois la géométrie figée.
 
 Pour **le corps**, des supports en forme de rectangle pour valider le positionnement des composants. C'est ici qu'on va déterminer la taille de la souris : longueur, largeur, hauteur. Le mur mesurant 50mm, les moustaches doivent être positionnées en dessous pour détecter le mur.
 
@@ -56,6 +57,18 @@ $$\begin{aligned} \text{Espace libre} &= c - \text{diag}_{\text{poteau}} \\ &= 1
 
 Laissons une marge donc on va fixer **70-80mm** de large. Plus la souris est petite et plus elle pardonne les petites erreurs de positionnement. Et plus on peut optimiser la vitesse en ligne droite et en diagonale, mais c'est pas forcement la priorité pour la v1.
 
+Chiffrons ce « pardon ». Dans un couloir droit, la largeur libre est la cellule moins l'épaisseur du poteau, soit $180 - 12 = 168$ mm. La souris centrée à 80 mm laisse donc de chaque côté :
+
+$$\frac{168 - 80}{2} = 44\ \text{mm}$$
+
+**44 mm par côté, c'est tout le budget d'erreur de navigation.** Chaque degré de dérive du cap et chaque millimètre d'erreur d'odométrie viennent y puiser. C'est ce chiffre qui fixe les tolérances des tests dans [Flash the critter]({% post_url 2026-08-20-flash-the-critter %}). À 70 mm de large on monterait à 49 mm, cinq de plus.
+
+Dans la longueur, le point de référence est le **milieu de l'essieu** : c'est la position que l'odométrie calcule, et le point autour duquel le robot pivote. Le nez est à **70 mm** devant. Essieu au centre d'une cellule, il reste entre le nez et le mur d'en face :
+
+$$84 - 70 = 14\ \text{mm}$$
+
+C'est la course de la moustache avant, dont le rôle est précisément de toucher ce mur.
+
 Concernant les moteurs, ils doivent être aligné sur le même axe, sinon le robot ne roule pas droit.
 
 Le pivot de la moustache doit être parfaitement stable et aligné avec la puce AS5600 qui va lire l'angle de l'aimant. Les moustaches doivent être positionnées à une hauteur < 50mm.
@@ -80,7 +93,7 @@ Caractéristiques des supports : <br>
 . fichier SVG = [body_v1.svg]({{ site.repo }}/mecha/body_v1.svg) <br>
 N'ayant pas de découpeuse laser, j'ai passé commande dans un magasin.
 
-[photo du résultat après découpe]
+[photo du résultat après découpe = body_lazer_cut.jpg]
 
 Les matières des moustaches à tester :
 
@@ -114,8 +127,8 @@ C'est l'étape des galères Ikéa, les pièces qui finalement vont mieux ailleur
 Il faudrait améliorer le pivot des moustaches qui pour l'instant est un peu bancal, mais ça sera pour la v2.
 La forme rectangle peut s'accrocher + facilement au coin en cas de dérive angulaire. Donc pour une v2 tester une forme circulaire ou octogonale.
 
-# Références
+# References
 
-- [Micromouse Online — The Chassis](https://micromouseonline.com/micromouse-book/the-chassis/)
+- [Micromouse Online — Chassis Layout](https://micromouseonline.com/micromouse-book/the-chassis/chassis-layout/)
 - [Demo Micromouse Robot — Sam Dale](https://www.spdale.com/projects/demo-micromouse)
 

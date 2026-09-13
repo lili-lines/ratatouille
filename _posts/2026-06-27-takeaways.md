@@ -120,7 +120,7 @@ The green/black/blue board that replaces messy jumper wires. It mechanically sup
 
 # References
 
-- [Electronics for Beginners — Voltage, Current, Resistance](https://freecircuitsim.com/guides/electronics-for-beginners.html)
+- [SparkFun — Voltage, Current, Resistance, and Ohm's Law](https://learn.sparkfun.com/tutorials/voltage-current-resistance-and-ohms-law/all)
 
 
 *[voltage]: also called the potential difference = the difference in electrical energy between 2 points in a circuit

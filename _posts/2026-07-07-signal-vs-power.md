@@ -94,3 +94,4 @@ Sharing one circuit between the two has a cost: the power side is noisy and the 
 # References
 
 - [TB6612FNG Hookup Guide — SparkFun Learn](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all)
+- [Solo — Electrical Noise Reduction Techniques for Motor Controllers](https://www.solomotorcontrollers.com/blog/electrical-noise-reduction/)

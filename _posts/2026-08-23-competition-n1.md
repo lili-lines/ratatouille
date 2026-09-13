@@ -11,4 +11,4 @@ tags: [competition]
 
 # References
 
-- [IEEE Region 1 Micromouse Competition Rules](https://ieeer1.org/wp-content/uploads/2025/01/Micromouse-Competition-Rules.pdf)
+- [TMIRC 2026 — Taiwan Micromouse and Intelligent Robot Contest, official site](https://sites.google.com/gm.lhu.edu.tw/tmirc2026/News?authuser=0)

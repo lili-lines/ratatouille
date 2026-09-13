@@ -34,34 +34,38 @@ These fast switches create electrical noise that leaks into the whole circuit an
 It means the reading stays clean while the motors run, that's the challenge, since a clean signal at standstill is easy.
 
 The noise defenses :
-- the RC filter (resistor + capacitor) on each whisker line,
+- the RC filter, resistor + capacitor, on each whisker line,
 - the decoupling capacitors next to each chip,
-- the star ground (one common ground point).
+- the star ground, one common ground point.
 
 
 #### 2.1 Experiment
 
- **Objectif** <br>
- 🚧
+**Goal** <br>
+Read the AS5600 signal while the motors are ON, and test how well the noise filters work.
 
-**Matériel** <br>
+**Material** <br>
 . power = on bench power supply : <br>
-    params in line : <br>
-    . voltage (7.4 V to mimic the battery) <br>
-    . the current limit  (300-500 mA) <br>
+. voltage 7.4 V to mimic the battery <br>
+. current limit 300-500 mA <br>
 
+<div class="two-col">
+<div class="col">
 . Teensy <br>
 . 1-2 AS5600 + magnet <br>
 . 1 motor N20 <br>
 . driver <br>
 . Breadboard + Dupont wires <br>
 . Multimeter, check the voltages before wiring everything together <br>
-
-The noise defenses, to check their efficacy 1 by 1 : <br>
+</div>
+<div class="col">
+The noise defenses : <br>
 . RC filter / whisker (R 1 kΩ + C 100 nF) <br>
 . decoupling capacitor (100 nF) next to each chip <br>
 . reservoir capacitor (≥ 470 µF) <br>
-. wiring constraint: star ground (one common ground point) <br>
+. wiring: star ground, one common GND point <br>
+</div>
+</div>
 
 <figure style="margin:0;">
   <img src="{{ '/assets/img/xp_signal_PWM.png' | relative_url }}" style="max-width:100%; display:block; margin:0 auto;">
@@ -69,23 +73,34 @@ The noise defenses, to check their efficacy 1 by 1 : <br>
 </figure>
 
 **Protocol:** <br>
-. Baseline = motor OFF, with 4 defenders → record the signal <br>
-. all 4 defenders, motor ON (PWM running) → record the signal, compare to the baseline <br>
-. remove the RC filter only, motor ON → record, compare, then put it back
-. remove the decoupling capacitor only, motor ON → record, compare, then put it back <br>
-. remove the reservoir capacitor only, motor ON → record, compare, then put it back <br>
-. break the star ground (daisy-chain), motor ON → record, compare, then restore it <br>
+Each step changes only one thing at a time.
+. baseline = motor OFF, with 4 defenders<br>
+. 4 defenders, motor ON PWM running <br>
+. remove the RC filter only, motor ON <br>
+. remove the decoupling capacitor only, motor ON <br>
+. remove the reservoir capacitor only, motor ON <br>
+. break the star ground (daisy-chain), motor ON <br>
 
 **Success criterion** <br>
-with the motor running, the whisker reading at rest stays within the same noise band as with the motor off
-
-Each step changes only one thing at a time, so any change in noise can be attributed to that one defender.
+with the motor running, the whisker reading stays clean
 
 **Result** <br>
-🚧 todo <br>
-. graph : signal with vs without each defender <br>
 
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/xp_compare_all.png' | relative_url }}" alt="Whisker signal for the 11 conditions, with std and peak-to-peak" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption style="text-align:center; font-size:0.85rem;">In blue the baseline, in green all defenders, in purple one defender removed at a time</figcaption>
+</figure>
+<br>
+
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/xp_stats_table.png' | relative_url }}" alt="Table of the mean, standard deviation and peak-to-peak per condition" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption style="text-align:center; font-size:0.85rem;">The same numbers as a table</figcaption>
+</figure>
+<br>
+
+The success criterion is met, but the experiment does not visibly confirm that the defenders are useful: according to the graphs there is no noise to remove in this setup. Good practice is to repeat the experiment several times to confirm the observation. So this one is to be done again for the v2.
 
 # References
 
-- [PWM 'noise' on AnalogRead input — Arduino Forum](https://forum.arduino.cc/t/pwm-noise-on-analogread-input/295606)
+- [TI — Four ways to improve your ADC system power supply rejection](https://e2e.ti.com/blogs_/archives/b/precisionhub/posts/four-ways-to-protect-your-adc-system-power-supply-rejection)
+- [Solo — Electrical Noise Reduction Techniques for Motor Controllers](https://www.solomotorcontrollers.com/blog/electrical-noise-reduction/)

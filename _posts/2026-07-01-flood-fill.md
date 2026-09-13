@@ -33,10 +33,7 @@ $d$ = smallest distance to the goal among the neighbours, plus 1
 
 Every cell gets its distance to the goal. The mouse then walks downhill (big → small) until it reaches $0$.
 
-Here are more detailed explanations:<br>
-. [Micromouse-from-scratch walkthrough](https://medium.com/@minikiraniamayadharmasiri/micromouse-from-scratch-algorithm-maze-traversal-shortest-path-floodfill-741242e8510) <br>
-. [UC Irvine's flood-fill page](https://ieee.ics.uci.edu/micromouse/floodfill.html) <br>
-. [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)
+More detailed explanations in the References at the end of this post.
 
 
 #### 2. Coordinates & directions in MMS
@@ -93,3 +90,13 @@ Robot stays on: the map lives in RAM. Clear the distance grid, keep the walls, r
 
 Robot off: RAM is wiped. The walls must be written to non-volatile memory (EEPROM / Flash). A 16×16 maze is 256 bytes, one per cell, which is tiny.
 
+
+<br>
+
+# References
+
+- [Micromouse Online — Solving the maze](https://micromouseonline.com/micromouse-book/mazes-and-maze-solving/solving-the-maze/)
+- [mackorone/mms — the Micromouse Simulator used in this post](https://github.com/mackorone/mms)
+- [Micromouse-from-scratch walkthrough](https://medium.com/@minikiraniamayadharmasiri/micromouse-from-scratch-algorithm-maze-traversal-shortest-path-floodfill-741242e8510)
+- [UC Irvine's flood-fill page](https://ieee.ics.uci.edu/micromouse/floodfill.html)
+- [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)

@@ -43,6 +43,6 @@ For the GND, a trunk wire that you add yourself, along a chosen row of holes.
 
 # References
 
-- [Breadboard vs Protoboard: Which One Should You Use — JLCPCB](https://jlcpcb.com/blog/breadboard-vs-protoboard-guide)
+- [Wikipedia — Stripboard](https://en.wikipedia.org/wiki/Stripboard)
 
 
