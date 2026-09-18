@@ -2,7 +2,7 @@
 layout: post
 title: 🥡 Takeaways, component
 date: 2026-07-02 10:00:00 +0200
-tags: [electronics]
+tags: [electronics, hardware]
 ---
 
 One card per component: what it does, what goes IN and OUT, the traps ⚠️, and a closer look 🔍.

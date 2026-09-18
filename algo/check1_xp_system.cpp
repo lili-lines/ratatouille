@@ -21,17 +21,17 @@ const int BIN2 = 20;
 const int STBY = 8;
 
 // ---- encodeurs ----
-const int ENC_A_R = 9;
-const int ENC_B_R = 10;
-const int ENC_A_L = 11;
-const int ENC_B_L = 12;
+const int ENC_A_R = 11;
+const int ENC_B_R = 12;
+const int ENC_A_L = 9;
+const int ENC_B_L = 10;
 volatile long encCountR = 0;
 volatile long encCountL = 0;
 
 // ---- moustaches ----
-const int WHISKER1 = A0;
-const int WHISKER2 = A1;
-const int WHISKER3 = A2;
+const int WHISKER_R = A0;  // droite
+const int WHISKER_F = A1;  // avant
+const int WHISKER_L = A2;  // gauche
 
 // ---- boutons ----
 const int BTN_GO = 17;
@@ -124,9 +124,12 @@ void setup() {
   }
 
   // SD.begin() peut reconfigurer 11/12 en mode SPI malgre le remap --
-  // on reprend la main dessus pour l'encodeur gauche
+  // on reprend la main sur les deux encodeurs (11/12 = encodeur DROIT depuis le recablage)
+  pinMode(ENC_A_R, INPUT);
+  pinMode(ENC_B_R, INPUT);
   pinMode(ENC_A_L, INPUT);
   pinMode(ENC_B_L, INPUT);
+  attachInterrupt(digitalPinToInterrupt(ENC_A_R), encoderR_ISR, RISING);
   attachInterrupt(digitalPinToInterrupt(ENC_A_L), encoderL_ISR, RISING);
 
   lastTime = millis();
@@ -148,9 +151,9 @@ void loop() {
   headingDeg += gyroZ_dps * dt;
 
   // moustaches
-  int w1 = analogRead(WHISKER1);
-  int w2 = analogRead(WHISKER2);
-  int w3 = analogRead(WHISKER3);
+  int wL = analogRead(WHISKER_L);
+  int wF = analogRead(WHISKER_F);
+  int wR = analogRead(WHISKER_R);
 
   // boutons -- LOW = appuye (pull-up)
   if (digitalRead(BTN_RESET) == LOW) {
@@ -176,9 +179,9 @@ void loop() {
   Serial.print(headingDeg);   Serial.print('\t');
   Serial.print(encCountR);    Serial.print('\t');
   Serial.print(encCountL);    Serial.print('\t');
-  Serial.print(w1);           Serial.print('\t');
-  Serial.print(w2);           Serial.print('\t');
-  Serial.println(w3);
+  Serial.print(wL);           Serial.print('\t');
+  Serial.print(wF);           Serial.print('\t');
+  Serial.println(wR);
 
   delay(20);
 }

@@ -33,10 +33,14 @@ const int LED_STATE = 21;
 // exemple "lente"     : SPEED_OUTER=100, SPEED_INNER=64
 // exemple "croisiere" : SPEED_OUTER=160, SPEED_INNER=103
 // exemple "fast"      : SPEED_OUTER=220, SPEED_INNER=142
-const int SPEED_OUTER = 160;  // roue exterieure du cercle (droite ici)
-const int SPEED_INNER = 103;  // roue interieure -> rayon ~15cm
+const int SPEED_OUTER = 220;  //160 roue exterieure du cercle (droite ici)
+const int SPEED_INNER = 142;  //103 roue interieure -> rayon ~15cm
 
 const float TARGET_ANGLE = 360.0;  // 1 tour complet
+
+// 🧭 Facteur d'echelle du gyro, calibre dans check3_xp_turn (la puce sous-lit de ~2.2 %,
+// dans la tolerance +-3 % de la datasheet). Sans lui, le robot depasse 360 de ~8 degres.
+const float GYRO_SCALE = 1.0223;
 
 enum State { IDLE, CIRCLING, DONE };
 State state = IDLE;
@@ -64,7 +68,7 @@ void updateHeading() {
   Wire.endTransmission(false);
   Wire.requestFrom(MPU_ADDR, 2, true);
   int16_t gyroZraw = Wire.read() << 8 | Wire.read();
-  float gyroZ_dps = (gyroZraw / 131.0) - gyroZ_bias;
+  float gyroZ_dps = ((gyroZraw / 131.0) - gyroZ_bias) * GYRO_SCALE;
 
   unsigned long now = millis();
   float dt = (now - lastTime) / 1000.0;
@@ -129,15 +133,16 @@ void loop() {
   }
 
   if (digitalRead(BTN_GO) == LOW && state == IDLE) {
+    delay(300);  // anti-rebond AVANT de demarrer : sinon les 300 premieres ms de rotation
+                 // sont integrees d'un seul coup avec la vitesse de fin (cf. check3)
     digitalWrite(STBY, HIGH);
     digitalWrite(LED_STATE, HIGH);
     headingDeg = 0;
     lastTime = millis();
     state = CIRCLING;
-    motorA(-SPEED_OUTER);  // roue droite
+    motorA(-SPEED_OUTER);  // roue droite (avancer = A negatif, B positif, cf. check2)
     motorB(SPEED_INNER);   // roue gauche, plus lente -> courbe vers la gauche
     Serial.println("GO -> cercle en cours...");
-    delay(300);
   }
 
   if (state == CIRCLING) {

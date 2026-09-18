@@ -11,7 +11,7 @@
 // --- Colors (UMBRA protocol, adapted for a light/cream background) ---
 $brand-color:      #a21caf;   // accent / links — UMBRA magenta (readable on cream)
 $text-color:       #1b1530;   // text color — dark indigo
-$background-color: #fffaf5;   // page background — creamy white (kept)
+$background-color: #f3eaf8;   // page background — pastel mauve
 $tag-color:        #0a9d62;   // readable green — tags, table rules, sub-headings
 
 // --- Font ---
@@ -60,6 +60,20 @@ $content-width:    800px;     // max width of the content column
 
   tr {
     border: none;
+  }
+}
+
+// Layout table used purely to place an image next to a list (e.g. BOM chassis
+// section): drop the borders/background from both it and any table nested
+// inside it, since these aren't real data grids.
+.post-content table.plain-table,
+.post-content table.plain-table table {
+  border: none;
+  background: transparent;
+
+  th, td {
+    border: none;
+    background: transparent;
   }
 }
 

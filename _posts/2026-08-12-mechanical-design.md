@@ -81,6 +81,29 @@ M3 = 2x Ø3,2mm → 7mm du bord
 
 Pour que le signal soit propre il faut faire attention aux composants bruyants. Donc séparer physiquement les composants sensibles au bruit : le gyro et les capteurs AS5600, des composants générant du bruit : le moteur, buck et driver.
 
+<div style="display:flex; flex-wrap:nowrap; gap:25px; align-items:center;" markdown="1">
+<img src="{{ '/assets/img/taxis_bouton.gif' | relative_url }}" alt="Boutons de pilotage" style="width:350px; flex-shrink:0; display:block; margin-top:35px; border-radius:10px;">
+<div style="flex:1; min-width:0;" markdown="1">
+#### 1.3 Piloter : exploration, retry, reset
+
+<style>
+.led-dot { display:inline-block; width:14px; height:14px; border-radius:50%; background:#3F00FF; margin:0 4px; vertical-align:middle; }
+.led-slow { animation: led-blink 2s steps(1) infinite; }
+.led-fast { animation: led-blink 0.4s steps(1) infinite; }
+.led-triple { animation: led-blink 0.3s steps(1) 6; }
+.led-fixed { animation: none; opacity: 1; }
+.led-orange { background:#ff8c00; }
+@keyframes led-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.15; } }
+</style>
+
+Ajouter des boutons : <br>
+<span class="led-dot led-slow"></span> GO run d'exploration <br>
+<span class="led-dot led-fast"></span> RETRY recommence l'étape actuelle <br>
+<span class="led-dot led-triple led-orange"></span> RESET tout effacer <br>
+<span class="led-dot led-fixed"></span> Phase d'exploration ✅ retour commence
+</div>
+</div>
+
 
 ## 2. Châssis et moustaches
 

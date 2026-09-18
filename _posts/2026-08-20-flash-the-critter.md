@@ -5,256 +5,272 @@ date: 2026-08-20 10:00:00 +0200
 tags: [electronics, firmware]
 ---
 
+**What I learned** <br>
+Checking the components and the circuit with a multimeter really matters, it catches errors like pins that are not connected. When working with magnetic fields, keep an eye on how close they are to each other, as with the AS5600. The noise measured on the breadboard came from the setup, not from the electronics: on the assembled robot it is 7× lower, so that is where it must be measured. Setting tolerances before testing is essential. The distance computation has to be reworked for a v2.
+
+
 * TOC
 {:toc}
 
-Après avoir validé l'assemblage des pièces, il faut checker si tout est correctement connecté, que le courant circule, que les informations sont transmises et interprétées correctement. Il est également important de définir la marge d'erreur acceptable pour la validation de chaque test.
 
-**La marge d'erreur** <br>
-Entre le mur et la souris il y a 44 mm de chaque côté en ligne droite, mais au moment de tourner comme l'essieu est situer à l'arrière le rayon balayer est de 🚧???mm, c.f. calcule dans [Mechanical design]({% post_url 2026-08-12-mechanical-design %}). Cette valeur va définir nos marges d'erreur. Pour le cap, l'erreur s'accumule durant le parcours.
+Here we go: check that everything is connected, that current flows, and that the information is sent and interpreted correctly. <br>
+First, define the acceptable error margin to validate each test.
 
-<div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
-<div style="flex:0 0 auto;" markdown="1">
-| erreur de<br>cap | décalage par<br>cellule | cellules avant de<br>💥 le mur |
-|---|---|---|
-| ±5° | 15,7 mm | 2,8 |
-| ±3° | 9,4 mm | 4,7 |
-| ±2° | 6,3 mm | 7,0 |
-
-Tableau 1: Erreur de cap, décalage latéral par cellule parcourue
-{: .table-caption}
-</div>
-<div style="flex:1; min-width:240px;" markdown="1">
-(1) 2 tolérances d'erreur d'angle la lecture du gyro comparée à l'angle réel ±2° c.f. mesures post Odometry. Et l'erreur de virage ±3°, erreur qui s'accumule durant le parcours, d'apres le tableau 1 en 4 cellules elle dépasse les 44mm.
-</div>
-</div>
+**The error margin** <br>
+Between the wall and the mouse there is 44 mm on each side, see [Mechanical design]({% post_url 2026-08-12-mechanical-design %}). This value sets our error margins. For the heading, the error accumulates along the path.
 
 <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
 <div style="flex:0 0 auto;" markdown="1">
-| erreur de<br>distance | décalage par<br>cellule | cellules avant<br> > 44 mm |
+| heading<br>error | drift per<br>cell | cells before<br>💥 the wall |
 |---|---|---|
-| ±1 % | 1,8 mm | 24 |
-| ±2 % | 3,6 mm | 12 |
-| ±3 % | 5,4 mm | 8 |
-| ±4 % | 7,2 mm | 6 |
+| ±5° | 15.7 mm | 2.8 |
+| ±3° | 9.4 mm | 4.7 |
+| ±2° | 6.3 mm | 7.0 |
 
-Tableau 2: Erreur de distance,<br>devenue décalage latéral après un virage à 90°
+Table 1: Heading error, lateral drift per cell travelled
 {: .table-caption}
 </div>
 <div style="flex:1; min-width:240px;" markdown="1">
-(2) L'erreur de distance est proportionnelle à la distance parcourue. Elle coûte au virage, tourner 20 mm et le nez peut toucher le mur. À ±2 % on tient 12 cellules avant de toucher.
+(1) 2 tolerances for the angle error: the gyro reading compared to the real angle, ±2°, see the measurements in [Odometry]({% post_url 2026-08-01-odometry %}). And the turn error, ±3°, an error that accumulates along the path: from table 1, after 4 cells it exceeds the 44 mm.
 </div>
 </div>
 
-(3) L'erreur de répétabilité tolérence ≤ 10 mm (soit 1 % sur 1m) entre les runs à vitesses différentes. Cette erreur vient du glissement eu démarrage et à l'arrêt, c'est le même phénomène independant de la distance.
+<div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
+<div style="flex:0 0 auto;" markdown="1">
+| distance<br>error | drift per<br>cell | cells before<br> > 44 mm |
+|---|---|---|
+| ±1 % | 1.8 mm | 24 |
+| ±2 % | 3.6 mm | 12 |
+| ±3 % | 5.4 mm | 8 |
+| ±4 % | 7.2 mm | 6 |
 
-(4) Erreur de singal : la moustache crête-à-crête < ..???... counts selon les chiffres à définir dans l'expèrience [Clean whisker signal]({% post_url 2026-07-28-clean-signal-under-pwm %}) 
-🚧 todo : expérience à refaire mais aussi à faire en bit = 12, sur le robot monté juste avec all encodeur également.
+Table 2: Distance error,<br>becomes a lateral drift after a 90° turn
+{: .table-caption}
+</div>
+<div style="flex:1; min-width:240px;" markdown="1">
+(2) The distance error is proportional to the distance travelled. It costs at the turn: turn 20 mm too late and the nose can touch the wall. At ±2 % we hold 12 cells before touching.
+</div>
+</div>
 
-ℹ️ Remarque : une erreur constante est plus facile à corriger qu'une erreur instable.
+(3) The error between runs ≤ 10 mm (that is 1 % over 1 m) at different speeds.
+
+(4) Signal error: the base noise of the AS5600 signal is 70 counts peak-to-peak on the breadboard, see [Clean whisker signal]({% post_url 2026-07-28-clean-signal-under-pwm %}), but once the robot is assembled the noise drops to 10.
+
+ℹ️ Note: a constant error is easier to correct than an unstable one.
 
 
-## 1. Test en USB réponse gyro, compteur, moustache
-
-[photo du dispositif avec monitor]
+## 1. USB test, gyro, counters and whiskers response
 
 <div class="two-col">
 <div class="col" markdown="1">
 
-**Objectif** <br>
-L'idée ici est de vérifier si les capteurs fonctionnent et sont lus correctement. C'est un test d'observation.
+**Goal** <br>
+Observation: the idea is to check that the sensors work and are read correctly.
 
-**Matériel** <br>
-. mouse en USB sans battery
+**Material** <br>
+. the mouse without battery, USB cable
 
-**Protocole** <br>
-Les moteurs sont à l'arrêt, `STBY LOW`. On tourne les roues à la main.
-Observer les valeurs des capteurs avec le Serial Monitor sur Arduino : les valeurs sont lues en continu.
+</div>
+<div class="col" markdown="1">
 
-Upload sur le Teensy : <br>
+**Protocol** <br>
+The motors are stopped, `STBY LOW`. We turn the wheels by hand.
+Watch the sensor values in the Arduino Serial Monitor: the values are read continuously.
+
+Upload on the Teensy: <br>
 [check1_xp_system.cpp]({{ site.repo }}/algo/check1_xp_system.cpp) <br>
 
 </div>
-<div class="col" markdown="1">
-**Critère de réussite** <br>
+</div>
 
-|---|---|
-| observable | affichage et réaction des valeurs |
-| gyro | ap calibrage, la valeur correspond ~ le mouvement de la souris + une dérive dans le temps |
-| 2 encodeurs de roue | comptent quand on tourne les roues à la main, d'un côté (+) et de l'autre (−) |
-| 3 AS5600 | les puces réagissent au mouvement de leur aimant sur la plage 0-4095|
+|---|---|---|
+| Observable | Success criterion | Result |
+| gyro | after calibration, the value follows the movement of the mouse, plus a drift over time | ✅ |
+| 2 wheel encoders | react when the wheels are turned by hand, one way (+) and the other (−) | no reaction from the right encoder; testing the signal path with the multimeter showed a missing solder joint; after fixing it the signal is ✅ |
+| 3 AS5600 | the chips react to the movement of their magnet over the 0-4095 range | initially the 3 were placed side by side, 2 of them were unstable: the AS5600 chips being that close probably disturb each other's magnetic field. The middle module was moved to level 1 with the chip facing down, to keep its pivot position without changing the structure. After that the signals are ✅ |
 
-Tableau 3: observation serial monitor
+Table 3: Serial Monitor observations
 {: .table-caption}
 
-🛈 pas d'erreur chiffrée à ce stade : on vérifie que la chaîne capteur → Teensy → Serial Monitor fonctionne.
-</div>
-</div>
 
-**Résultat** <br>
-[monitor gif capture d'écran]
-[ajouter un tableau des releves exacte de l'xp]
+## 2. USB test, motors, buttons, trajectory, turn
 
-Compteur roues : le compteur de la roue droite ne renvoie pas de signal. 1ère chose à faire : vérifier le chemin du signal au multimètre pour savoir si tout est bien connecté. C'est là qu'on remarque que certaines pattes ne sont pas soudées. Les 2 compteurs de roues fonctionnent 👌 <br>
-Tester le gyro en bougeant la souris sur les angles : 45°, 90°, 360°. On fait pivoter la souris avec un repère au sol et on lit le signal du gyro. 👌 <br>
-Les 3 AS5600 étaient initialement positionnés à l'avant les uns à côté des autres, mais à la lecture des signaux il y a un problème. J'en ai déduit que la proximité des puces AS5600 perturbait les champs magnétiques. J'ai déplacé le module du milieu à l'étage 1 en tournant la puce vers le bas. Ainsi, j'ai pu garder la position de son pivot sans modifier la structure. 👌 <br>
+Tolerance: <br>
+. whisker at rest: ~10 counts peak-to-peak (12 bits)
 
+**Goal** <br>
+The driver is in `STBY LOW` sleep mode at startup. The buttons: GO wakes the driver up `STBY HIGH`, RESET zeroes the sensors. <br>
+Check that the position and contact sensors return the right information, and that the Teensy interprets them correctly.
 
-<div style="display:flex; flex-wrap:nowrap; gap:25px; align-items:center;" markdown="1">
-<img src="{{ '/assets/img/taxis_bouton.gif' | relative_url }}" alt="Boutons de pilotage" style="width:350px; flex-shrink:0; display:block; margin-top:35px; border-radius:10px;">
-<div style="flex:1; min-width:0;" markdown="1">
-### Piloter : exploration, retry, reset
+**Material** <br>
+. mouse without battery, USB <br>
+. Arduino Serial Monitor <br>
+. Python <br>
 
-<style>
-.led-dot { display:inline-block; width:14px; height:14px; border-radius:50%; background:#3F00FF; margin:0 4px; vertical-align:middle; }
-.led-slow { animation: led-blink 2s steps(1) infinite; }
-.led-fast { animation: led-blink 0.4s steps(1) infinite; }
-.led-triple { animation: led-blink 0.3s steps(1) 6; }
-.led-fixed { animation: none; opacity: 1; }
-.led-orange { background:#ff8c00; }
-@keyframes led-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.15; } }
-</style>
+#### 2.1 By hand, motors OFF
 
-Ajouter des boutons : <br>
-<span class="led-dot led-slow"></span> GO run d'exploration <br>
-<span class="led-dot led-fast"></span> RETRY recommence l'étape actuelle <br>
-<span class="led-dot led-triple led-orange"></span> RESET tout effacer <br>
-<span class="led-dot led-fixed"></span> Phase d'exploration ✅ retour commence
-</div>
-</div>
-
-
-## 2. Test en USB, moteur, boutons, LED, trajectoire, virage
-
-Tolérance : <br>
-. moustache au repos : crête-à-crête < ??? counts (12 bits)
-
-**Objectif** <br>
-Le driver en mode `STBY LOW` sleep reste au démarrage. Les boutons : RESET remet tout à zéro, GO réveille le driver `STBY HIGH`, RETRY redémarre l'étape en cours en cas de problème sur le terrain. 
-LED d'état fixe et clignotante selon GO, RETRY et RESET.
-Vérifier que les capteurs de positionnement et de contact renvoient les bonnes informations. Et que le Teensy les interprète correctement.
-
-**Matériel** <br>
-. mouse sans battery + USB + serial monitor
-
-#### 2.1 À la main, moteurs éteints
-
-Tolérance : <br>
-. distance poussée à la main ±2 %
-. cap du parcours en L ±2°
-
-**Protocole**
+**Protocol** <br>
 <div class="two-col">
 <div class="col" style="flex:1;" markdown="1">
-Distance en ligne droite de 30 cm : pousser le robot à la main, en ligne droite, sur une distance connue, mesurée à la marque du milieu de l'essieu.<br>
-Lire la dernière ligne `encCountR` et `encCountL` sur serial monitor qui est en ticks bruts et calculer la distance. RESET.
+Straight line of 30 cm: push the robot by hand. <br>
+Read the last line of `encCountR` and `encCountL` in the Serial Monitor, in raw ticks, and compute the distance. <br>
+ℹ️ the distance is measured at the middle of the axle
 </div>
 <div class="col" style="flex:1.1;" markdown="1">
-$\text{dist}_{mm} = \dfrac{encCountR + encCountL}{2} \times 0{,}087$
+$\text{dist}_{mm} = \dfrac{encCountR + encCountL}{2} \times 0.087$
 
-$0,087$ = mm parcourus par un tick d'encodeur, résolution qu'on a calculée dans le post [Odometry]({% post_url 2026-08-01-odometry %}) via la circonférence ⌀32 mm
+$0.087$ = mm travelled per encoder tick, see the resolution computed in [Odometry]({% post_url 2026-08-01-odometry %})
 </div>
 </div>
 
 <div class="two-col">
 <div class="col" style="flex:1;" markdown="1">
-Parcours combiné 30 cm + 90° : pousser le robot en L, et comparer la position finale calculée distance et le cap à la position réelle mesurée. Lire la dernière ligne de `headingDeg` sur serial monitor. <br>
+Combined path, 30 cm + 90°: push the robot in an L. Read the last line of `headingDeg` in the Serial Monitor. <br>
+
+Upload on the Teensy: <br>
+. [check1_xp_system.cpp]({{ site.repo }}/algo/check1_xp_system.cpp) <br>
+. [xp_log_system.py]({{ site.repo }}/algo/xp_log_system.py) <br>
+
 </div>
 <div class="col" style="flex:1.1;" markdown="1">
 ```cpp
-float gyroZ_dps = (gyroZraw / 131.0) - gyroZ_bias;   // vitesse de rotation, °/s
-headingDeg += gyroZ_dps * dt;                        // cumulée en degrés
+float gyroZ_dps = (gyroZraw / 131.0) - gyroZ_bias;   // rotation speed, °/s
+headingDeg += gyroZ_dps * dt;                        // accumulated in degrees
 ```
-ℹ️ le gyro une vitesse de rotation en °/s, l'angle est calculé en ° dans le script c'est la valeur `headingDeg`
+ℹ️ the gyro measures a rotation speed in °/s, the angle in ° is computed in the script, it is `headingDeg`
 </div>
 </div>
 
-| Critères | Mesure | Tolèrance | Validation | 
+**Result** <br>
+
+| Criteria | Measure | Tolerance | Validation | 
 |---|---|---|---|
-| LED clignotement GO, RESET, RETRY | observation | - | ? |
-| ligne droite 30cm | ? | ±2 %, ±6 mm | ? |
-| cap 90° | ? | ±2° | ? |
+| straight line 30 cm | 255 mm (−45 mm, −15 %) | ±2 %, ±6 mm | ❌ |
+| heading 90° | 89.6° | ±2° | ✅ |
 
-Tableau 4: Résultats expérience à la main, moteurs OFF
+Table 4: Results of the hand-push experiment, motors OFF
 {: .table-caption}
 
+Data: [xp_30cm_log_1789541716.csv]({{ '/assets/data_xp/xp_30cm_log_1789541716.csv' | relative_url }}), [xp_L_log_1789542386.csv]({{ '/assets/data_xp/xp_L_log_1789542386.csv' | relative_url }})
 
-#### 2.2 Autonome, moteurs allumés
+The mouse underestimates the distance by 15 %. The cause is not identified, to investigate for the v2. The good news is that the 2 encoders measure the same distance, R 254 mm, L 256 mm. <br>
 
-**Protocole** <br>
-. avec les moteurs allumés le robot doit parcourir seul et en ligne droite la distance demandée de 30 cm, et faire les virages selon l'angle demandé, 45, 90 et 360°.
-. pour tester la réaction des moutaches si on moustache bouge le robot tournera à 90° du cote de la moustache qui a bougé, et pour la moustache de devant le robot fera un 360.
-. Appuyer sur les boutons pour tester les LEDs. Voir les clignotements correspondant section 1.
+ℹ️ The peak-to-peak value of the AS5600 signal on the assembled mouse is ~10, in the end 7 times lower than on the breadboard where the noise was ~70.
 
-Upload sur le Teensy : <br>
+
+#### 2.2 Autonomous on USB, motors ON
+
+**Protocol** <br>
+. with the motors ON, the robot must travel on its own, in a straight line, the requested distance of 30 cm <br>
+. it must do a 360° <br>
+. touch a whisker: the robot turns 90° towards the side of the whisker that moved, and for the front whisker the robot does a 360.
+
+
+Upload on the Teensy: <br>
 [> check2_xp_straight.cpp]({{ site.repo }}/algo/check2_xp_straight.cpp) <br>
-[> check3_xp_turn.cpp]({{ site.repo }}/algo/check3_xp_turn.cpp) - parametrage `TARGET_ANGLE = 360 & 90 & 45` <br>
+[> check3_xp_turn.cpp]({{ site.repo }}/algo/check3_xp_turn.cpp) - setting `TARGET_ANGLE = 360` <br>
 [> check4_xp_whisker_turn.cpp]({{ site.repo }}/algo/check4_xp_whisker_turn.cpp)
 
 
-| Critères | Mesure | Tolèrance | Validation | 
+| Criteria | Measure | Tolerance | Validation | 
 |---|---|---|---|
-| ligne droite 30cm  | ? | ±2 %, ±6 mm | ? |
-| virage 45° | ? | ±3° | ? |
-| virage 90° | ? | ±3° | ? |
-| virage 360° | ? | ±3° | ? |
-| as56 gauche, reaction 90° | ? | observation | ? |
-| as56 droit, reaction 90° | ? | observation  | ? |
-| as56 avant, reaction 360° | ? | observation | ? |
+| straight line 30 cm | 340 mm | ±2 %, ±6 mm | ❌ |
+| 360° turn | - | observation | ✅ |
+| left AS5600, 90° reaction | - | observation | ✅ |
+| right AS5600, 90° reaction | - | observation  | ✅ |
+| front AS5600, 180° reaction | - | observation | ✅ |
 
-Tableau 5: Résultats expérience moteurs ON
+Table 5: Results with motors ON
 {: .table-caption}
 
-[video ligne droite 30 cm] [video moustache L, R, F reaction] <br>
-[video  360°] [video  90°] [video  45°] <br>
+<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:270px; max-width:100%; margin:0 auto; aspect-ratio:9/16; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100386987957993638" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">Straight line 30 cm — <a href="https://x.com/lili_lines/status/2100386987957993638">see on X</a></figcaption>
+  </figure>
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:270px; max-width:100%; margin:0 auto; aspect-ratio:9/16; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100395652039504211" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">360° pivot — <a href="https://x.com/lili_lines/status/2100395652039504211">see on X</a></figcaption>
+  </figure>
+</div>
+
+<figure style="margin:0;">
+  <div style="position:relative; width:480px; max-width:100%; margin:0 auto; aspect-ratio:16/9; border-radius:3px; overflow:hidden;">
+    <iframe src="https://x.com/i/videos/tweet/2100474516245823643" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+  </div>
+  <figcaption style="text-align:center; font-size:0.85rem;">Whisker sensitivity — <a href="https://x.com/lili_lines/status/2100474516245823643">see on X</a></figcaption>
+</figure>
 
 
-## 3. Test sur batterie
+## 3. Battery test
 
 <div class="two-col">
 <div class="col" markdown="1">
-**Objectif** <br>
-Vérification finale du montage et de la sensibilité des capteurs sur batterie avant de tester le labyrinthe.
+**Goal** <br>
+Final check of the assembly and of the sensor sensitivity on battery, before testing in the maze.
 </div>
 <div class="col" markdown="1">
-**Matériel** <br>
-. 🐭 mouse complètes
+**Material** <br>
+. 🐭 complete mouse with battery
 </div>
 </div>
 
-**Protocole** <br>
-On marque au sol la distance demandée ainsi que les angles et un rond comme repère. Pour le cercle, le robot doit revenir sur la marque de départ.
-Et dans cette expérience on détourne exceptionnelement les boutons, pour ne pas avoir à reflasher la souris à chaque fois, on attribue aux boutons les fonctions suivantes : <br>
-go=lent, retry=croisière, reset=fast
+**Protocol** <br>
+Mark the requested distance on the floor. For the circle, the robot must come back to its starting square.
 
-🚧todo : prévoir dans le code d'enregistre les données de chaque changement de vitesse
-
-Upload sur le Teensy : <br>
-[> check2_xp_straight.cpp]({{ site.repo }}/algo/check2_xp_straight.cpp) - parametrage `TICKS_TARGET = (long)(1000.0 / MM_PER_TICK)`, soit 11510 ticks pour 1 m <br>
+Upload on the Teensy: <br>
+[> check2_xp_straight.cpp]({{ site.repo }}/algo/check2_xp_straight.cpp) - setting `DIST_MM = 900.0`, that is 10 359 ticks for 900 mm <br>
 [> check6_xp_circle.cpp]({{ site.repo }}/algo/check6_xp_circle.cpp)
 
-| Critères | Mesure | Tolèrance | Validation | 
+| Criteria | Measure | Tolerance | Validation | 
 |---|---|---|---|
-| ligne droite 1 m, lent | ? | ±2 %, ±20 mm | ? |
-| ligne droite 1 m, croisière | ? | ±2 %, ±20 mm | ? |
-| ligne droite 1 m, fast | ? | ±2 %, ±20 mm | ? |
-| écart entre les runs | ? | ≤ 10 mm | ? |
-| cercle, lent | ? | ±20 mm | ? |
-| cercle, croisière | ? | ±20 mm | ? |
-| cercle, fast | ? | ±20 mm | ? |
-| écart entre les runs | ? | ≤ 10 mm | ? |
-| suivre le tracé du cercle | observation | - | ? |
+| straight line 900 mm, cruise | 1035 mm | ±2 %, ±20 mm | ❌ |
+| straight line 900 mm, fast | 840 mm | ±2 %, ±20 mm | ❌ |
+| max gap between runs | 195 mm | ≤ 10 mm | ❌ |
+| circle, cruise | 25 mm | ±20 mm | ❌ |
+| circle, fast | 25 mm | ±20 mm | ❌ |
+| max gap between runs | 10 mm | ≤ 10 mm | ✅ |
+| follow the circle | - | observation | ✅ |
 
-Tableau 6: Résultats expérience sur battery
+Table 6: Results on battery
 {: .table-caption}
 
-[video ligne droite 1m, lente]
-[video ligne droite 1m, croisière]
-[video ligne droite 1m, fast]
+The error is not the same at each speed: the distance error changes sign when the speed goes up. A problem to solve for the v2.
 
-[video 1 tour cercle, lente]
-[video 1 tour cercle, croisière]
-[video 1 tour cercle, fast]
+<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:270px; max-width:100%; margin:0 auto; aspect-ratio:9/16; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100527968938299767" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">Straight line 900 mm, cruise — <a href="https://x.com/lili_lines/status/2100527968938299767">see on X</a></figcaption>
+  </figure>
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:270px; max-width:100%; margin:0 auto; aspect-ratio:9/16; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100528381322268845" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">Straight line 900 mm, fast — <a href="https://x.com/lili_lines/status/2100528381322268845">see on X</a></figcaption>
+  </figure>
+</div>
+<br>
+
+<div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100529941485957495" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">1 circle, cruise — <a href="https://x.com/lili_lines/status/2100529941485957495">see on X</a></figcaption>
+  </figure>
+  <figure style="flex:1; min-width:260px; margin:0;">
+    <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:3px; overflow:hidden;">
+      <iframe src="https://x.com/i/videos/tweet/2100530212068880484" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <figcaption style="text-align:center; font-size:0.85rem;">1 circle, fast — <a href="https://x.com/lili_lines/status/2100530212068880484">see on X</a></figcaption>
+  </figure>
+</div>
 
 
 # References

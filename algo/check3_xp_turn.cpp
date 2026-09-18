@@ -26,6 +26,17 @@ const int LED_STATE = 21;
 const int TURN_SPEED = 100;  // 0-255
 const float TARGET_ANGLE = 360.0; // 360.0 90.0, 45.0
 
+// 🧭 Facteur d'echelle du gyro. La sensibilite nominale (131 LSB/deg/s) a une
+// tolerance de +-3 % selon la datasheet : chaque puce devie un peu.
+// Calibration : viser 360, mesurer l'angle REEL au rapporteur, puis
+//   GYRO_SCALE = GYRO_SCALE_actuel * angle_reel / 360   (en partant de 1.0 la 1re fois)
+// Historique : 365/360 -> le robot faisait encore 363 reel
+// -> 365/360 * 363/360 = 1.0223 👍 pas mal
+// -> 365/360 * 364/360 = 1.0251 🚧 todo essayer
+const float GYRO_SCALE = 1.0223;
+// pour 360 il fait legerement +
+// 90 même rmq
+
 enum State { IDLE, TURNING, DONE };
 State state = IDLE;
 
@@ -52,7 +63,9 @@ void updateHeading() {
   Wire.endTransmission(false);
   Wire.requestFrom(MPU_ADDR, 2, true);
   int16_t gyroZraw = Wire.read() << 8 | Wire.read();
-  float gyroZ_dps = (gyroZraw / 131.0) - gyroZ_bias;
+  
+  // 🧭 GYRO_SCALE corrige la sensibilite reelle de la puce (voir la constante en haut)
+  float gyroZ_dps = ((gyroZraw / 131.0) - gyroZ_bias) * GYRO_SCALE;
 
   unsigned long now = millis();
   float dt = (now - lastTime) / 1000.0;
@@ -67,6 +80,13 @@ void setup() {
   Wire.beginTransmission(MPU_ADDR);
   Wire.write(0x6B);
   Wire.write(0);
+  Wire.endTransmission(true);
+
+  // force le gyro en +-250 deg/s (FS_SEL=0), sensibilite 131 LSB/(deg/s) --
+  // sans ca, un reglage herite d'un test precedent fausserait l'echelle de headingDeg
+  Wire.beginTransmission(MPU_ADDR);
+  Wire.write(0x1B);
+  Wire.write(0x00);
   Wire.endTransmission(true);
 
   pinMode(PWMA, OUTPUT);
@@ -117,6 +137,8 @@ void loop() {
   }
 
   if (digitalRead(BTN_GO) == LOW && state == IDLE) {
+    delay(300);  // anti-rebond AVANT de demarrer : sinon les 300 premieres ms de rotation
+                 // sont integrees d'un seul coup avec la vitesse de fin, alors que le robot accelerait
     digitalWrite(STBY, HIGH);
     digitalWrite(LED_STATE, HIGH);
     headingDeg = 0;
@@ -125,7 +147,6 @@ void loop() {
     motorA(-TURN_SPEED);
     motorB(-TURN_SPEED);
     Serial.println("GO -> pivot en cours...");
-    delay(300);
   }
 
   if (state == TURNING) {
@@ -141,6 +162,6 @@ void loop() {
       Serial.println(headingDeg);
       Serial.println("Compare au vrai angle sur ton repere/rapporteur. RESET pour recommencer.");
     }
-    delay(20);
+    delay(1);  // baisse encore -- le plancher reel est le temps de lecture I2C (~qq centaines de µs)
   }
 }

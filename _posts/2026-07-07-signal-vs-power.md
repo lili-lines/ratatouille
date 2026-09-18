@@ -2,7 +2,7 @@
 layout: post
 title: Signal vs power
 date: 2026-07-07 10:00:00 +0200
-tags: [electricity]
+tags: [signal, electricity]
 ---
 
 * TOC
