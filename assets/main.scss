@@ -63,20 +63,6 @@ $content-width:    800px;     // max width of the content column
   }
 }
 
-// Layout table used purely to place an image next to a list (e.g. BOM chassis
-// section): drop the borders/background from both it and any table nested
-// inside it, since these aren't real data grids.
-.post-content table.plain-table,
-.post-content table.plain-table table {
-  border: none;
-  background: transparent;
-
-  th, td {
-    border: none;
-    background: transparent;
-  }
-}
-
 // Caption under a table, same look as the image figcaptions. Written in
 // markdown as a paragraph followed by `{: .table-caption}`. The negative
 // top margin pulls it up under the table (which carries a 30px bottom margin).

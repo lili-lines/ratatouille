@@ -41,9 +41,13 @@ If you have a very tall waterfall (high Volts) but only a tiny trickle of water 
 
 🐭 For a fast and powerful mouse, you need the right combination: enough height (7.4V) and a good water flow (2A or more).
 
-🚧 todo : <br>
-. l'effet Joule : P = R × I² <br>
-. pour les fils, calculer la capacité, ils chauffent à caus du courant qui les traverse, dc seul le nombre d'A circulant compte, la tension n'ente pas dans l'équation
+🔥 **Joule heating** = Part of the power is lost as heat in every wire and component:
+
+$$\text{Heat (Watts)} = \text{Resistance (Ohms)} \times \text{Current (Amperes)}^2$$
+
+Only the current is in the equation, not the voltage: a wire heats because of how much water flows through it, not because of how tall the waterfall is. And it is squared, so twice the current means four times the heat.
+
+🐭 In the MicroMouse: the wires are sized by the Amperes they carry, not by the Volts. The motor wires see several A, they need to be thicker than the sensor wires that see a few mA.
 
 
 **Hertz (Hz)**
@@ -118,6 +122,7 @@ The green/black/blue board that replaces messy jumper wires. It mechanically sup
 🐭 Designing a custom PCB is a major step in making a MicroMouse compact and reliable.
 
 
+<br>
 # References
 
 - [SparkFun — Voltage, Current, Resistance, and Ohm's Law](https://learn.sparkfun.com/tutorials/voltage-current-resistance-and-ohms-law/all)

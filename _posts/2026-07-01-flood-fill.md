@@ -8,11 +8,11 @@ tags: [algo, mms]
 * TOC
 {:toc}
 
-#### 1. The real path : the claude path 🤖
+#### 1. Flood-fill 🤖
 
-I did not write this algorithm from scratch. I asked Claude Code to write the flood-fill for the [mms](https://github.com/mackorone/mms) simulator. It worked on the first runs, but it was a black box 🧙.
+I asked Claude Code to write the flood-fill for the [mms](https://github.com/mackorone/mms) simulator. It worked on the first runs.
 
-So I read the code line by line and asked Claude to explain it to me. This post is not a tutorial. It is the list of things I ended up understanding, that caught my interest and that I wanted to share.
+After I read the code line by line and asked Claude to explain it to me. This post is not a tutorial. It is the list of things I ended up understanding, that caught my interest and that I wanted to share.
 
 I did not know the right words at the time. So I asked Mistral to write a proper prompt for me to get mms working. Here is the full prompt it gave me: <br>
 [floodfill_prompt.txt]({{ site.repo }}/algo/floodfill_prompt.txt).
@@ -92,7 +92,6 @@ Robot off: RAM is wiped. The walls must be written to non-volatile memory (EEPRO
 
 
 <br>
-
 # References
 
 - [Micromouse Online — Solving the maze](https://micromouseonline.com/micromouse-book/mazes-and-maze-solving/solving-the-maze/)

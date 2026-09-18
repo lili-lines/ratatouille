@@ -1,0 +1,16 @@
+condition,label,n,mean,std,std/mean %,MAD,5-95 %,p2p
+motorOFF,motor OFF (baseline),1500,2411.7,4.27,0.18,1.0,11,68
+motor130,"motor 130, all defenders",1500,2410.4,3.67,0.15,1.0,10,56
+motor130_noRC,"motor 130, no RC filter",1500,2411.6,3.50,0.15,1.0,9,58
+motor130_noCondD,"motor 130, no decoupling",1500,2452.7,4.32,0.18,1.0,10,86
+motor130_noCondR,"motor 130, no reservoir",1500,2378.2,4.66,0.20,2.0,11,82
+motor130_nostar,"motor 130, no star ground",1500,2247.4,4.03,0.18,2.0,12,62
+motor130_star,"motor 130, star ground only",1500,2499.6,2.77,0.11,1.0,7,42
+motor130_nofilter,"motor 130, no defender at all",1500,2426.0,4.55,0.19,3.0,15,41
+motor206,"motor 206, all defenders",1500,2410.5,4.11,0.17,1.0,11,66
+motor206_noRC,"motor 206, no RC filter",1500,2411.6,3.09,0.13,1.0,8,45
+motor206_noCondD,"motor 206, no decoupling",1500,2454.7,3.38,0.14,1.0,9,56
+motor206_noCondR,"motor 206, no reservoir",1500,2384.5,4.15,0.17,2.0,10,70
+motor206_nostar,"motor 206, no star ground",1500,2249.6,4.27,0.19,2.0,10,81
+motor206_star,"motor 206, star ground only",1500,2498.4,2.45,0.10,1.0,7,35
+motor206_nofilter,"motor 206, no defender at all",1500,2421.8,4.21,0.17,3.0,13,35

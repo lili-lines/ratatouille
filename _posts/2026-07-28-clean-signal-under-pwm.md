@@ -5,11 +5,12 @@ date: 2026-07-28 10:00:00 +0200
 tags: [electronics, hardware, signal, experiment]
 ---
 
+**What I learned** <br>
+The noise on the whisker line is real (~3.5 mV rms, the same at 10-bit and 12-bit), and it has two parts. The constant fuzz is reduced 3× by the four defenders working together, but no single one stands out. The rare spikes are not touched by them, they come from the setup. The experiment gives the value of the normal noise, ~90 counts peak-to-peak, which becomes the whisker tolerance for the rest of the project.
+
+
 * TOC
 {:toc}
-
-**What I learned** <br>
-The noise on the whisker line is real (~3.5 mV rms, the same at 10-bit and 12-bit). On this breadboard setup none of the four defenses reduces it measurably. But the experiment gives the value of the normal noise, ~90 counts peak-to-peak, which becomes the whisker tolerance for the rest of the project.
 
 
 ## 1. Pulse Width Modulation (PWM)
@@ -81,51 +82,53 @@ The noise defenses: <br>
 </div>
 
 **Protocol:** <br>
-Each step changes only one thing at a time, 2 vitesses de moteur 130 et 206. <br>
-col1 🚧 <br>
+Each step changes only one thing at a time, at 2 motor speeds, PWM 130 and 206. <br>
+
+<div class="two-col">
+<div class="col">
 . baseline = motor OFF, with 4 defenders <br>
 . 4 defenders, motor ON PWM running <br>
 . no defenders, motor ON <br>
 . star ground only, motor ON <br>
-
-col2 🚧 <br>
-. remove the RC filter only, motor ON <br>
-. remove the decoupling capacitor only, motor ON <br>
-. remove the reservoir capacitor only, motor ON <br>
-. break the star ground (daisy-chain), motor ON <br>
-
+</div>
+<div class="col">
+. remove RC filter only, motor ON <br>
+. remove decoupling capacitor only, motor ON <br>
+. remove reservoir capacitor only, motor ON <br>
+. break star ground (daisy-chain), motor ON <br>
+</div>
+</div>
+<br>
 
 Upload on the Teensy: <br>
-[xp2_pwm.cpp]({{ site.repo }}/algo/xp2_pwm.cpp)
-To record the data: <br>
-[xp2_pwm_log.py]({{ site.repo }}/algo/xp2_pwm_log.py)
-To extract the stats: <br>
-[xp2_pwm_compare.py]({{ site.repo }}/algo/xp2_pwm_compare.py)
+[xp2_pwm.cpp]({{ site.repo }}/algo/xp2_pwm.cpp) <br>
+To record the data: [xp2_pwm_log.py]({{ site.repo }}/algo/xp2_pwm_log.py) <br>
+To extract the stats: [xp2_compare_12bit.py]({{ site.repo }}/algo/xp2_compare_12bit.py)
 
 **Success criterion** <br>
-with the motor running, removing a defender makes the reading measurably noisier than with all four
+With the motor ON, removing a defender makes the reading measurably noisier than with all four
 
 **Result** <br>
 A first run was done at 10-bit (see Appendix A). Since the AS5600 is a 12-bit sensor, the experiment was redone at 12-bit, `analogReadResolution(12)` 0–4095.
 
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/xp_compare_all_12b.png' | relative_url }}" alt="Whisker signal for the 11 conditions at 12-bit, each centered on its own mean" style="max-width:100%; display:block; margin:0 auto;">
+  <img src="{{ '/assets/plot_xp/xp_compare_all_12b.png' | relative_url }}" alt="Whisker signal for the 11 conditions at 12-bit, each centered on its own mean" style="max-width:100%; display:block; margin:0 auto;">
   <figcaption style="text-align:center; font-size:0.85rem;">12-bit, in blue the baseline, in green all defenders, in purple one defender removed at a time.</figcaption>
 </figure>
 <br>
 
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/xp_stats_table_all_12b.png' | relative_url }}" alt="Table of the mean, standard deviation, relative std and peak-to-peak per condition at 12-bit" style="max-width:100%; display:block; margin:0 auto;">
-  <figcaption style="text-align:center; font-size:0.85rem;">The same numbers as a table. std/mean is used rather than std alone, because the magnet moves a little between conditions.</figcaption>
+  <img src="{{ '/assets/plot_xp/xp_stats_table.png' | relative_url }}" alt="Table of the mean, standard deviation, relative std and peak-to-peak per condition at 12-bit" style="max-width:100%; display:block; margin:0 auto;">
+  <figcaption style="text-align:center; font-size:0.85rem;">The same numbers as a table. std/mean rather than std alone, because the magnet moves a little between conditions. MAD = median absolute deviation, the constant fuzz, blind to the rare spikes. 5-95 % = width of the band that holds 90 % of the samples.</figcaption>
 </figure>
 <br>
 
+Data: the 15 recordings and the stats table, in [data_xp/as5600_12bit]({{ site.repo }}/assets/data_xp/as5600_12bit)
+
 . The noise is real. In volts, 10-bit and 12-bit give the same std, ~3.5 mV. A rounding artefact would have collapsed at 12-bit. <br>
-. The defenders do not reduce it. std/mean stays at 0.13–0.20 % whichever one is removed, same as the baseline. <br>
+. The defenders do reduce the noise, but not the part the std was looking at. The noise has two parts. The constant fuzz (MAD) is 1 count with the four defenders and 3 counts with none, three times thicker, and the 5-95 % band goes from 10 to 15 counts. The rare spikes, which set the peak-to-peak, are not reduced: 56-66 counts with the defenders, 35-41 without. They come from somewhere else, probably the magnet on its holder. <br>
 
-Success criterion not met: removing a defender does not make the reading noisier. 
-
-🚧 todo : finalement les defenders ont un effet, ok ne reduit l'ampleur les bruit, mais la quantité.
+Success criterion partly met: without the defenders the reading is measurably fuzzier (×3), but no single defender stands out, they work as a group. The spikes are not their job.
 
 What the experiment gives instead is the value of the normal noise: motor ON or OFF, the reading stays within ~90 counts peak-to-peak. This is the whisker tolerance used in [Flash the critter]({% post_url 2026-08-20-flash-the-critter %}). It was measured on a breadboard with one unloaded motor, so it must be checked again on the assembled mouse.
 <br><br>
@@ -140,13 +143,13 @@ What the experiment gives instead is the value of the normal noise: motor ON or 
 The 10-bit run, for comparison
 
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/xp_compare_all.png' | relative_url }}" alt="Whisker signal for the 11 conditions, with std and peak-to-peak" style="max-width:100%; display:block; margin:0 auto;">
+  <img src="{{ '/assets/plot_xp/xp_compare_all.png' | relative_url }}" alt="Whisker signal for the 11 conditions, with std and peak-to-peak" style="max-width:100%; display:block; margin:0 auto;">
   <figcaption style="text-align:center; font-size:0.85rem;">10bits precision, in blue the baseline, in green all defenders, in purple one defender removed at a time</figcaption>
 </figure>
 <br>
 
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/xp_stats_table.png' | relative_url }}" alt="Table of the mean, standard deviation and peak-to-peak per condition" style="max-width:100%; display:block; margin:0 auto;">
+  <img src="{{ '/assets/plot_xp/xp_stats_table_10b.png' | relative_url }}" alt="Table of the mean, standard deviation and peak-to-peak per condition" style="max-width:100%; display:block; margin:0 auto;">
   <figcaption style="text-align:center; font-size:0.85rem;">The same numbers as a table</figcaption>
 </figure>
 <br>

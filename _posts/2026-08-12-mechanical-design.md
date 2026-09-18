@@ -8,83 +8,75 @@ tags: [mechanics, hardware]
 * TOC
 {:toc}
 
-🚧 todo : ajouter la position de l'essieu, la distance avec le nez, justifier la position des moustache également + indiquer la marque de la mesure d'odometry
-
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/mouse_v0.png' | relative_url }}" alt="Design initial de la souris" style="max-width:100%; border-radius:6px;">
-  <figcaption style="text-align:center; font-size:0.85rem;">Design d'assemblage des composants V0, en marron les plaques acrylique découpées au laser.</figcaption>
+  <img src="{{ '/assets/img/mouse_v0.png' | relative_url }}" alt="Initial design of the mouse" style="max-width:100%; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Assembly design of the components, V0. In brown the laser-cut acrylic plates.</figcaption>
 </figure>
 <br>
 
-Ce post détaille le processus de fabrication du corps et l'assemblage des composants sur le châssis. Ci-dessus le design initial imaginé. Pour une première composition j'utilise des supports en plastique acrylique découpés au laser.
+This post covers how the body was made and how the components were assembled on the chassis. Above, the initial design. For a first build I use laser-cut acrylic plates as supports.
 
-Au départ le châssis était prévu en impression 3D (c.f. [BOM]({% post_url 2026-06-28-bom %})), mais pour un premier montage la découpe laser est plus simple et les itérations sont plus rapide. Il est plus facile de repercer ou d'élargir un trou à la main pour ajuster le positionnement. L'impression 3D reste pertinente pour une v2, une fois la géométrie figée.
+At first the chassis was planned in 3D print (see [BOM]({% post_url 2026-06-28-bom %})), but for a first assembly laser cutting is simpler and the iterations are faster. It is easier to re-drill or widen a hole by hand to adjust a position. 3D printing stays relevant for a v2, once the geometry is settled.
 
-Pour **le corps**, des supports en forme de rectangle pour valider le positionnement des composants. C'est ici qu'on va déterminer la taille de la souris : longueur, largeur, hauteur. Le mur mesurant 50mm, les moustaches doivent être positionnées en dessous pour détecter le mur.
+For **the body**, rectangular plates to validate the position of the components. This is where the size of the mouse is set: length, width, height. The wall is 50 mm high, so the whiskers must sit below that to detect it.
 
-Pour **les moustaches**, une structure en sandwich qui va maintenir le pivot des moustaches stable et droit d'un côté et de l'autre. La matière de la moustache doit être solide pour plus de précision. Enfin un mécanisme doit être prévu pour ramener la moustache à un état neutre défini.
+For **the whiskers**, a sandwich structure that keeps the whisker pivot stable and straight on both sides. The whisker material must be stiff for precision. And a mechanism must bring the whisker back to a defined neutral position.
 
-## 1. Les contraintes
+## 1. The constraints
 
-#### 1.1 Mécaniques
+#### 1.1 Mechanical
 
-La souris doit être suffisamment petite pour circuler dans le labyrinthe et avoir de la marge dans les virages. Et également pouvoir faire les diagonales en ligne droite si on y arrive. Donc calculons l'espace libre dans une diagonale : <br>
+The mouse must be small enough to move around the maze with some margin in the turns. And, if we get there, to run the diagonals in a straight line. So let's compute the free space in a diagonal: <br>
 
 <div style="display:flex; flex-wrap:nowrap; gap:16px; align-items:center;" markdown="1">
 <figure style="margin:0; flex-shrink:0;">
-  <img src="{{ '/assets/img/diag_mesure_transp.png' | relative_url }}" alt="Calcul de l'espace libre en diagonale" style="width:500px; border-radius:6px;">
-  <figcaption style="text-align:center; font-size:0.85rem;">Schéma du labyrinthe illustrant le calcul de l'espace libre.</figcaption>
+  <img src="{{ '/assets/img/diag_mesure_transp.png' | relative_url }}" alt="Free space in a diagonal" style="width:500px; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Maze diagram for the free space computation.</figcaption>
 </figure>
 <div style="flex:1; min-width:0; font-size:0.85em;" markdown="1">
-**Théorème de Pythagore :**
+**Pythagoras:**
 
 $$\begin{aligned} \text{diag}^2 &= c^2 + c^2 \\ \text{diag} &= \sqrt{2} \times c \end{aligned}$$
 
-Notre côté connu 180mm devient l'hypoténuse, on cherche donc le côté perpendiculaire à la trajectoire :
+Our known side, 180 mm, becomes the hypotenuse, so we look for the side perpendicular to the path:
 
 $$\begin{aligned} c &= \frac{\text{diag}}{\sqrt{2}} = \frac{180}{\sqrt{2}} \approx 127.28\text{mm} \end{aligned}$$
 
-On calcule la diagonale du poteau 12mm :
+The diagonal of the 12 mm post:
 
-$$\text{diag}_{\text{poteau}} = \sqrt{2} \times 12 \approx 16.97\text{mm}$$
+$$\text{diag}_{\text{post}} = \sqrt{2} \times 12 \approx 16.97\text{mm}$$
 
-On soustrait cette diagonale à notre côté :
+Subtract it from our side:
 
-$$\begin{aligned} \text{Espace libre} &= c - \text{diag}_{\text{poteau}} \\ &= 127.28 - 16.97 \\ & \approx 110.31\text{mm} \end{aligned}$$
+$$\begin{aligned} \text{Free space} &= c - \text{diag}_{\text{post}} \\ &= 127.28 - 16.97 \\ & \approx 110.31\text{mm} \end{aligned}$$
 </div>
 </div>
 <br>
 
-Laissons une marge donc on va fixer **70-80mm** de large. Plus la souris est petite et plus elle pardonne les petites erreurs de positionnement. Et plus on peut optimiser la vitesse en ligne droite et en diagonale, mais c'est pas forcement la priorité pour la v1.
+Let's keep a margin and set the width at 70-80 mm. The smaller the mouse, the more it forgives small position errors. And the more speed we can get in straight lines and diagonals, but that is not the priority for the v1.
 
-Chiffrons ce « pardon ». Dans un couloir droit, la largeur libre est la cellule moins l'épaisseur du poteau, soit $180 - 12 = 168$ mm. La souris centrée à 80 mm laisse donc de chaque côté :
+In a straight corridor, the free width is the cell minus the post, $180 - 12 = 168$ mm. An 80 mm mouse in the middle leaves on each side:
 
 $$\frac{168 - 80}{2} = 44\ \text{mm}$$
 
-**44 mm par côté, c'est tout le budget d'erreur de navigation.** Chaque degré de dérive du cap et chaque millimètre d'erreur d'odométrie viennent y puiser. C'est ce chiffre qui fixe les tolérances des tests dans [Flash the critter]({% post_url 2026-08-20-flash-the-critter %}). À 70 mm de large on monterait à 49 mm, cinq de plus.
+44 mm per side, that is the free space. This is the number that sets the test tolerances in [Flash the critter]({% post_url 2026-08-20-flash-the-critter %}).
 
-Dans la longueur, le point de référence est le **milieu de l'essieu** : c'est la position que l'odométrie calcule, et le point autour duquel le robot pivote. Le nez est à **70 mm** devant. Essieu au centre d'une cellule, il reste entre le nez et le mur d'en face :
+Lengthwise, the reference point is the middle of the axle: it is the position the odometry computes, and the point the robot pivots around. 
+The motors must be aligned on the same axis, or the robot does not run straight.
+The whisker pivot must be perfectly stable and aligned with the AS5600 chip that reads the magnet position. The whiskers must sit at a height < 50 mm.
 
-$$84 - 70 = 14\ \text{mm}$$
-
-C'est la course de la moustache avant, dont le rôle est précisément de toucher ce mur.
-
-Concernant les moteurs, ils doivent être aligné sur le même axe, sinon le robot ne roule pas droit.
-
-Le pivot de la moustache doit être parfaitement stable et aligné avec la puce AS5600 qui va lire l'angle de l'aimant. Les moustaches doivent être positionnées à une hauteur < 50mm.
-
-Pour le placement des vis la distance du centre du trou au bord de la plaque doit être ≥ à 2 × le diamètre du trou, donc pour les vis : <br>
-M2 = 2x Ø2,2mm → 5mm du bord <br>
-M3 = 2x Ø3,2mm → 7mm du bord
+For the screws, the distance from the centre of the hole to the edge of the plate must be ≥ 2 × the hole diameter: <br>
+M2 = 2 × Ø2.2 mm → 5 mm from the edge <br>
+M3 = 2 × Ø3.2 mm → 7 mm from the edge
 
 #### 1.2 Signal
 
-Pour que le signal soit propre il faut faire attention aux composants bruyants. Donc séparer physiquement les composants sensibles au bruit : le gyro et les capteurs AS5600, des composants générant du bruit : le moteur, buck et driver.
+For a clean signal, watch the noisy components. So physically separate the noise-sensitive ones, the gyro and the AS5600 sensors, from the noise-making ones, the motors, the buck and the driver.
 
 <div style="display:flex; flex-wrap:nowrap; gap:25px; align-items:center;" markdown="1">
-<img src="{{ '/assets/img/taxis_bouton.gif' | relative_url }}" alt="Boutons de pilotage" style="width:350px; flex-shrink:0; display:block; margin-top:35px; border-radius:10px;">
+<img src="{{ '/assets/img/taxis_bouton.gif' | relative_url }}" alt="Control buttons" style="width:350px; flex-shrink:0; display:block; margin-top:35px; border-radius:10px;">
 <div style="flex:1; min-width:0;" markdown="1">
-#### 1.3 Piloter : exploration, retry, reset
+#### 1.3 Driving: explore, retry, reset
 
 <style>
 .led-dot { display:inline-block; width:14px; height:14px; border-radius:50%; background:#3F00FF; margin:0 4px; vertical-align:middle; }
@@ -96,62 +88,83 @@ Pour que le signal soit propre il faut faire attention aux composants bruyants. 
 @keyframes led-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.15; } }
 </style>
 
-Ajouter des boutons : <br>
-<span class="led-dot led-slow"></span> GO run d'exploration <br>
-<span class="led-dot led-fast"></span> RETRY recommence l'étape actuelle <br>
-<span class="led-dot led-triple led-orange"></span> RESET tout effacer <br>
-<span class="led-dot led-fixed"></span> Phase d'exploration ✅ retour commence
+Add buttons: <br>
+<span class="led-dot led-slow"></span> GO, exploration run <br>
+<span class="led-dot led-fast"></span> RETRY, restart the current step <br>
+<span class="led-dot led-triple led-orange"></span> RESET, erase everything <br>
+<span class="led-dot led-fixed"></span> Exploration done ✅ the return starts
 </div>
 </div>
 
 
-## 2. Châssis et moustaches
+## 2. Chassis and whiskers
 
-Dessiner les pièces avec le logiciel vectoriel = Inkscape <br>
-Caractéristiques des supports : <br>
-. matériel = acrylique car + léger et solide <br>
-. couleur = transparent <br>
-. épaisseur = 2mm <br>
-. taille = on va essayer plusieurs longueurs <br>
-. fichier SVG = [body_v1.svg]({{ site.repo }}/mecha/body_v1.svg) <br>
-N'ayant pas de découpeuse laser, j'ai passé commande dans un magasin.
+Draw the parts in a vector software = Inkscape <br>
+. material = transparent acrylic, light and strong <br>
+. thickness = 2 mm <br>
+. SVG file = [body_v1.svg]({{ site.repo }}/mecha/body_v1.svg) <br>
 
-[photo du résultat après découpe = body_lazer_cut.jpg]
+<div class="two-col">
+<div class="col">
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/body_lazer_cut.jpg' | relative_url }}" alt="The acrylic plates after laser cutting" style="width:100%; display:block; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Result of the laser cut</figcaption>
+</figure>
+</div>
+<div class="col">
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/whisker_type.png' | relative_url }}" alt="The whisker materials tested: aluminium, plastic, piano wire, copper" style="width:100%; display:block; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">The whisker materials to test</figcaption>
+</figure>
+</div>
+</div>
 
-Les matières des moustaches à tester :
-
-[photo alu, plastique, corde de piano, cuivre]
-
-Pour la v1 on part sur **la tige alu Ø0.5mm**. C'est le meilleur compromis parmi les matières testées : assez rigide pour transmettre le contact au pivot sans se plier n'importe comment (contrairement au plastique), mais assez souple pour ne pas repousser le robot loin du mur (contrairement à la corde de piano). Elle se coupe et se met en forme facilement, ce qui compte pour une v1 où on ajuste souvent. Les autres matières restent à retester en v2, une fois la géométrie du pivot stabilisée.
+For the v1 we go with the Ø0.5 mm aluminium rod. It is the best compromise among the materials tested: stiff enough to pass the contact to the pivot without bending any which way, but soft enough not to push the robot away from the wall. It cuts and shapes easily, which matters for a v1 where we adjust often.
 
 
 ## 3. Validation
 
-AUSSI = check each component with a multimeter
+<figure style="margin:0;">
+  <img src="{{ '/assets/img/monstre_cie.gif' | relative_url }}" alt="Monsters, Inc." style="width:400px; max-width:100%; display:block; margin:0 auto; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Monsters, Inc., 2001</figcaption>
+</figure>
 
-Cette partie est itérative prototype, critère de validation, mesure, si le critère n'est pas respecté, alors on modifie le prototype est on remesure.
+Validation is iterative, like Boo with Randall Boggs in Monsters, Inc.: we change things until we are happy. 
 
-Les critères sont : la hauteur des moustaches < 50mm, l'ensemble est stable, le centre de gravité et le poids sont ok, la prise teensy est accessible, les boutons egalement.
+**Criteria** <br>
+. whisker height < 50 mm ✅ <br>
+. the whole thing is stable ✅ <br>
+. centre of gravity and weight are ok ✅ <br>
+. the Teensy port and the buttons are reachable ✅<br>
 
-Validation empiriquement :
-
-**L'assemblage** <br>
-Premier problème les moustaches sont trop haute, alors il faut descendre les AS5600 à l'étage 0 et la c'est ok.
-Il est difficile de faire tombé les trous en face, car certain composants sont mals coupés comme le module AS5600. Alors prévoir une marge ou alors positionné à la main et utiliser une perceuse. Puis mesuré et ajuster le dessin vectoriel pour une v2. A part les moustaches le reste des critères sont respectés. <br>
-C'est l'étape des galères Ikéa, les pièces qui finalement vont mieux ailleurs, celle qu'on ajoute et retire. Montage, démontage... prévoir des supports pour les tests, percer plusieurs trous pour essayer des positions de vis différentes. Iterer jusqu'à ce que le résultats satisfasse les critères et ensuite faire au propre pour la v1. <br>
+**Notes** <br>
+First problem, the whiskers are too high, so the AS5600 go down to level 0 and then it is ok.
+Getting the holes to line up is hard, because some components are badly cut, like the AS5600 module. So plan a margin, or position by hand and use a drill. Then measure and adjust the vector drawing for a v2. Apart from the whiskers, the other criteria are met. <br>
+This is the IKEA stage: the parts that end up better somewhere else, the ones we add and remove. Assemble, disassemble... plan supports for the tests, drill several holes to try different screw positions. Iterate until the result meets the criteria, then make a clean version for the v1. <br>
 
 <figure style="margin:0;">
-  <img src="{{ '/assets/img/floor_mouse.png' | relative_url }}" alt="Positionnement v1 sur le plan du labyrinthe" style="max-width:100%; border-radius:6px;">
-  <figcaption style="text-align:center; font-size:0.85rem;">Positionnement validé pour la v1</figcaption>
+  <img src="{{ '/assets/img/floor_mouse.png' | relative_url }}" alt="v1 layout on the maze plan" style="max-width:100%; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">Layout validated for the v1</figcaption>
 </figure>
 
 
-## 4. Réflexion
-Il faudrait améliorer le pivot des moustaches qui pour l'instant est un peu bancal, mais ça sera pour la v2.
-La forme rectangle peut s'accrocher + facilement au coin en cas de dérive angulaire. Donc pour une v2 tester une forme circulaire ou octogonale.
+## 4. Thoughts
+
+<div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; align-items:flex-start;">
+<figure style="margin:0; flex:0 1 auto;">
+  <img src="{{ '/assets/img/IMG_9714.JPG' | relative_url }}" alt="" style="height:320px; max-width:100%; display:block; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">pivot, option 1</figcaption>
+</figure>
+<figure style="margin:0; flex:0 1 auto;">
+  <img src="{{ '/assets/img/IMG_9726.jpg' | relative_url }}" alt="" style="height:320px; max-width:100%; display:block; border-radius:6px;">
+  <figcaption style="text-align:center; font-size:0.85rem;">pivot, option 2</figcaption>
+</figure>
+</div>
+
+The whisker pivot should be improved, it is a bit wobbly for now, but that will be for the v2.
+A rectangular shape catches the corners more easily when the heading drifts. So for a v2, try a round or octagonal shape.
 
 # References
 
 - [Micromouse Online — Chassis Layout](https://micromouseonline.com/micromouse-book/the-chassis/chassis-layout/)
 - [Demo Micromouse Robot — Sam Dale](https://www.spdale.com/projects/demo-micromouse)
-

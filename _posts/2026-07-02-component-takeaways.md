@@ -43,12 +43,11 @@ The connectors :
 </div>
 <br>
 
-What I keep from writing these cards: every component boils down to IN → OUT, and most of the traps are voltage ones. 3.3 V logic that is not 5 V tolerant, power lines that must never reach the MCU, an analog output that scales with VCC.
 
+<br>
 # References
 
 The sources behind the cards :
-
 - [Teensy 4.0 — pjrc.com](https://www.pjrc.com/store/teensy40.html), the 40 pins pinout
 - [AS5600 — ams-osram](https://ams-osram.com/products/sensor-solutions/position-sensors/ams-as5600-position-sensor), datasheet of the magnetic angle sensor
 - [MPU-6050 module — components101](https://components101.com/sensors/mpu6050-module), pinout & registers

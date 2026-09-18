@@ -172,18 +172,18 @@
   title: "battery"
   images:
     - src: battery.jpg
-  role: "🚧 : Battery. Powers the robot. 2S = en série, SM 3-pin = power + équilibre"
+  role: "LiPo 2S battery, 7.4 V 800 mAh. Powers the whole robot. <strong style='color:#d62828;'>The most fragile component of all!</strong>"
   in:
-    - "power charge yellow (?) (7.4 V Li-ion 2S) ⚡"
+    - "power charger, via the SM 3-pin balance lead ⚡"
   out:
-    - "power (7.4 V → MP1584) ⚡"
-    - "+ rouge ~ 7.4 V/8.4 V"
-    - "- noir ground = GND (0 V)"
-    - "yellow = for the charger, no connect to 🐭"
+    - "red = +, 7.4 V nominal, 8.4 V full & 6.0 V empty, → switch"
+    - "black - = GND (0 V)"
+    - "yellow = balance lead, 2S cells, 3.7 V each"
   warn:
-  - "prévoir comment recharger la batterie sans la déconnecter du robot"
-  - "🚧 todo : explication de ce qu'il faut"
-  - "attention à l'explosion 💥"
-  - "important pour la charge mettre les couleurs en face, c'est le moment 
-    ou on peut se bruler donc attention, une fois les rouges en face des 
-    rouges, noir en face des noirs... on branche, si ça fume pas c'est ok"
+    - "2S = 2 cells in series, 3.7 V each."
+    - "charging: match the colours before plugging. This is the moment a LiPo can burn 💥"
+    - "never charge unattended"
+  zoom:
+    - "C-rating = how fast it can empty: 800 mAh × 10C = 8 A max, above the 3.2 A peak of the robot"
+    - "the balance lead yellow lets the charger equalise the 2 cells"
+    - "800 mAh is more than needed: a 250 mAh 45C would still give 11 A and weigh 30 g less (v2)"
