@@ -411,8 +411,23 @@ abbr[data-bubble]:focus::after {
   }
 }
 
+// Medium screens: the TOC is a sticky column inside the content area
+@media (min-width: 1000px) and (max-width: 1279px) {
+  .home { display: flex; gap: 20px; align-items: flex-start; }
+  #side-toc {
+    position: sticky;
+    top: 20px;
+    flex: 0 0 185px;
+    margin-left: -50px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .home-main { flex: 1; }
+}
+
 // Narrow screens: the TOC becomes a plain list on top of the page
-@media (max-width: 1279px) {
+@media (max-width: 999px) {
   #side-toc {
     margin-bottom: $spacing-unit;
     padding: 10px 12px;
