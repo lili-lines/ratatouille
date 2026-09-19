@@ -2,39 +2,103 @@
 layout: default
 ---
 
+{%- comment -%}
+Single-page home: every post is rendered one under the other, oldest first,
+with a sticky table of contents in the left margin (built by the script below).
+Each post keeps its own page (see _layouts/post.html), so post_url links still work.
+{%- endcomment -%}
+
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
 
-  {{ content }}
+  <nav id="side-toc" aria-label="Table of contents">
+    <p class="side-toc-title">Contents</p>
+    <ul></ul>
+  </nav>
 
-  {%- if site.posts.size > 0 -%}
-    <ul class="post-list">
-      {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
-        {%- if post.tags.size > 0 -%}
-          <span class="post-tags-inline">
-            {%- for tag in post.tags -%}
-              <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>
-            {%- endfor -%}
-          </span>
-        {%- endif -%}
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
+  <div class="home-main">
+    {%- if page.title -%}
+      <h1 class="page-heading">{{ page.title }}</h1>
+    {%- endif -%}
 
-    {%- comment -%} "subscribe via RSS" link intentionally removed {%- endcomment -%}
-  {%- endif -%}
+    {{ content }}
+
+    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    {%- for post in site.posts reversed -%}
+    <article class="post home-post" data-slug="{{ post.slug }}">
+      <header class="post-header">
+        <h1 class="post-title" id="{{ post.slug }}">
+          <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        </h1>
+        <p class="post-meta">
+          {{ post.date | date: date_format }}
+          {%- if post.tags.size > 0 -%}
+            <span class="post-tags-inline">
+              {%- for tag in post.tags -%}
+                <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>
+              {%- endfor -%}
+            </span>
+          {%- endif -%}
+        </p>
+      </header>
+      <div class="post-content">
+        {{ post.content }}
+      </div>
+    </article>
+    {%- endfor -%}
+  </div>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var list = document.querySelector('#side-toc ul');
+  var entries = [];
+
+  document.querySelectorAll('.home-post').forEach(function (art) {
+    var slug = art.dataset.slug;
+    var body = art.querySelector('.post-content');
+
+    // Prefix every heading id with the post slug, so "## 1. ..." in two
+    // different posts do not share the same anchor. Rewrite in-post links too.
+    body.querySelectorAll('[id]').forEach(function (el) { el.id = slug + '-' + el.id; });
+    body.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.setAttribute('href', '#' + slug + '-' + a.getAttribute('href').slice(1));
+    });
+
+    // One entry per post title, then one per h2 of that post
+    var title = art.querySelector('.post-title');
+    var li = document.createElement('li');
+    li.className = 'toc-post';
+    li.innerHTML = '<a href="#' + slug + '">' + title.textContent.trim() + '</a>';
+    var sub = document.createElement('ul');
+    body.querySelectorAll('h2[id]').forEach(function (h) {
+      var s = document.createElement('li');
+      s.innerHTML = '<a href="#' + h.id + '">' + h.textContent.trim() + '</a>';
+      sub.appendChild(s);
+      entries.push({ el: h, link: s.firstChild });
+    });
+    if (sub.children.length) li.appendChild(sub);
+    list.appendChild(li);
+    entries.push({ el: title, link: li.firstChild });
+  });
+
+  // Highlight the entry of the section currently at the top of the screen
+  var current = null;
+  function update() {
+    var y = window.scrollY + 120, best = null;
+    entries.forEach(function (e) { if (e.el.offsetTop <= y) best = e; });
+    if (best === current) return;
+    if (current) current.link.classList.remove('active');
+    if (best) {
+      best.link.classList.add('active');
+      // keep the active entry visible inside the scrolling sidebar
+      var nav = document.getElementById('side-toc');
+      var r = best.link.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) best.link.scrollIntoView({ block: 'nearest' });
+    }
+    current = best;
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+});
+</script>

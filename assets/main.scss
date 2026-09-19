@@ -367,3 +367,62 @@ abbr[data-bubble]:focus::after {
   transition: 0.15s;
 }
 .compo-thumbs a:hover img { opacity: 1; border-color: $brand-color; }
+
+// ============================================================
+//  Single-page home: all posts in one column + sticky side TOC
+//  (markup in _layouts/home.html)
+// ============================================================
+.home { position: relative; }
+.home-main { min-width: 0; }
+
+.home-post {
+  margin-top: $spacing-unit * 2.5;
+  padding-top: $spacing-unit;
+  border-top: 2px solid $tag-color;
+  .post-title { margin-bottom: 4px; }
+  .post-title a { color: $text-color; text-decoration: none; }
+  .post-title a:hover { color: $brand-color; }
+  [id$="markdown-toc"] { display: none; }   // each post's own TOC: the sidebar replaces it
+}
+
+#side-toc {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  ul { list-style: none; margin: 0; padding: 0; }
+  ul ul { padding-left: 12px; margin-bottom: 6px; }
+  li { margin: 1px 0; }
+  a { color: $text-color; text-decoration: none; opacity: 0.7; display: block; padding: 1px 6px; border-radius: 4px; }
+  a:hover { opacity: 1; color: $brand-color; }
+  a.active { opacity: 1; color: $brand-color; font-weight: 700; background: #f6e9fb; }
+  .toc-post > a { font-weight: 700; opacity: 0.9; margin-top: 6px; }
+  .side-toc-title { font-weight: 700; margin: 0 0 8px 6px; color: $brand-color; }
+}
+
+// Wide screens: the TOC sits in the left margin, outside the content column
+@media (min-width: 1280px) {
+  #side-toc {
+    position: fixed;
+    top: 90px;
+    left: calc(50% - #{$content-width * 0.5} - 260px);
+    width: 230px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+}
+
+// Narrow screens: the TOC becomes a plain list on top of the page
+@media (max-width: 1279px) {
+  #side-toc {
+    margin-bottom: $spacing-unit;
+    padding: 10px 12px;
+    border: 1px solid $tag-color;
+    border-radius: 6px;
+    columns: 2;
+    column-gap: 24px;
+    .toc-post { break-inside: avoid; }
+  }
+}
+@media (max-width: 600px) {
+  #side-toc { columns: 1; }
+}

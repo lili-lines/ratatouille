@@ -13,7 +13,7 @@ Checking the components and the circuit with a multimeter really matters, it cat
 {:toc}
 
 
-Here we go: check that everything is connected, that current flows, and that the information is sent and interpreted correctly. <br>
+Now check that everything is connected, that current flows, and that the information is sent and interpreted correctly. <br>
 First, define the acceptable error margin to validate each test.
 
 **The error margin** <br>
@@ -129,7 +129,7 @@ Combined path, 30 cm + 90°: push the robot in an L. Read the last line of `head
 
 Upload on the Teensy: <br>
 . [check1_xp_system.cpp]({{ site.repo }}/algo/check1_xp_system.cpp) <br>
-. [xp_log_system.py]({{ site.repo }}/algo/xp_log_system.py) <br>
+. [check1_xp_system_log.py]({{ site.repo }}/algo/check1_xp_system_log.py) <br>
 
 </div>
 <div class="col" style="flex:1.1;" markdown="1">

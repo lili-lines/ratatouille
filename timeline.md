@@ -2,6 +2,7 @@
 layout: page
 title: Timeline
 permalink: /timeline/
+published: false
 ---
 
 ## 🐭 Timeline Micromouse : June 12 → August 22, 2026
