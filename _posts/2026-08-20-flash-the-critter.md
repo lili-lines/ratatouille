@@ -2,22 +2,25 @@
 layout: post
 title: Flash the critter
 date: 2026-08-20 10:00:00 +0200
-tags: [electronics, firmware]
+tags: [electronics, firmware, experiment]
 ---
 
+<div class="learned">
+<img class="learned-icon" src="{{ '/assets/img/line.png' | relative_url }}" alt="">
+<div class="learned-text" markdown="1">
 **What I learned** <br>
-Checking the components and the circuit with a multimeter really matters, it catches errors like pins that are not connected. When working with magnetic fields, keep an eye on how close they are to each other, as with the AS5600. The noise measured on the breadboard came from the setup, not from the electronics: on the assembled robot it is 7× lower, so that is where it must be measured. Setting tolerances before testing is essential. The distance computation has to be reworked for a v2.
-
+Checking the components and the circuit with a multimeter really matters, it catches errors like pins that are not connected. When working with magnetic fields, keep an eye on how close they are to each other. The noise measured on the breadboard came from the setup, not from the electronics. On the robot it is 7× lower. Setting tolerances before testing is essential.
+</div>
+</div>
 
 * TOC
 {:toc}
 
-
-Now check that everything is connected, that current flows, and that the information is sent and interpreted correctly. <br>
-First, define the acceptable error margin to validate each test.
+First power on. Everything is checked one step at a time, then the mouse goes on the floor.
+Now check that everything is connected, that current flows, and that the information is sent and interpreted correctly. First, define the acceptable error margin to validate each test.
 
 **The error margin** <br>
-Between the wall and the mouse there is 44 mm on each side, see [Mechanical design]({% post_url 2026-08-12-mechanical-design %}). This value sets our error margins. For the heading, the error accumulates along the path.
+Between the wall and the mouse there is 44 mm on each side, see [Mechanical design]({% post_url 2026-08-12-mechanical-design %}). This value sets our (→ the) error margins. For the heading, the error accumulates along the path.
 
 <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
 <div style="flex:0 0 auto;" markdown="1">
@@ -48,7 +51,7 @@ Table 2: Distance error,<br>becomes a lateral drift after a 90° turn
 {: .table-caption}
 </div>
 <div style="flex:1; min-width:240px;" markdown="1">
-(2) The distance error is proportional to the distance travelled. It costs at the turn: turn 20 mm too late and the nose can touch the wall. At ±2 % we hold 12 cells before touching.
+(2) The distance error is proportional to the distance travelled. It costs at the turn: turn 20 mm too late and the nose can touch the wall. At ±2 % we hold (→ the mouse holds) 12 cells before touching.
 </div>
 </div>
 
@@ -59,7 +62,9 @@ Table 2: Distance error,<br>becomes a lateral drift after a 90° turn
 ℹ️ Note: a constant error is easier to correct than an unstable one.
 
 
-## 1. USB test, gyro, counters and whiskers response
+## 1. USB test
+
+#### 1.1 Test gyro, counters and whiskers response
 
 <div class="two-col">
 <div class="col" markdown="1">
@@ -74,7 +79,7 @@ Observation: the idea is to check that the sensors work and are read correctly.
 <div class="col" markdown="1">
 
 **Protocol** <br>
-The motors are stopped, `STBY LOW`. We turn the wheels by hand.
+The motors are stopped, `STBY LOW`. We turn the wheels by hand. (→ I turn the wheels by hand.)
 Watch the sensor values in the Arduino Serial Monitor: the values are read continuously.
 
 Upload on the Teensy: <br>
@@ -85,7 +90,7 @@ Upload on the Teensy: <br>
 
 |---|---|---|
 | Observable | Success criterion | Result |
-| gyro | after calibration, the value follows the movement of the mouse, plus a drift over time | ✅ |
+| gyro | after calibration[^1], the value follows the movement of the mouse, plus a drift over time | ✅ |
 | 2 wheel encoders | react when the wheels are turned by hand, one way (+) and the other (−) | no reaction from the right encoder; testing the signal path with the multimeter showed a missing solder joint; after fixing it the signal is ✅ |
 | 3 AS5600 | the chips react to the movement of their magnet over the 0-4095 range | initially the 3 were placed side by side, 2 of them were unstable: the AS5600 chips being that close probably disturb each other's magnetic field. The middle module was moved to level 1 with the chip facing down, to keep its pivot position without changing the structure. After that the signals are ✅ |
 
@@ -93,7 +98,7 @@ Table 3: Serial Monitor observations
 {: .table-caption}
 
 
-## 2. USB test, motors, buttons, trajectory, turn
+#### 1.2 Test motors, buttons, trajectory, turn
 
 Tolerance: <br>
 . whisker at rest: ~10 counts peak-to-peak (12 bits)
@@ -107,7 +112,7 @@ Check that the position and contact sensors return the right information, and th
 . Arduino Serial Monitor <br>
 . Python <br>
 
-#### 2.1 By hand, motors OFF
+#### 1.2.1 By hand, motors OFF
 
 **Protocol** <br>
 <div class="two-col">
@@ -158,7 +163,7 @@ The mouse underestimates the distance by 15 %. The cause is not identified, to i
 ℹ️ The peak-to-peak value of the AS5600 signal on the assembled mouse is ~10, in the end 7 times lower than on the breadboard where the noise was ~70.
 
 
-#### 2.2 Autonomous on USB, motors ON
+#### 1.2.2 Autonomous on USB, motors ON
 
 **Protocol** <br>
 . with the motors ON, the robot must travel on its own, in a straight line, the requested distance of 30 cm <br>
@@ -206,7 +211,7 @@ Table 5: Results with motors ON
 </figure>
 
 
-## 3. Battery test
+## 2. Battery test
 
 <div class="two-col">
 <div class="col" markdown="1">
@@ -272,7 +277,14 @@ The error is not the same at each speed: the distance error changes sign when th
   </figure>
 </div>
 
+<br>
 
-# References
+That is the end of the v1. The mouse runs straight, turns correctly, and reacts to its whiskers. It still under-reads distance by 15 %, and the cause is not found yet.
 
-- [joshuaccl/Micromouse (GitHub)](https://github.com/joshuaccl/Micromouse), STM32 micromouse firmware with dedicated branches for gyro/encoder calibration and wall tracking
+This first step taught me the basics of electricity and electronics, a bit of mechanics, and which components make a small autonomous robot that explores its space. I also started 3D drawing and 3D printing. And above all a way of working, one experiment at a time, a protocol, a success criterion set before the measurement, and the result written down even when it is a failure. That is where most of the learning came from. In 10 weeks, from a blank BOM to a robot on the floor.
+
+Now on to the v2, a stiffer whisker pivot, an oval body, a smaller battery, and the wheel encoder mystery to solve. The adventure goes on.
+
+<br>
+
+[^1]: [joshuaccl/Micromouse (GitHub)](https://github.com/joshuaccl/Micromouse), STM32 micromouse firmware with dedicated branches for gyro/encoder calibration and wall tracking

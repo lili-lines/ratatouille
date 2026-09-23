@@ -8,9 +8,11 @@ tags: [algo, mms]
 * TOC
 {:toc}
 
-#### 1. Flood-fill 🤖
+On the software side, one of the classics is the flood-fill algorithm[^1]: it spreads through the maze like a liquid, then gives the shortest path. Here is how it works.
 
-I asked Claude Code to write the flood-fill for the [mms](https://github.com/mackorone/mms) simulator. It worked on the first runs.
+#### 1. Claude I want a Flood-fill 🤖
+
+I asked Claude Code to write the flood-fill for the mms[^2] simulator. It worked on the first runs.
 
 After I read the code line by line and asked Claude to explain it to me. This post is not a tutorial. It is the list of things I ended up understanding, that caught my interest and that I wanted to share.
 
@@ -31,9 +33,7 @@ $$d(\text{cell}) = 1 + \min_{n}\, d(n), \qquad d(\text{goal}) = 0$$
 $n$ = the neighbours with no wall in between <br>
 $d$ = smallest distance to the goal among the neighbours, plus 1
 
-Every cell gets its distance to the goal. The mouse then walks downhill (big → small) until it reaches $0$.
-
-More detailed explanations in the References at the end of this post.
+Every cell gets its distance to the goal. The mouse then walks downhill (big → small) until it reaches $0$. More detailed explanations in a step-by-step walkthrough[^3], the UC Irvine page[^4] and an academic paper[^5].
 
 
 #### 2. Coordinates & directions in MMS
@@ -84,18 +84,18 @@ Every command must be flushed, or the dialogue breaks.
 
 #### 5. On the real robot
 
-The real robot has 3 runs: exploration, return, and speed run. It must not lose the wall map it built.
-
-Robot stays on: the map lives in RAM. Clear the distance grid, keep the walls, re-run flood-fill, and the path is recomputed in a fraction of a second.
-
+The real robot has 3 runs: exploration, return, and speed run. It must not lose the wall map it built. <br>
+Robot stays on: the map lives in RAM. Clear the distance grid, keep the walls, re-run flood-fill, and the path is recomputed in a fraction of a second. <br>
 Robot off: RAM is wiped. The walls must be written to non-volatile memory (EEPROM / Flash). A 16×16 maze is 256 bytes, one per cell, which is tiny.
 
+<br>
+
+No more testing or tuning in the simulator for now: that will be done on the mouse itself, once it is built. The maze can be solved on a screen. Now back to the physical parts, one card per component to look at each in detail.
 
 <br>
-# References
 
-- [Micromouse Online — Solving the maze](https://micromouseonline.com/micromouse-book/mazes-and-maze-solving/solving-the-maze/)
-- [mackorone/mms — the Micromouse Simulator used in this post](https://github.com/mackorone/mms)
-- [Micromouse-from-scratch walkthrough](https://medium.com/@minikiraniamayadharmasiri/micromouse-from-scratch-algorithm-maze-traversal-shortest-path-floodfill-741242e8510)
-- [UC Irvine's flood-fill page](https://ieee.ics.uci.edu/micromouse/floodfill.html)
-- [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)
+[^1]: [Micromouse Online — Solving the maze](https://micromouseonline.com/micromouse-book/mazes-and-maze-solving/solving-the-maze/)
+[^2]: [mackorone/mms — the Micromouse Simulator used in this post](https://github.com/mackorone/mms)
+[^3]: [Micromouse-from-scratch walkthrough](https://medium.com/@minikiraniamayadharmasiri/micromouse-from-scratch-algorithm-maze-traversal-shortest-path-floodfill-741242e8510)
+[^4]: [UC Irvine's flood-fill page](https://ieee.ics.uci.edu/micromouse/floodfill.html)
+[^5]: [academic PDF](https://marsuniversity.github.io/ece387/FloodFill.pdf)

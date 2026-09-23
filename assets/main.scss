@@ -15,8 +15,8 @@ $background-color: #f3eaf8;   // page background — pastel mauve
 $tag-color:        #0a9d62;   // readable green — tags, table rules, sub-headings
 
 // --- Font ---
-$base-font-family: "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
-$base-font-size:   17px;
+$base-font-family: "Computer Modern Serif", "Latin Modern Roman", Georgia, serif;   // LaTeX default font
+$base-font-size:   18px;
 $base-line-height: 1.65;
 
 // --- Layout ---
@@ -395,6 +395,10 @@ abbr[data-bubble]:focus::after {
   a:hover { opacity: 1; color: $brand-color; }
   a.active { opacity: 1; color: $brand-color; font-weight: 700; background: #f6e9fb; }
   .toc-post > a { font-weight: 700; opacity: 0.9; margin-top: 6px; }
+  @media (min-width: 1000px) {
+    .toc-post > ul { display: none; }          // sections shown only for the post being read
+    .toc-post.open > ul { display: block; }
+  }
   .side-toc-title { font-weight: 700; margin: 0 0 8px 6px; color: $brand-color; }
 }
 
@@ -440,4 +444,61 @@ abbr[data-bubble]:focus::after {
 }
 @media (max-width: 600px) {
   #side-toc { columns: 1; }
+}
+
+// Appendix folded by default (<details class="appendix"> in the posts)
+details.appendix {
+  margin-top: $spacing-unit;
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: #1f1547;
+    list-style: none;
+    &::-webkit-details-marker { display: none; }
+    &::before {
+      content: "▶";
+      display: inline-block;
+      font-size: 0.7em;
+      margin-right: 0.6em;
+      transition: transform 0.15s;
+    }
+  }
+  &[open] > summary::before { transform: rotate(90deg); }
+  > :not(summary) { margin-top: $spacing-unit * 0.5; }
+}
+
+// "What I learned" block at the top of the experiment posts: image left, boxed text right
+.learned {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin: 0 0 $spacing-unit;
+  .learned-icon { width: 120px; height: 120px; flex: 0 0 auto; }
+  .learned-text {
+    flex: 1;
+    min-width: 0;
+    border-left: 4px solid $tag-color;
+    background: #e9f7f0;
+    border-radius: 6px;
+    padding: 12px 18px;
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    font-size: 0.82em;
+  }
+  .learned-text p { margin: 0; text-align: justify; }
+  .learned-text strong { color: $tag-color; }
+}
+
+// Footnotes = the references of a post (kramdown puts them at the very end)
+.footnotes {
+  margin-top: $spacing-unit;
+  font-size: 0.9em;
+  &::before {
+    content: "References";
+    display: block;
+    font-weight: 700;
+    color: #1f1547;
+    margin-bottom: 8px;
+  }
+  ol { padding-left: 1.4em; }
+  p { margin: 0; text-align: left; }
 }

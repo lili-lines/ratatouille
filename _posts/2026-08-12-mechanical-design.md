@@ -8,6 +8,8 @@ tags: [mechanics, hardware]
 * TOC
 {:toc}
 
+Here the design of the mouse is chosen from the constraints of the maze: how big it can be, what shape, and how to build the whisker module.
+
 <figure style="margin:0;">
   <img src="{{ '/assets/img/mouse_v0.png' | relative_url }}" alt="Initial design of the mouse" style="max-width:100%; border-radius:6px;">
   <figcaption style="text-align:center; font-size:0.85rem;">Assembly design of the components, V0. In brown the laser-cut acrylic plates.</figcaption>
@@ -26,7 +28,7 @@ For **the whiskers**, a sandwich structure that keeps the whisker pivot stable a
 
 #### 1.1 Mechanical
 
-The mouse must be small enough to move around the maze with some margin in the turns. And, if we get there, to run the diagonals in a straight line. So let's compute the free space in a diagonal: <br>
+The mouse must be small enough to move around the maze with some margin in the turns. And, if I get there, to run the diagonals in a straight line. So, the free space in a diagonal: <br>
 
 <div style="display:flex; flex-wrap:nowrap; gap:16px; align-items:center;" markdown="1">
 <figure style="margin:0; flex-shrink:0;">
@@ -34,11 +36,11 @@ The mouse must be small enough to move around the maze with some margin in the t
   <figcaption style="text-align:center; font-size:0.85rem;">Maze diagram for the free space computation.</figcaption>
 </figure>
 <div style="flex:1; min-width:0; font-size:0.85em;" markdown="1">
-**Pythagoras:**
+Pythagoras
 
 $$\begin{aligned} \text{diag}^2 &= c^2 + c^2 \\ \text{diag} &= \sqrt{2} \times c \end{aligned}$$
 
-Our known side, 180 mm, becomes the hypotenuse, so we look for the side perpendicular to the path:
+The known side, 180 mm, becomes the hypotenuse, and the unknown is the side perpendicular to the path:
 
 $$\begin{aligned} c &= \frac{\text{diag}}{\sqrt{2}} = \frac{180}{\sqrt{2}} \approx 127.28\text{mm} \end{aligned}$$
 
@@ -46,14 +48,14 @@ The diagonal of the 12 mm post:
 
 $$\text{diag}_{\text{post}} = \sqrt{2} \times 12 \approx 16.97\text{mm}$$
 
-Subtract it from our side:
+Subtract it from that side:
 
 $$\begin{aligned} \text{Free space} &= c - \text{diag}_{\text{post}} \\ &= 127.28 - 16.97 \\ & \approx 110.31\text{mm} \end{aligned}$$
 </div>
 </div>
 <br>
 
-Let's keep a margin and set the width at 70-80 mm. The smaller the mouse, the more it forgives small position errors. And the more speed we can get in straight lines and diagonals, but that is not the priority for the v1.
+I keep a margin and set the width at 70-80 mm. The smaller the mouse, the more it forgives small position errors. And the more speed it can reach in straight lines and diagonals, but that is not the priority for the v1.
 
 In a straight corridor, the free width is the cell minus the post, $180 - 12 = 168$ mm. An 80 mm mouse in the middle leaves on each side:
 
@@ -61,7 +63,7 @@ $$\frac{168 - 80}{2} = 44\ \text{mm}$$
 
 44 mm per side, that is the free space. This is the number that sets the test tolerances in [Flash the critter]({% post_url 2026-08-20-flash-the-critter %}).
 
-Lengthwise, the reference point is the middle of the axle: it is the position the odometry computes, and the point the robot pivots around. 
+Lengthwise, the reference point is the middle of the axle[^1]: it is the position the odometry computes, and the point the robot pivots around. 
 The motors must be aligned on the same axis, or the robot does not run straight.
 The whisker pivot must be perfectly stable and aligned with the AS5600 chip that reads the magnet position. The whiskers must sit at a height < 50 mm.
 
@@ -119,7 +121,7 @@ Draw the parts in a vector software = Inkscape <br>
 </div>
 </div>
 
-For the v1 we go with the Ø0.5 mm aluminium rod. It is the best compromise among the materials tested: stiff enough to pass the contact to the pivot without bending any which way, but soft enough not to push the robot away from the wall. It cuts and shapes easily, which matters for a v1 where we adjust often.
+For the v1 I go with the Ø0.5 mm aluminium rod. It is the best compromise among the materials tested: stiff enough to pass the contact to the pivot without bending any which way, but soft enough not to push the robot away from the wall. It cuts and shapes easily, which matters for a v1 where adjustments are frequent.
 
 
 ## 3. Validation
@@ -129,7 +131,7 @@ For the v1 we go with the Ø0.5 mm aluminium rod. It is the best compromise amon
   <figcaption style="text-align:center; font-size:0.85rem;">Monsters, Inc., 2001</figcaption>
 </figure>
 
-Validation is iterative, like Boo with Randall Boggs in Monsters, Inc.: we change things until we are happy. 
+Validation is iterative, like Boo with Randall Boggs in Monsters, Inc., I change things until I am happy.
 
 **Criteria** <br>
 . whisker height < 50 mm ✅ <br>
@@ -140,7 +142,7 @@ Validation is iterative, like Boo with Randall Boggs in Monsters, Inc.: we chang
 **Notes** <br>
 First problem, the whiskers are too high, so the AS5600 go down to level 0 and then it is ok.
 Getting the holes to line up is hard, because some components are badly cut, like the AS5600 module. So plan a margin, or position by hand and use a drill. Then measure and adjust the vector drawing for a v2. Apart from the whiskers, the other criteria are met. <br>
-This is the IKEA stage: the parts that end up better somewhere else, the ones we add and remove. Assemble, disassemble... plan supports for the tests, drill several holes to try different screw positions. Iterate until the result meets the criteria, then make a clean version for the v1. <br>
+This is the IKEA stage: the parts that end up better somewhere else, the ones added and removed. Assemble, disassemble... plan supports for the tests, drill several holes to try different screw positions. Iterate until the result meets the criteria, then make a clean version for the v1. <br>
 
 <figure style="margin:0;">
   <img src="{{ '/assets/img/floor_mouse.png' | relative_url }}" alt="v1 layout on the maze plan" style="max-width:100%; border-radius:6px;">
@@ -162,9 +164,13 @@ This is the IKEA stage: the parts that end up better somewhere else, the ones we
 </div>
 
 The whisker pivot should be improved, it is a bit wobbly for now, but that will be for the v2.
-A rectangular shape catches the corners more easily when the heading drifts. So for a v2, try a round or octagonal shape.
+A rectangular shape catches the corners more easily when the heading drifts. So for a v2, try a round or octagonal shape[^2].
 
-# References
+<br>
 
-- [Micromouse Online — Chassis Layout](https://micromouseonline.com/micromouse-book/the-chassis/chassis-layout/)
-- [Demo Micromouse Robot — Sam Dale](https://www.spdale.com/projects/demo-micromouse)
+With the chassis adjusted to the position of every part, on to soldering the electronics.
+
+<br>
+
+[^1]: [Micromouse Online — Chassis Layout](https://micromouseonline.com/micromouse-book/the-chassis/chassis-layout/)
+[^2]: [Demo Micromouse Robot — Sam Dale](https://www.spdale.com/projects/demo-micromouse)

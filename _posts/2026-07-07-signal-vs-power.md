@@ -8,17 +8,19 @@ tags: [signal, electricity]
 * TOC
 {:toc}
 
+Two things flow in the wires, signal and power. Here is what they are.
 
 🟣🔴 + ⚡ <br> 
 🟡🟢 + ℹ️🎮 <br>
 ⚫ - <br>
+
 
 ## 1. What flows
 
 #### 1.1 Signal
 Signal = the physical carrier of the information on a wire: a voltage or a pulse (e.g. 3.3 V = "on"). It carries the information, not energy, so its current is tiny.
 
-**Information** ℹ️, what we want to know or command, e.g. the whisker is moving, turn 90°.
+**Information** ℹ️, what we want to know or command (→ what is to be known or commanded), e.g. the whisker is moving, turn 90°.
 The information is encoded in a physical property of the signal, a voltage, a duration, a sequence of bits. Each component is built to read that property by a known rule, the protocol.
 
 Three ways to encode it:
@@ -80,15 +82,17 @@ That's why the ground is wired as a star, at one single point, so that no strong
 
 ## 2. From order to power
 
-The driver is where the two worlds meet:
+The driver is where the two worlds meet[^1]:
 - **VCC** = logic side, 3.3 V, it listens to the Teensy's order.
 - **VM** = motor side, 7.4 V, the battery's power.
 
-Sharing one circuit between the two has a cost: the power side is noisy and the signal side is fragile. Measured in [Clean whisker signal, PWM]({% post_url 2026-07-28-clean-signal-under-pwm %}).
-
+Sharing one circuit between the two has a cost: the power side is noisy[^2] and the signal side is fragile. Measured in [Clean whisker signal, PWM]({% post_url 2026-07-28-clean-signal-under-pwm %}).
 
 <br>
-# References
 
-- [TB6612FNG Hookup Guide — SparkFun Learn](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all)
-- [Solo — Electrical Noise Reduction Techniques for Motor Controllers](https://www.solomotorcontrollers.com/blog/electrical-noise-reduction/)
+Now that what flows is clearer, let's see how the AS5600 magnetic sensors work and what they return.
+
+<br>
+
+[^1]: [TB6612FNG Hookup Guide — SparkFun Learn](https://learn.sparkfun.com/tutorials/tb6612fng-hookup-guide/all)
+[^2]: [Solo — Electrical Noise Reduction Techniques for Motor Controllers](https://www.solomotorcontrollers.com/blog/electrical-noise-reduction/)

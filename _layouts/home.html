@@ -91,10 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (current) current.link.classList.remove('active');
     if (best) {
       best.link.classList.add('active');
-      // keep the active entry visible inside the scrolling sidebar
-      var nav = document.getElementById('side-toc');
-      var r = best.link.getBoundingClientRect(), n = nav.getBoundingClientRect();
-      if (r.top < n.top || r.bottom > n.bottom) best.link.scrollIntoView({ block: 'nearest' });
+      // unfold only the post being read, so the sidebar fits the screen and never scrolls
+      var post = best.link.closest('.toc-post');
+      list.querySelectorAll('.toc-post.open').forEach(function (li) { if (li !== post) li.classList.remove('open'); });
+      post.classList.add('open');
     }
     current = best;
   }
